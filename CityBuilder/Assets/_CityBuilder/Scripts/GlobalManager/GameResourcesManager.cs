@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameRig.Scripts.Systems.CurrencySystem;
+using GameRig.Scripts.Systems.OfflineSystem;
 using GameRig.Scripts.Systems.SaveSystem;
+using GameRig.Scripts.Utilities.Attributes;
+using GameRig.Scripts.Utilities.GameRigConstantValues;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,10 +36,20 @@ namespace _CityBuilder.Scripts.GlobalManager
         private static List<ResourcesData> ResourcesDataList = new List<ResourcesData>();
 
 
-        [InitializeOnLoadMethod]
+        [InvokeOnAppLaunch()]
         private static void Initialize()
         {
+            settings = Resources.Load<GameCurrencySettings>(GameRigResourcesPaths.GameCurrencySettings);
             InitializeResourcesList();
+            OfflineManager.OnGoToOffline += SaveResourcesAmount;
+        }
+
+        private static void SaveResourcesAmount()
+        {
+            foreach (var resourcesData in ResourcesDataList)
+            {
+                SaveManager.Save(resourcesData.ResourceType.ToString(), resourcesData.ResourceAmount);      
+            }
         }
 
         private static void InitializeResourcesList()
@@ -80,7 +93,7 @@ namespace _CityBuilder.Scripts.GlobalManager
             return currentResource.ResourceAmount;
         }
 
-        public static void SetResourceAmount(ResourcesType resourcesType, int value)
+        public static void AddResourceAmount(ResourcesType resourcesType, int value)
         {
             ResourcesData currentResource = ResourcesDataList.Find(e => e.ResourceType == resourcesType);
             currentResource.ResourceAmount += value;
@@ -89,7 +102,7 @@ namespace _CityBuilder.Scripts.GlobalManager
 
         private static int LoadResourcesAmount(ResourcesType resourcesType)
         {
-            return  SaveManager.Load(resourcesType.ToString() ,0);
+            return SaveManager.Load(resourcesType.ToString(), 0);
         }
     }
 }
