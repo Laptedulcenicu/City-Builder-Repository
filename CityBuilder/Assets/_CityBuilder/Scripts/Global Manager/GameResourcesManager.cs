@@ -5,12 +5,11 @@ using GameRig.Scripts.Systems.OfflineSystem;
 using GameRig.Scripts.Systems.SaveSystem;
 using GameRig.Scripts.Utilities.Attributes;
 using GameRig.Scripts.Utilities.GameRigConstantValues;
-using UnityEditor;
 using UnityEngine;
 
-namespace _CityBuilder.Scripts.GlobalManager
+namespace _CityBuilder.Scripts.Global_Manager
 {
-    public enum ResourcesType
+    public enum ResourceType
     {
         Gold = 0,
         Wood = 1,
@@ -22,13 +21,13 @@ namespace _CityBuilder.Scripts.GlobalManager
 
     public class ResourcesData
     {
-        public ResourcesType ResourceType;
+        public ResourceType ResourceType;
         public int ResourceAmount;
     }
 
     public static class GameResourcesManager
     {
-        public delegate void OnGameResourcesChangeDelegate(ResourcesType resourcesType, int amount);
+        public delegate void OnGameResourcesChangeDelegate(ResourceType resourceType, int amount);
 
         public static OnGameResourcesChangeDelegate OnGameResourcesChange = delegate { };
 
@@ -54,18 +53,18 @@ namespace _CityBuilder.Scripts.GlobalManager
 
         private static void InitializeResourcesList()
         {
-            for (int i = 0; i < Enum.GetNames(typeof(ResourcesType)).Length; i++)
+            for (int i = 0; i < Enum.GetNames(typeof(ResourceType)).Length; i++)
             {
                 ResourcesData newResourceData = new ResourcesData()
-                    {ResourceAmount = LoadResourcesAmount((ResourcesType) i), ResourceType = (ResourcesType) i};
+                    {ResourceAmount = LoadResourcesAmount((ResourceType) i), ResourceType = (ResourceType) i};
 
                 ResourcesDataList.Add(newResourceData);
             }
         }
 
-        public static string GetDisplayString(ResourcesType resourcesType)
+        public static string GetDisplayString(ResourceType resourceType)
         {
-            var number = GetResourceAmount(resourcesType);
+            var number = GetResourceAmount(resourceType);
 
             string displayString = Mathf.Abs(number) < 1f && number >= 0.1f ? $"{number:0.0}" : $"{number:0}";
 
@@ -87,22 +86,22 @@ namespace _CityBuilder.Scripts.GlobalManager
             return displayString;
         }
 
-        public static int GetResourceAmount(ResourcesType resourcesType)
+        public static int GetResourceAmount(ResourceType resourceType)
         {
-            ResourcesData currentResource = ResourcesDataList.Find(e => e.ResourceType == resourcesType);
+            ResourcesData currentResource = ResourcesDataList.Find(e => e.ResourceType == resourceType);
             return currentResource.ResourceAmount;
         }
 
-        public static void AddResourceAmount(ResourcesType resourcesType, int value)
+        public static void AddResourceAmount(ResourceType resourceType, int value)
         {
-            ResourcesData currentResource = ResourcesDataList.Find(e => e.ResourceType == resourcesType);
+            ResourcesData currentResource = ResourcesDataList.Find(e => e.ResourceType == resourceType);
             currentResource.ResourceAmount += value;
-            OnGameResourcesChange(resourcesType, currentResource.ResourceAmount);
+            OnGameResourcesChange(resourceType, currentResource.ResourceAmount);
         }
 
-        private static int LoadResourcesAmount(ResourcesType resourcesType)
+        private static int LoadResourcesAmount(ResourceType resourceType)
         {
-            return SaveManager.Load(resourcesType.ToString(), 0);
+            return SaveManager.Load(resourceType.ToString(), 0);
         }
     }
 }

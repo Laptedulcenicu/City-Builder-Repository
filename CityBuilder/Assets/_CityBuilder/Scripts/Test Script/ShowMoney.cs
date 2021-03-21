@@ -1,27 +1,28 @@
 ﻿using System;
-using _CityBuilder.Scripts.GlobalManager;
+using _CityBuilder.Scripts.Global_Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts.TestScript
 {
     public class ShowMoney : MonoBehaviour
     {
-        [SerializeField] private ResourcesType resourcesType;
+        [FormerlySerializedAs("resourcesType")] [SerializeField] private ResourceType resourceType;
         private TextMeshProUGUI currentResourceValue;
 
         private void Awake()
         {
             currentResourceValue = GetComponent<TextMeshProUGUI>();
             GameResourcesManager.OnGameResourcesChange += OnGameResourcesChange;
-            currentResourceValue.text = GameResourcesManager.GetDisplayString(resourcesType);
+            currentResourceValue.text = GameResourcesManager.GetDisplayString(resourceType);
         }
 
-        private void OnGameResourcesChange(ResourcesType resources, int amount)
+        private void OnGameResourcesChange(ResourceType resource, int amount)
         {
-            if (resourcesType == resources)
+            if (resourceType == resource)
             {
-                currentResourceValue.text = GameResourcesManager.GetDisplayString(resourcesType);
+                currentResourceValue.text = GameResourcesManager.GetDisplayString(resourceType);
             }
         }
     }

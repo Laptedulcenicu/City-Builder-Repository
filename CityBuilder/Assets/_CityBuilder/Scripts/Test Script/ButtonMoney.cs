@@ -1,16 +1,17 @@
-﻿using _CityBuilder.Scripts.GlobalManager;
+﻿using _CityBuilder.Scripts.Global_Manager;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts.TestScript
 {
    public class ButtonMoney : MonoBehaviour
    {
-      [SerializeField] private ResourcesType resourcesType;
+      [FormerlySerializedAs("resourcesType")] [SerializeField] private ResourceType resourceType;
       [SerializeField] private int amountValue;
 
       public void AddMoney()
       {
-         GameResourcesManager.AddResourceAmount(resourcesType,amountValue);
+         GameResourcesManager.AddResourceAmount(resourceType,amountValue);
       }
    }
 }
