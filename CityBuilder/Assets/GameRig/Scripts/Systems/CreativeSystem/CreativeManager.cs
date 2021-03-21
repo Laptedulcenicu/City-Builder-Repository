@@ -27,9 +27,9 @@ namespace GameRig.Scripts.Systems.CreativeSystem
 
 			screenshotsSettings = Resources.LoadAll<ScreenshotSettings>(GameRigResourcesPaths.ScreenshotsSettings);
 
-			InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.P, SaveScreenshots);
-			InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.R, ResetTheResolution);
-			InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.E, ResetGame);
+		//	InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.P, SaveScreenshots);
+		//	InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.R, ResetTheResolution);
+		//	InputManager.Subscribe(KeyEventType.KeyDown, KeyCode.E, ResetGame);
 #endif
 		}
 

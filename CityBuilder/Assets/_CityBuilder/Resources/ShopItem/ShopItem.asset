@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aa4b40fb671954abd86262fa8347bd, type: 3}
   m_Name: ShopItem
   m_EditorClassIdentifier: 
+  itemName: 
+  itemDescription: 
   unlockDay: 0
   buildingType: 2
   sprite: {fileID: 0}
   buildingContainer: {fileID: 11400000, guid: 46b39862af7a05a48b469518761398d8, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
-    amount: 100
-  - resourceType: 1
-    amount: 30
-  - resourceType: 4
-    amount: 10
+    amount: 2

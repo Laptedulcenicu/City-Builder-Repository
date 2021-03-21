@@ -17,10 +17,11 @@ MonoBehaviour:
   upgradeStageList:
   - gamePrefab: {fileID: 0}
     buildingConfiguration: {fileID: 0}
-    necessaryResourcesDataList: []
-  - gamePrefab: {fileID: 0}
-    buildingConfiguration: {fileID: 0}
-    necessaryResourcesDataList: []
+    necessaryResourcesDataList:
+    - resourceType: 1
+      amount: 0
+    - resourceType: 3
+      amount: 0
   - gamePrefab: {fileID: 0}
     buildingConfiguration: {fileID: 0}
     necessaryResourcesDataList: []
