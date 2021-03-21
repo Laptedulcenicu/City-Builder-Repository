@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e9ca9bc4c61b646aa7b3816300551e, type: 3}
+  m_Name: FunctionalBuildingContainer
+  m_EditorClassIdentifier: 
+  defaultPrefab: {fileID: 0}
+  defaultConfiguration: {fileID: 0}
+  upgradeStageList:
+  - gamePrefab: {fileID: 0}
+    buildingConfiguration: {fileID: 0}
+    necessaryResourcesDataList: []
+  - gamePrefab: {fileID: 0}
+    buildingConfiguration: {fileID: 0}
+    necessaryResourcesDataList: []
+  - gamePrefab: {fileID: 0}
+    buildingConfiguration: {fileID: 0}
+    necessaryResourcesDataList: []
