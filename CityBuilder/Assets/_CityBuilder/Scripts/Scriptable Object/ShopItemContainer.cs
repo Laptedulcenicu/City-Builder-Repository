@@ -30,6 +30,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
     [CreateAssetMenu(fileName = "ShopItem", menuName = "GameData/ShopItem")]
     public class ShopItemContainer : ScriptableObject
     {
+        [SerializeField] private string itemName;
         [SerializeField][TextArea] private string itemDescription;
         [SerializeField] private int unlockDay;
         [SerializeField] private BuildingType buildingType;
@@ -46,5 +47,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         public BuildingContainer Container => buildingContainer;
 
         public string ItemDescription => itemDescription;
+
+        public string ItemName => itemName;
     }
 }
