@@ -85,6 +85,31 @@ namespace _CityBuilder.Scripts.Global_Manager
 
             return displayString;
         }
+        
+        public static string GetDisplayString(int value)
+        {
+            var number = value;
+
+            string displayString = Mathf.Abs(number) < 1f && number >= 0.1f ? $"{number:0.0}" : $"{number:0}";
+
+            for (int i = settings.DisplaySettings.Length - 1; i >= 0; i--)
+            {
+                CurrencyDisplaySettings displaySettings = settings.DisplaySettings[i];
+
+                if (number < displaySettings.Amount)
+                {
+                    continue;
+                }
+
+                displayString = $"{Math.Truncate(10 * number / displaySettings.Amount) / 10:0.0}" +
+                                displaySettings.Suffix;
+
+                break;
+            }
+
+            return displayString;
+        }
+        
 
         public static int GetResourceAmount(ResourceType resourceType)
         {

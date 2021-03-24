@@ -14,14 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPrefab: {fileID: 0}
   defaultConfiguration: {fileID: 0}
-  upgradeStageList:
-  - gamePrefab: {fileID: 0}
-    buildingConfiguration: {fileID: 0}
-    necessaryResourcesDataList:
-    - resourceType: 1
-      amount: 0
-    - resourceType: 3
-      amount: 0
-  - gamePrefab: {fileID: 0}
-    buildingConfiguration: {fileID: 0}
-    necessaryResourcesDataList: []
+  upgradeStageList: []

@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aa4b40fb671954abd86262fa8347bd, type: 3}
   m_Name: ShopItem
   m_EditorClassIdentifier: 
-  itemName: 
-  itemDescription: 
+  itemName: Flat 1
+  itemDescription: 'Ceva DespreFlat 1 Acolo
+
+'
   unlockDay: 0
   buildingType: 2
-  sprite: {fileID: 0}
-  buildingContainer: {fileID: 11400000, guid: 46b39862af7a05a48b469518761398d8, type: 2}
+  sprite: {fileID: 21300026, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  buildingContainer: {fileID: 11400000, guid: dcfa1470cd3caf3498b3e3b9fab77dab, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
-    amount: 2
+    amount: 5

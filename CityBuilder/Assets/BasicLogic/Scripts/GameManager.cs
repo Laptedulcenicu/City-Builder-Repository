@@ -2,10 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Test_Script;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public ShopManager ShopManager;
     public CameraMovement cameraMovement;
     public RoadManager roadManager;
     public InputManager inputManager;
@@ -44,6 +47,17 @@ public class GameManager : MonoBehaviour
         inputManager.OnEscape += HandleEscape;
     }
 
+    public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
+    {
+        ClearInputActions();
+
+        inputManager.OnMouseClick += (pos) =>
+        {
+            ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer);
+        };
+        inputManager.OnEscape += HandleEscape;
+    }
+        
     private void SpecialPlacementHandler()
     {
         ClearInputActions();
@@ -68,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     private void RoadPlacementHandler()
     {
+        print("RoadPlacementHandler");
         ClearInputActions();
 
         inputManager.OnMouseClick += (pos) =>
@@ -93,7 +108,13 @@ public class GameManager : MonoBehaviour
         if (result.HasValue)
             callback.Invoke(result.Value);
     }
-
+    
+    private void ProcessInputAndCall(Action<Vector3Int,ShopItemContainer> callback, Ray ray, ShopItemContainer shopItemContainer)
+    {
+        Vector3Int? result = objectDetector.RaycastGround(ray);
+        if (result.HasValue)
+            callback.Invoke(result.Value, shopItemContainer);
+    }
 
 
     private void Update()

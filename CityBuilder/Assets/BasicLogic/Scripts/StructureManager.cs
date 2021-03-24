@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _CityBuilder.Scripts.Global_Manager;
+using _CityBuilder.Scripts.Scriptable_Object;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -28,6 +30,29 @@ public class StructureManager : MonoBehaviour
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
+    
+    public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
+    {
+        if (CheckPositionBeforePlacement(position))
+        {
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                {
+                    return;
+                }
+            }
+            
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                GameResourcesManager.AddResourceAmount( necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
+            }
+            
+            int randomIndex = GetRandomWeightedIndex(houseWeights);
+            placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, buildingPrefabIndex:randomIndex);
+            AudioPlayer.instance.PlayPlacementSound();
+        }
+    }
 
     internal void PlaceBigStructure(Vector3Int position)
     {
@@ -40,6 +65,8 @@ public class StructureManager : MonoBehaviour
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
+    
+    
 
     private bool CheckBigStructure(Vector3Int position, int width, int height)
     {
