@@ -9,11 +9,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public ShopManager ShopManager;
+    
     public CameraMovement cameraMovement;
     public RoadManager roadManager;
     public InputManager inputManager;
 
-    public UIController uiController;
 
     public StructureManager structureManager;
 
@@ -23,17 +23,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        uiController.OnRoadPlacement += RoadPlacementHandler;
-        uiController.OnHousePlacement += HousePlacementHandler;
-        uiController.OnSpecialPlacement += SpecialPlacementHandler;
-        uiController.OnBigStructurePlacement += BigStructurePlacement;
         inputManager.OnEscape += HandleEscape;
     }
 
     private void HandleEscape()
     {
         ClearInputActions();
-        uiController.ResetButtonColor();
     }
 
     private void BigStructurePlacement()
@@ -82,7 +77,6 @@ public class GameManager : MonoBehaviour
 
     private void RoadPlacementHandler()
     {
-        print("RoadPlacementHandler");
         ClearInputActions();
 
         inputManager.OnMouseClick += (pos) =>

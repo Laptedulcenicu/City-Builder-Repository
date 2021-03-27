@@ -49,6 +49,8 @@ namespace _CityBuilder.Scripts.Test_Script
             }
             
             Disable();
+            GameResourcesManager.AddResourceAmount(ResourceType.Gold, 100);
+            GameResourcesManager.AddResourceAmount(ResourceType.Wood, 300);
         }
         private void OnDestroy()
         {
