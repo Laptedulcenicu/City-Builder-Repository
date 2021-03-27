@@ -5,13 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
-{
+{ 
     public event Action<Ray> OnMouseClick, OnMouseHold;
-    public event Action OnMouseUp, OnEscape;
-    private Vector2 mouseMovementVector = Vector2.zero;
-    public Vector2 CameraMovementVector { get => mouseMovementVector; }
-    [SerializeField]
-    Camera mainCamera;
+    public event Action OnMouseUp, OnEscape; 
+    
+    [SerializeField] private Camera mainCamera;
 
 
     void Update()
@@ -19,7 +17,6 @@ public class InputManager : MonoBehaviour
         CheckClickDownEvent();
         CheckClickHoldEvent();
         CheckClickUpEvent();
-        CheckArrowInput();
         CheckEscClick();
     }
 
@@ -55,12 +52,7 @@ public class InputManager : MonoBehaviour
             OnEscape.Invoke();
         }
     }
-
-    private void CheckArrowInput()
-    {
-        mouseMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    }
-
+    
     public void ClearEvents()
     {
         OnMouseClick = null;

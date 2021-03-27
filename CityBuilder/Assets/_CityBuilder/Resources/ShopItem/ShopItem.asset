@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aa4b40fb671954abd86262fa8347bd, type: 3}
   m_Name: ShopItem
   m_EditorClassIdentifier: 
-  itemName: Flat 1
-  itemDescription: 'Ceva DespreFlat 1 Acolo
-
-'
+  itemName: Road
+  itemDescription: Drum
   unlockDay: 0
   buildingType: 2
   sprite: {fileID: 21300026, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}

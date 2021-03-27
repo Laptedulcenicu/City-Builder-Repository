@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object;
+using BitBenderGames;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace _CityBuilder.Scripts.Test_Script
     }
     public class ShopManager : MonoBehaviour
     {
+        [SerializeField] private TouchInputController touchInputController;
         [SerializeField] private List<MoneyTextData> needMoney;
         [SerializeField] private List<MoneyTextData> currentMoney;
         [SerializeField] private Item itemPrefab;
@@ -105,11 +107,13 @@ namespace _CityBuilder.Scripts.Test_Script
             gameManager.GenericPlacementHandler(selectedShopItemContainer);
             Disable();
             panel.SetActive(false);
+            touchInputController.enabled = false;
         }
 
         public void Cancel()
         {
             panel.SetActive(true);
+            touchInputController.enabled = true;
         }
 
         private void Disable()

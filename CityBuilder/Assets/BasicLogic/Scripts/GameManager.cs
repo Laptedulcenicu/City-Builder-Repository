@@ -4,16 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
 using _CityBuilder.Scripts.Test_Script;
+using BitBenderGames;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public ShopManager ShopManager;
     
-    public CameraMovement cameraMovement;
     public RoadManager roadManager;
     public InputManager inputManager;
-
+  
 
     public StructureManager structureManager;
 
@@ -44,13 +44,22 @@ public class GameManager : MonoBehaviour
 
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
     {
-        ClearInputActions();
 
-        inputManager.OnMouseClick += (pos) =>
+        if (shopItemContainer.Container.IsRoad)
         {
-            ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer);
-        };
-        inputManager.OnEscape += HandleEscape;
+            RoadPlacementHandler();
+        }
+        else
+        {
+            ClearInputActions();
+
+            inputManager.OnMouseClick += (pos) =>
+            {
+                ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer);
+            };
+            inputManager.OnEscape += HandleEscape;
+        }
+     
     }
         
     private void SpecialPlacementHandler()
@@ -91,7 +100,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnEscape += HandleEscape;
     }
 
-    private void ClearInputActions()
+    public void ClearInputActions()
     {
         inputManager.ClearEvents();
     }
@@ -109,13 +118,7 @@ public class GameManager : MonoBehaviour
         if (result.HasValue)
             callback.Invoke(result.Value, shopItemContainer);
     }
-
-
-    private void Update()
-    {
-        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
-    }
-
+    
     public void SaveGame()
     {
         SaveDataSerialization saveData = new SaveDataSerialization();

@@ -16,10 +16,7 @@ public class RoadManager : MonoBehaviour
 
     public RoadFixer roadFixer;
 
-    private void Start()
-    {
-        roadFixer = GetComponent<RoadFixer>();
-    }
+  
 
     public void PlaceRoad(Vector3Int position)
     {

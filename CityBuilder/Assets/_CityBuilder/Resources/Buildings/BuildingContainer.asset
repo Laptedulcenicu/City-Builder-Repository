@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPrefab: {fileID: 7864668269691680764, guid: 44c75b500bfebf84993deb17f38a98f6,
     type: 3}
+  isRoad: 1
+  weight: 0.25

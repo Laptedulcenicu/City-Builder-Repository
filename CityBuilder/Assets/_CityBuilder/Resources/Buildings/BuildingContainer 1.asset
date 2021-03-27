@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac808a8dc869804fa449a6ce0805683, type: 3}
   m_Name: BuildingContainer 1
   m_EditorClassIdentifier: 
-  defaultPrefab: {fileID: 919132149155446097, guid: 0881845cc82972449b1b551ee63da7ea,
+  defaultPrefab: {fileID: 7864668269691680764, guid: 44c75b500bfebf84993deb17f38a98f6,
     type: 3}
+  isRoad: 0
+  weight: 0.5
