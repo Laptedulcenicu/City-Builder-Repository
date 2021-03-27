@@ -8,11 +8,17 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         
         [SerializeField] private GameObject defaultPrefab;
         [SerializeField] private bool isRoad;
-        [SerializeField] [Range(0,1)] private float weight=0.25f;
+        [Range(0,1)] public float weight=0.25f;
+    
+        [SerializeField]  private int width=1;
+        [SerializeField]  private int height=1;
         
         public GameObject DefaultPrefab => defaultPrefab;
         public float Weight => weight;
 
         public bool IsRoad => isRoad;
+        public int Height => height;
+
+        public int Width => width;
     }
 }
