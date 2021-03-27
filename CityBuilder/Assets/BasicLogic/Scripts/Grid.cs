@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-/// <summary>
-/// Source https://github.com/lordjesus/Packt-Introduction-to-graph-algorithms-for-game-developers
-/// </summary>
 public class Point
 {
     public int X { get; set; }
@@ -21,11 +18,13 @@ public class Point
         {
             return false;
         }
+
         if (obj is Point)
         {
             Point p = obj as Point;
             return this.X == p.X && this.Y == p.Y;
         }
+
         return false;
     }
 
@@ -60,9 +59,18 @@ public class Grid
 {
     private CellType[,] _grid;
     private int _width;
-    public int Width { get { return _width; } }
+
+    public int Width
+    {
+        get { return _width; }
+    }
+
     private int _height;
-    public int Height { get { return _height; } }
+
+    public int Height
+    {
+        get { return _height; }
+    }
 
     private List<Point> _roadList = new List<Point>();
     private List<Point> _specialStructure = new List<Point>();
@@ -74,28 +82,27 @@ public class Grid
         _height = height;
         _grid = new CellType[width, height];
     }
-
-    // Adding index operator to our Grid class so that we can use grid[][] to access specific cell from our grid. 
+    
     public CellType this[int i, int j]
     {
-        get
-        {
-            return _grid[i, j];
-        }
+        get { return _grid[i, j]; }
         set
         {
             if (value == CellType.Road)
             {
                 _roadList.Add(new Point(i, j));
             }
+
             if (value == CellType.SpecialStructure)
             {
                 _specialStructure.Add(new Point(i, j));
             }
+
             if (value == CellType.Structure || value == CellType.BigStructure)
             {
                 _houseStructure.Add(new Point(i, j));
             }
+
             _grid[i, j] = value;
         }
     }
@@ -106,6 +113,7 @@ public class Grid
         {
             return cellType == CellType.Road;
         }
+
         return cellType == CellType.Empty || cellType == CellType.Road;
     }
 
@@ -115,7 +123,8 @@ public class Grid
         {
             return null;
         }
-        return _roadList[UnityEngine.Random.Range(0, _roadList.Count)];
+
+        return _roadList[Random.Range(0, _roadList.Count)];
     }
 
     public Point GetRandomSpecialStructurePoint()
@@ -124,7 +133,8 @@ public class Grid
         {
             return null;
         }
-        return _specialStructure[UnityEngine.Random.Range(0, _specialStructure.Count)];
+
+        return _specialStructure[Random.Range(0, _specialStructure.Count)];
     }
 
     public Point GetRandomHouseStructurePoint()
@@ -133,7 +143,8 @@ public class Grid
         {
             return null;
         }
-        return _houseStructure[UnityEngine.Random.Range(0, _houseStructure.Count)];
+
+        return _houseStructure[Random.Range(0, _houseStructure.Count)];
     }
 
     public List<Point> GetAllHouses()
@@ -148,7 +159,7 @@ public class Grid
 
     public List<Point> GetAdjacentCells(Point cell, bool isAgent)
     {
-        return GetWakableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
+        return GetWakableAdjacentCells((int) cell.X, (int) cell.Y, isAgent);
     }
 
     public float GetCostOfEnteringCell(Point cell)
@@ -163,18 +174,22 @@ public class Grid
         {
             adjacentCells.Add(new Point(x - 1, y));
         }
+
         if (x < _width - 1)
         {
             adjacentCells.Add(new Point(x + 1, y));
         }
+
         if (y > 0)
         {
             adjacentCells.Add(new Point(x, y - 1));
         }
+
         if (y < _height - 1)
         {
             adjacentCells.Add(new Point(x, y + 1));
         }
+
         return adjacentCells;
     }
 
@@ -188,6 +203,7 @@ public class Grid
                 adjacentCells.RemoveAt(i);
             }
         }
+
         return adjacentCells;
     }
 
@@ -201,34 +217,34 @@ public class Grid
                 adjacentCells.RemoveAt(i);
             }
         }
+
         return adjacentCells;
     }
 
-    /// <summary>
-    /// Returns array [Left neighbour, Top neighbour, Right neighbour, Down neighbour]
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
+    
     public CellType[] GetAllAdjacentCellTypes(int x, int y)
     {
-        CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
+        CellType[] neighbours = {CellType.None, CellType.None, CellType.None, CellType.None};
         if (x > 0)
         {
             neighbours[0] = _grid[x - 1, y];
         }
+
         if (x < _width - 1)
         {
             neighbours[2] = _grid[x + 1, y];
         }
+
         if (y > 0)
         {
             neighbours[3] = _grid[x, y - 1];
         }
+
         if (y < _height - 1)
         {
             neighbours[1] = _grid[x, y + 1];
         }
+
         return neighbours;
     }
 }

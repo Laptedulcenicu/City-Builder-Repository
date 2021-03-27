@@ -13,12 +13,8 @@ public class GameManager : MonoBehaviour
     
     public RoadManager roadManager;
     public InputManager inputManager;
-  
-
     public StructureManager structureManager;
-
     public ObjectDetector objectDetector;
-
     public SaveSystem saveSystem;
 
     void Start()
@@ -30,21 +26,9 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
     }
-
-    private void BigStructurePlacement()
-    {
-        ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceBigStructure, pos);
-        };
-        inputManager.OnEscape += HandleEscape;
-    }
-
+    
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
     {
-
         if (shopItemContainer.Container.IsRoad)
         {
             RoadPlacementHandler();
@@ -59,31 +43,8 @@ public class GameManager : MonoBehaviour
             };
             inputManager.OnEscape += HandleEscape;
         }
-     
     }
-        
-    private void SpecialPlacementHandler()
-    {
-        ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceSpecial, pos);
-        };
-        inputManager.OnEscape += HandleEscape;
-    }
-
-    private void HousePlacementHandler()
-    {
-        ClearInputActions();
-
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(structureManager.PlaceHouse, pos);
-        };
-        inputManager.OnEscape += HandleEscape;
-    }
-
+    
     private void RoadPlacementHandler()
     {
         ClearInputActions();

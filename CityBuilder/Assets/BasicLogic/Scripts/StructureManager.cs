@@ -21,15 +21,7 @@ public class StructureManager : MonoBehaviour
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
     }
 
-    public void PlaceHouse(Vector3Int position)
-    {
-        if (CheckPositionBeforePlacement(position))
-        {
-            int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].prefab, CellType.Structure, buildingPrefabIndex:randomIndex);
-            AudioPlayer.instance.PlayPlacementSound();
-        }
-    }
+
     
     public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
     {
@@ -90,16 +82,7 @@ public class StructureManager : MonoBehaviour
         return nearRoad;
     }
 
-    public void PlaceSpecial(Vector3Int position)
-    {
-        if (CheckPositionBeforePlacement(position))
-        {
-            int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, buildingPrefabIndex: randomIndex);
-            AudioPlayer.instance.PlayPlacementSound();
-        }
-    }
-
+   
     private int GetRandomWeightedIndex(float[] weights)
     {
         float sum = 0f;
