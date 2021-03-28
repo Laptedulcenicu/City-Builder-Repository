@@ -1,10 +1,6 @@
-﻿using SVS;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using _CityBuilder.Scripts.Scriptable_Object;
 using _CityBuilder.Scripts.Test_Script;
-using BitBenderGames;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -88,7 +84,6 @@ public class GameManager : MonoBehaviour
             saveData.AddStructureData(structureData.Key, structureData.Value.BuildingPrefabIndex, structureData.Value.BuildingType);
         }
         var jsonFormat = JsonUtility.ToJson(saveData);
-        Debug.Log(jsonFormat);
         saveSystem.SaveData(jsonFormat);
     }
 
@@ -99,6 +94,7 @@ public class GameManager : MonoBehaviour
             return;
         SaveDataSerialization saveData = JsonUtility.FromJson<SaveDataSerialization>(jsonFormatData);
         structureManager.ClearMap();
+        
         foreach (var structureData in saveData.structuresData)
         {
             Vector3Int position = Vector3Int.RoundToInt(structureData.position.GetValue());
@@ -109,7 +105,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                structureManager.PlaceLoadedStructure(position, structureData.buildingPrefabindex, structureData.buildingType);
+                structureManager.PlaceLoadedStructure(position, structureData.buildingPrefabindex);
             }
         }
     }

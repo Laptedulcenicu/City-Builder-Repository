@@ -13,5 +13,7 @@ namespace GameRig.Scripts.Utilities.ConstantValues
 		public static string CurrentTrack = "Track";
 		public static string WinLevel = "WinLevel";
 		public static string Notification = "Notification";
+		public static string Day = "Day";
+		public static string currentWeather = "weather";
 	}
 }

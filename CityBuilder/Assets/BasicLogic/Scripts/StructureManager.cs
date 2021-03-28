@@ -10,6 +10,13 @@ using UnityEngine;
 public class StructureManager : MonoBehaviour
 {
     public PlacementManager placementManager;
+
+    private List<BuildingContainer> buildingContainerList= new List<BuildingContainer>();
+    private void Awake()
+    {
+        buildingContainerList = Resources.LoadAll<BuildingContainer>("Buildings").ToList();
+    }
+
     public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
     {
         if (CheckPositionBeforePlacement(position))
@@ -31,9 +38,7 @@ public class StructureManager : MonoBehaviour
             if(CheckBigStructure(position, shopItemContainer.Container.Width , shopItemContainer.Container.Height))
             {
                 //int randomIndex = GetRandomWeightedIndex(houseWeights);
-                int randomIndex = 1;
-                
-                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height, randomIndex);
+                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
                 AudioPlayer.instance.PlayPlacementSound();
             }
             
@@ -101,22 +106,9 @@ public class StructureManager : MonoBehaviour
         return true;
     }
 
-    internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, CellType buildingType)
+    internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex)
     {
-        // switch (buildingType)
-        // {
-        //     case CellType.Structure:
-        //         placementManager.PlaceObjectOnTheMap(position, housesPrefabe[buildingPrefabindex].prefab, CellType.Structure, buildingPrefabIndex: buildingPrefabindex);
-        //         break;
-        //     case CellType.BigStructure:
-        //         placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[buildingPrefabindex].prefab, CellType.BigStructure, 2, 2, buildingPrefabindex);
-        //         break;
-        //     case CellType.SpecialStructure:
-        //         placementManager.PlaceObjectOnTheMap(position, specialPrefabs[buildingPrefabindex].prefab, CellType.SpecialStructure, buildingPrefabIndex: buildingPrefabindex);
-        //         break;
-        //     default:
-        //         break;
-        // }
+        placementManager.PlaceObjectOnTheMap(position,buildingContainerList.Find(e=>e.Index==buildingPrefabindex).DefaultPrefab, CellType.Structure, buildingPrefabIndex: buildingPrefabindex);
     }
 
     public Dictionary<Vector3Int, StructureModel> GetAllStructures()
@@ -128,12 +120,4 @@ public class StructureManager : MonoBehaviour
     {
         placementManager.ClearGrid();
     }
-}
-
-[Serializable]
-public struct StructurePrefabWeighted
-{
-    public GameObject prefab;
-    [Range(0,1)]
-    public float weight;
 }

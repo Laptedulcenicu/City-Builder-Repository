@@ -411,6 +411,9 @@ namespace UniStorm
             m_UniStormManager.name = "UniStorm Manager";
             Instance = this;
             InitializeCloudSettings();
+            
+            
+            
         }
 
         void Start()
