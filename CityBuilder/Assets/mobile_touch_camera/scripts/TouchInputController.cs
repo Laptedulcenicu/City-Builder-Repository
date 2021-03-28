@@ -157,10 +157,10 @@ namespace BitBenderGames
 
         public void Update()
         {
-            // if (Utilities.PointIsOverUi(Input.mousePosition))
-            // {
-            //     return;
-            // }
+            if (Utilities.PointIsOverUi(Input.mousePosition))
+            {
+                return;
+            }
 
             if (TouchWrapper.IsFingerDown == false)
             {
