@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
 
 public class Point
@@ -50,31 +51,22 @@ public enum CellType
     Empty,
     Road,
     Structure,
-    BigStructure,
-    SpecialStructure,
+    Nature,
+    Wall,
     None
 }
 
 public class Grid
 {
     private CellType[,] _grid;
+    private string[,] cellIndex;
     private int _width;
-
-    public int Width
-    {
-        get { return _width; }
-    }
-
     private int _height;
-
-    public int Height
-    {
-        get { return _height; }
-    }
-
-    private List<Point> _roadList = new List<Point>();
-    private List<Point> _specialStructure = new List<Point>();
-    private List<Point> _houseStructure = new List<Point>();
+    
+    private readonly List<Point> roadList = new List<Point>();
+    private readonly List<Point> structureList = new List<Point>();
+    public List<Point> StructureList => structureList;
+    
 
     public Grid(int width, int height)
     {
@@ -83,6 +75,9 @@ public class Grid
         _grid = new CellType[width, height];
     }
     
+    
+
+    
     public CellType this[int i, int j]
     {
         get { return _grid[i, j]; }
@@ -90,22 +85,20 @@ public class Grid
         {
             if (value == CellType.Road)
             {
-                _roadList.Add(new Point(i, j));
+                
+                roadList.Add(new Point(i, j));
             }
-
-            if (value == CellType.SpecialStructure)
+            
+            if (value == CellType.Structure )
             {
-                _specialStructure.Add(new Point(i, j));
-            }
-
-            if (value == CellType.Structure || value == CellType.BigStructure)
-            {
-                _houseStructure.Add(new Point(i, j));
+                StructureList.Add(new Point(i, j));
             }
 
             _grid[i, j] = value;
         }
     }
+
+
 
     public static bool IsCellWakable(CellType cellType, bool aiAgent = false)
     {
@@ -119,43 +112,43 @@ public class Grid
 
     public Point GetRandomRoadPoint()
     {
-        if (_roadList.Count == 0)
+        if (roadList.Count == 0)
         {
             return null;
         }
 
-        return _roadList[Random.Range(0, _roadList.Count)];
+        return roadList[Random.Range(0, roadList.Count)];
     }
-
-    public Point GetRandomSpecialStructurePoint()
-    {
-        if (_specialStructure.Count == 0)
-        {
-            return null;
-        }
-
-        return _specialStructure[Random.Range(0, _specialStructure.Count)];
-    }
-
-    public Point GetRandomHouseStructurePoint()
-    {
-        if (_houseStructure.Count == 0)
-        {
-            return null;
-        }
-
-        return _houseStructure[Random.Range(0, _houseStructure.Count)];
-    }
-
-    public List<Point> GetAllHouses()
-    {
-        return _houseStructure;
-    }
-
-    internal List<Point> GetAllSpecialStructure()
-    {
-        return _specialStructure;
-    }
+    //
+    // public Point GetRandomSpecialStructurePoint()
+    // {
+    //     if (_specialStructure.Count == 0)
+    //     {
+    //         return null;
+    //     }
+    //
+    //     return _specialStructure[Random.Range(0, _specialStructure.Count)];
+    // }
+    //
+    // public Point GetRandomHouseStructurePoint()
+    // {
+    //     if (_houseStructure.Count == 0)
+    //     {
+    //         return null;
+    //     }
+    //
+    //     return _houseStructure[Random.Range(0, _houseStructure.Count)];
+    // }
+    //
+    // public List<Point> GetAllHouses()
+    // {
+    //     return _houseStructure;
+    // }
+    //
+    // internal List<Point> GetAllSpecialStructure()
+    // {
+    //     return _specialStructure;
+    // }
 
     public List<Point> GetAdjacentCells(Point cell, bool isAgent)
     {

@@ -15,5 +15,6 @@ namespace GameRig.Scripts.Utilities.ConstantValues
 		public static string Notification = "Notification";
 		public static string Day = "Day";
 		public static string currentWeather = "weather";
+		public static string Cell = "Cell";
 	}
 }

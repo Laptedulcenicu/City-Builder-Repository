@@ -115,6 +115,8 @@ public class StructureManager : MonoBehaviour
     {
         return placementManager.GetAllStructures();
     }
+    
+    
 
     public void ClearMap()
     {

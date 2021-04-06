@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
 using _CityBuilder.Scripts.Test_Script;
+using GameRig.Scripts.Systems.SaveSystem;
+using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public ShopManager ShopManager;
-    
+
     public RoadManager roadManager;
     public InputManager inputManager;
     public StructureManager structureManager;
     public ObjectDetector objectDetector;
-    public SaveSystem saveSystem;
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
     }
-    
+
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
     {
         if (shopItemContainer.Container.IsRoad)
@@ -40,20 +42,14 @@ public class GameManager : MonoBehaviour
             inputManager.OnEscape += HandleEscape;
         }
     }
-    
+
     private void RoadPlacementHandler()
     {
         ClearInputActions();
 
-        inputManager.OnMouseClick += (pos) =>
-        {
-            ProcessInputAndCall(roadManager.PlaceRoad, pos);
-        };
+        inputManager.OnMouseClick += (pos) => { ProcessInputAndCall(roadManager.PlaceRoad, pos); };
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
-        inputManager.OnMouseHold += (pos) =>
-        {
-            ProcessInputAndCall(roadManager.PlaceRoad, pos);
-        };
+        inputManager.OnMouseHold += (pos) => { ProcessInputAndCall(roadManager.PlaceRoad, pos); };
         inputManager.OnEscape += HandleEscape;
     }
 
@@ -68,45 +64,75 @@ public class GameManager : MonoBehaviour
         if (result.HasValue)
             callback.Invoke(result.Value);
     }
-    
-    private void ProcessInputAndCall(Action<Vector3Int,ShopItemContainer> callback, Ray ray, ShopItemContainer shopItemContainer)
+
+    private void ProcessInputAndCall(Action<Vector3Int, ShopItemContainer> callback, Ray ray,
+        ShopItemContainer shopItemContainer)
     {
         Vector3Int? result = objectDetector.RaycastGround(ray);
         if (result.HasValue)
             callback.Invoke(result.Value, shopItemContainer);
     }
-    
+
     public void SaveGame()
     {
-        SaveDataSerialization saveData = new SaveDataSerialization();
-        foreach (var structureData in structureManager.GetAllStructures())
+        List<SaveValue> saveList = new List<SaveValue>();
+        
+        for (int width = 0; width < structureManager.placementManager.Width; width++)
         {
-            saveData.AddStructureData(structureData.Key, structureData.Value.BuildingPrefabIndex, structureData.Value.BuildingType);
+            for (int height = 0; height < structureManager.placementManager.Height; height++)
+            {
+                SaveValue newSaveValue = new SaveValue();
+
+
+                newSaveValue.position = new Vector3Int(width, 0, height);
+
+                StructureModel intermediaryStructure =
+                    structureManager.placementManager.GetStructureAt(newSaveValue.position);
+
+
+                if (intermediaryStructure)
+                {
+                    newSaveValue.buildingPrefabindex = intermediaryStructure.BuildingPrefabIndex;
+                    newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
+                }
+
+                saveList.Add(newSaveValue);
+            }
         }
-        var jsonFormat = JsonUtility.ToJson(saveData);
-        saveSystem.SaveData(jsonFormat);
+        
+        SaveManager.Save(SaveKeys.Cell, saveList);
     }
 
     public void LoadGame()
     {
-        var jsonFormatData = saveSystem.LoadData();
-        if (String.IsNullOrEmpty(jsonFormatData))
-            return;
-        SaveDataSerialization saveData = JsonUtility.FromJson<SaveDataSerialization>(jsonFormatData);
         structureManager.ClearMap();
+
+        List<SaveValue> newSaveValue = SaveManager.Load(SaveKeys.Cell,new List<SaveValue>());
         
-        foreach (var structureData in saveData.structuresData)
+        foreach (var saveValue in newSaveValue)
         {
-            Vector3Int position = Vector3Int.RoundToInt(structureData.position.GetValue());
-            if (structureData.buildingType == CellType.Road)
+            if (saveValue.buildingType != CellType.Empty)
             {
-                roadManager.PlaceRoad(position);
-                roadManager.FinishPlacingRoad();
+                Vector3Int position = Vector3Int.RoundToInt(saveValue.position);
+                if (saveValue.buildingType == CellType.Road)
+                {
+                    roadManager.PlaceRoad(position);
+                    roadManager.FinishPlacingRoad();
+                }
+                else
+                {
+                    structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex);
+                }
             }
-            else
-            {
-                structureManager.PlaceLoadedStructure(position, structureData.buildingPrefabindex);
-            }
+
         }
+    }
+
+    [Serializable]
+    public class SaveValue
+    {
+        public int buildingPrefabindex;
+        public CellType buildingType;
+        public Vector3Int position;
     }
 }

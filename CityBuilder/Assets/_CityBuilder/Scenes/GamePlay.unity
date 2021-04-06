@@ -14043,7 +14043,6 @@ GameObject:
   m_Component:
   - component: {fileID: 899527524}
   - component: {fileID: 899527523}
-  - component: {fileID: 899527522}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14051,20 +14050,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &899527522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899527521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7098d8e0e29ae2e4f8d2630f62010df3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveName: SaveCityBuilderData_
-  saveDataIndex: 0
 --- !u!114 &899527523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14082,7 +14067,7 @@ MonoBehaviour:
   inputManager: {fileID: 246317459}
   structureManager: {fileID: 2080395267}
   objectDetector: {fileID: 1058192005}
-  saveSystem: {fileID: 899527522}
+  saveSystem: {fileID: 0}
 --- !u!4 &899527524
 Transform:
   m_ObjectHideFlags: 0
@@ -22704,8 +22689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2579291c11f2f7145bcb17a548190b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 15
-  height: 15
+  width: 80
+  height: 80
 --- !u!4 &1547233247
 Transform:
   m_ObjectHideFlags: 0
@@ -29130,7 +29115,7 @@ MonoBehaviour:
   UniStormMenuKey: 27
   UniStormCanvas: {fileID: 0}
   m_MenuToggle: 0
-  TabNumber: 4
+  TabNumber: 2
   TimeTabNumbers: 0
   WeatherTabNumbers: 1
   CelestialTabNumbers: 0
@@ -30101,7 +30086,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   CurrentSeason: 2
-  CloudType: 1
+  CloudType: 0
   CloudQuality: 0
   TemperatureType: 0
   TemperatureCurve:
@@ -32336,6 +32321,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2009722015}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026825630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026825632}
+  - component: {fileID: 2026825631}
+  m_Layer: 0
+  m_Name: Easy Save 3 Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2026825631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026825630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a83408fcc9044c4fbc7e5d09a369ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openPrefabs: 0
+  prefabs: []
+  idRef:
+    _Keys: 
+    _Values: []
+--- !u!4 &2026825632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026825630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2031158983
 GameObject:
   m_ObjectHideFlags: 0
@@ -34666,7 +34699,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134692079}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!4 &2134692084
 Transform:
   m_ObjectHideFlags: 0
