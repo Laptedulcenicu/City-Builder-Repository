@@ -78,23 +78,20 @@ public class GameManager : MonoBehaviour
         {
             for (int height = 0; height < structureManager.placementManager.Height; height++)
             {
-                SaveValue newSaveValue = new SaveValue();
-
-
-                newSaveValue.position = new Vector3Int(width, 0, height);
-
-                StructureModel intermediaryStructure =
-                    structureManager.placementManager.GetStructureAt(newSaveValue.position);
-
-
-                if (intermediaryStructure)
+                if (structureManager.placementManager.GetCellType(width, height) != CellType.Empty)
                 {
+                    SaveValue newSaveValue = new SaveValue();
+                    newSaveValue.position = new Vector3Int(width, 0, height);
+                    StructureModel intermediaryStructure =
+                        structureManager.placementManager.GetStructureAt(newSaveValue.position);
+                    
                     newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
                     newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
                     newSaveValue.upgradeState = intermediaryStructure.UpgradeState;
-                }
 
-                saveList.Add(newSaveValue);
+
+                    saveList.Add(newSaveValue);
+                }
             }
         }
 
@@ -109,19 +106,18 @@ public class GameManager : MonoBehaviour
 
         foreach (var saveValue in newSaveValue)
         {
-            if (saveValue.buildingType != CellType.Empty)
+            Vector3Int position = Vector3Int.RoundToInt(saveValue.position);
+            if (saveValue.buildingType == CellType.Road)
             {
-                Vector3Int position = Vector3Int.RoundToInt(saveValue.position);
-                if (saveValue.buildingType == CellType.Road)
-                {
-                    roadManager.PlaceRoad(position);
-                    roadManager.FinishPlacingRoad();
-                }
-                else
-                {
-                    structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex,
-                        saveValue.upgradeState);
-                }
+                RoadFixer.ConfigRoadData(
+                    structureManager.BuildingContainerList.Find(e => e.Index == saveValue.buildingPrefabindex));
+                roadManager.PlaceRoad(position);
+                roadManager.FinishPlacingRoad();
+            }
+            else
+            {
+                structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex,
+                    saveValue.upgradeState);
             }
         }
     }

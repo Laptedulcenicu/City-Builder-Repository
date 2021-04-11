@@ -17,14 +17,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public CellType Type => buildingType;
 
-    // public void CreateModel(GameObject model, int buildingPrefabIndex, CellType buildingType)
-    // {
-    //     var structure = Instantiate(model, transform);
-    //     yHeight = structure.transform.position.y;
-    //     this.buildingType = buildingType;
-    // //    BuildingPrefabIndex = buildingPrefabIndex;
-    // }
-
     
     public void CreateModel( BuildingContainer container, int upgradeLevel)
     {

@@ -13,6 +13,9 @@ public class StructureManager : MonoBehaviour
     public PlacementManager placementManager;
 
     private List<BuildingContainer> buildingContainerList= new List<BuildingContainer>();
+
+    public List<BuildingContainer> BuildingContainerList => buildingContainerList;
+
     private void Awake()
     {
         buildingContainerList = Resources.LoadAll<BuildingContainer>("Buildings").ToList();
@@ -109,7 +112,7 @@ public class StructureManager : MonoBehaviour
 
     internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, int upgradeState)
     {
-        placementManager.PlaceObjectOnTheMap(position,buildingContainerList.Find(e=>e.Index==buildingPrefabindex),upgradeState);
+        placementManager.PlaceObjectOnTheMap(position,BuildingContainerList.Find(e=>e.Index==buildingPrefabindex),upgradeState);
     }
 
     public Dictionary<Vector3Int, StructureModel> GetAllStructures()
