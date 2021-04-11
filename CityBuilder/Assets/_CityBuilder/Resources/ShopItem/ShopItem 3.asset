@@ -16,6 +16,7 @@ MonoBehaviour:
   itemDescription: Flat 4
   unlockDay: 0
   buildingType: 2
+  cellType: 2
   sprite: {fileID: 21300032, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   buildingContainer: {fileID: 11400000, guid: c9ffe7a2b4123604e87de56931ae0ef6, type: 2}
   necessaryResourcesDataList:

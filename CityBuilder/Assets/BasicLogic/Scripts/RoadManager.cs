@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object;
+using BasicLogic.Scripts;
 using UnityEngine;
 
 public class RoadManager : MonoBehaviour
@@ -33,7 +35,8 @@ public class RoadManager : MonoBehaviour
             startPosition = position;
 
             temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
+
+            placementManager.PlaceTemporaryStructure(position,roadFixer.Container,  roadFixer.DeadEnd);
 
         }
         else
@@ -57,7 +60,7 @@ public class RoadManager : MonoBehaviour
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
                 }  
-                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road);
+                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.Container,roadFixer.DeadEnd );
             }
         }
 

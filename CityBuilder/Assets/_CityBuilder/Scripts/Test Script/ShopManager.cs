@@ -104,6 +104,10 @@ namespace _CityBuilder.Scripts.Test_Script
                 }
             }
 
+            if (selectedShopItemContainer.Container.IsRoad)
+            {
+                RoadFixer.ConfigRoadData(selectedShopItemContainer.Container);
+            }
             gameManager.GenericPlacementHandler(selectedShopItemContainer);
             Disable();
             panel.SetActive(false);

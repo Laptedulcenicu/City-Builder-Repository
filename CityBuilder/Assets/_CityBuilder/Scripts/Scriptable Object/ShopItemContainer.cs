@@ -34,6 +34,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         [SerializeField][TextArea] private string itemDescription;
         [SerializeField] private int unlockDay;
         [SerializeField] private BuildingType buildingType;
+    
         [SerializeField] private Sprite sprite;
         [SerializeField] private BuildingContainer buildingContainer;
 
@@ -42,12 +43,14 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         public List<NecessaryResourcesData> NecessaryResourcesDataList => necessaryResourcesDataList;
         public BuildingType BuildingType1 => buildingType;
         public int UnlockLevel => unlockDay;
-        public Sprite Sprite1 => sprite;
+        public Sprite Sprite1 => sprite; 
 
         public BuildingContainer Container => buildingContainer;
 
         public string ItemDescription => itemDescription;
 
         public string ItemName => itemName;
+
+    
     }
 }

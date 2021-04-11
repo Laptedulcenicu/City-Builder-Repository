@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac808a8dc869804fa449a6ce0805683, type: 3}
   m_Name: BuildingContainer 3
   m_EditorClassIdentifier: 
+  index: 3
   defaultPrefab: {fileID: 7864668269691680764, guid: 44c75b500bfebf84993deb17f38a98f6,
     type: 3}
+  defaultBuildingConfiguration: {fileID: 0}
+  cellType: 2
   isRoad: 0
-  weight: 0.25
+  isUpgradable: 0
+  width: 1
+  height: 1

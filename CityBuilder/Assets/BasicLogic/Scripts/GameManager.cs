@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
-using _CityBuilder.Scripts.Test_Script;
 using GameRig.Scripts.Systems.SaveSystem;
 using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public ShopManager ShopManager;
-
     public RoadManager roadManager;
     public InputManager inputManager;
     public StructureManager structureManager;
@@ -76,7 +73,7 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         List<SaveValue> saveList = new List<SaveValue>();
-        
+
         for (int width = 0; width < structureManager.placementManager.Width; width++)
         {
             for (int height = 0; height < structureManager.placementManager.Height; height++)
@@ -92,14 +89,15 @@ public class GameManager : MonoBehaviour
 
                 if (intermediaryStructure)
                 {
-                    newSaveValue.buildingPrefabindex = intermediaryStructure.BuildingPrefabIndex;
+                    newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
                     newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
+                    newSaveValue.upgradeState = intermediaryStructure.UpgradeState;
                 }
 
                 saveList.Add(newSaveValue);
             }
         }
-        
+
         SaveManager.Save(SaveKeys.Cell, saveList);
     }
 
@@ -107,8 +105,8 @@ public class GameManager : MonoBehaviour
     {
         structureManager.ClearMap();
 
-        List<SaveValue> newSaveValue = SaveManager.Load(SaveKeys.Cell,new List<SaveValue>());
-        
+        List<SaveValue> newSaveValue = SaveManager.Load(SaveKeys.Cell, new List<SaveValue>());
+
         foreach (var saveValue in newSaveValue)
         {
             if (saveValue.buildingType != CellType.Empty)
@@ -121,16 +119,17 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex);
+                    structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex,
+                        saveValue.upgradeState);
                 }
             }
-
         }
     }
 
     [Serializable]
     public class SaveValue
     {
+        public int upgradeState;
         public int buildingPrefabindex;
         public CellType buildingType;
         public Vector3Int position;

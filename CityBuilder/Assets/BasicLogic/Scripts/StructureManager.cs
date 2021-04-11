@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object;
+using BasicLogic.Scripts;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -37,8 +38,8 @@ public class StructureManager : MonoBehaviour
             
             if(CheckBigStructure(position, shopItemContainer.Container.Width , shopItemContainer.Container.Height))
             {
-                //int randomIndex = GetRandomWeightedIndex(houseWeights);
-                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
+               // placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
+                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container);
                 AudioPlayer.instance.PlayPlacementSound();
             }
             
@@ -106,9 +107,9 @@ public class StructureManager : MonoBehaviour
         return true;
     }
 
-    internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex)
+    internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, int upgradeState)
     {
-        placementManager.PlaceObjectOnTheMap(position,buildingContainerList.Find(e=>e.Index==buildingPrefabindex).DefaultPrefab, CellType.Structure, buildingPrefabIndex: buildingPrefabindex);
+        placementManager.PlaceObjectOnTheMap(position,buildingContainerList.Find(e=>e.Index==buildingPrefabindex),upgradeState);
     }
 
     public Dictionary<Vector3Int, StructureModel> GetAllStructures()

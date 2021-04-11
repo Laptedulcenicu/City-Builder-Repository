@@ -17,7 +17,7 @@ MonoBehaviour:
   unlockDay: 0
   buildingType: 2
   sprite: {fileID: 21300026, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  buildingContainer: {fileID: 11400000, guid: dcfa1470cd3caf3498b3e3b9fab77dab, type: 2}
+  buildingContainer: {fileID: 11400000, guid: 5eb866f170de9e6459693a023213c4e1, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
     amount: 5

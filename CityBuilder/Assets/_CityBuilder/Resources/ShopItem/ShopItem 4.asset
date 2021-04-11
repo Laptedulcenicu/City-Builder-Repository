@@ -16,6 +16,7 @@ MonoBehaviour:
   itemDescription: "Flat 5\t"
   unlockDay: 0
   buildingType: 2
+  cellType: 2
   sprite: {fileID: 21300034, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   buildingContainer: {fileID: 11400000, guid: d9cb2a81c25c57446bee90a24b376716, type: 2}
   necessaryResourcesDataList:

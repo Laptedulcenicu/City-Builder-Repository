@@ -1,33 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using _CityBuilder.Scripts.Scriptable_Object;
 using UnityEngine;
 
 public class StructureModel : MonoBehaviour, INeedingRoad
 {
+    private BuildingContainer buildingContainer;
+    private BuildingConfiguration defaultBuildingConfiguration;
+    private RoadBuildingData currentRoadBuildingData;
+    private CellType buildingType;
+    private int upgradeState;
+    private bool isUpgradable;
     float yHeight = 0;
-
     public Vector3Int RoadPosition { get; set; }
+    public BuildingContainer Container => buildingContainer;
+    public int UpgradeState => upgradeState;
+    public bool IsUpgradable => isUpgradable;
 
-    [field: SerializeField]
-    public CellType BuildingType { get; private set; }
-    [field: SerializeField]
-    public int BuildingPrefabIndex { get; private set; }
+    public CellType Type => buildingType;
 
-    public void CreateModel(GameObject model, int buildingPrefabIndex, CellType buildingType)
+    // public void CreateModel(GameObject model, int buildingPrefabIndex, CellType buildingType)
+    // {
+    //     var structure = Instantiate(model, transform);
+    //     yHeight = structure.transform.position.y;
+    //     this.buildingType = buildingType;
+    // //    BuildingPrefabIndex = buildingPrefabIndex;
+    // }
+
+    
+    public void CreateModel( BuildingContainer container, int upgradeLevel)
     {
-        var structure = Instantiate(model, transform);
+        isUpgradable = container.IsUpgradable;
+        buildingContainer = container;
+        if (container.IsUpgradable)
+        {
+            upgradeState = upgradeLevel;
+            SetUpgradeState();
+        }
+        else
+        {
+            var structure = Instantiate(container.DefaultPrefab, transform);
+            yHeight = structure.transform.position.y;
+        }
+    }
+    
+    public void CreateModel( BuildingContainer container, RoadBuildingData roadBuildingData)
+    {
+        buildingType = container.CellType1;
+        isUpgradable = container.IsUpgradable;
+        currentRoadBuildingData = roadBuildingData;
+        buildingContainer = container;
+        
+        var structure = Instantiate(currentRoadBuildingData.RoadPrefab, transform);
         yHeight = structure.transform.position.y;
-        BuildingType = buildingType;
-        BuildingPrefabIndex = buildingPrefabIndex;
+  
+        
     }
 
-    public void SwapModel(GameObject model, Quaternion rotation)
+    private void SetUpgradeState()
     {
+        FunctionalBuildingContainer functionalBuildingContainer = (FunctionalBuildingContainer) Container;
+        
+        
+    }
+    
+    public void SwapModel(BuildingContainer container,RoadBuildingData roadBuildingData, Quaternion rotation)
+    {
+        buildingContainer = container;
+        currentRoadBuildingData = roadBuildingData;
+        
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
-        var structure = Instantiate(model, transform);
+        
+        var structure = Instantiate(currentRoadBuildingData.RoadPrefab, transform);
         structure.transform.localPosition = new Vector3(0, yHeight, 0);
         structure.transform.localRotation = rotation;
     }
