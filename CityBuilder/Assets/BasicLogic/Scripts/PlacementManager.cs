@@ -21,15 +21,6 @@ namespace BasicLogic.Scripts
         private void Awake()
         {
             placementGrid = new Grid(Width, Height);
-
-
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    print(placementGrid[i, j]);
-                }
-            }
         }
 
         internal CellType[] GetNeighbourTypesFor(Vector3Int position)
