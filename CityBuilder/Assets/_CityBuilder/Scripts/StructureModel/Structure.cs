@@ -8,13 +8,21 @@ namespace _CityBuilder.Scripts.StructureModel
     public class Structure : MonoBehaviour
     {
         protected LifeStatusData LifeStatusData;
+        protected StructureContainer StructureContainer;
+        protected StructureConfiguration StructureConfiguration;
+        public StructureContainer Container => StructureContainer;
+
+        protected StructureConfiguration Configuration => StructureConfiguration;
+
+        protected LifeStatusData StatusData => LifeStatusData;
+
+        public virtual void CreateModel(StructureContainer structureContainer, StructureConfiguration structureConfiguration)
+        {
+            StructureContainer = structureContainer;
+            StructureConfiguration = structureConfiguration;
+            LifeStatusData = structureConfiguration.StatusData;
+        }
         
-        private StructureContainer structureContainer;
-        private StructureConfiguration defaultStructureConfiguration;
-        private RoadBuildingData currentRoadBuildingData;
-        public StructureContainer Container => structureContainer;
-
-
         
         //
         // public void CreateModel(BuildingContainer container, int upgradeLevel)
