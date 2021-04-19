@@ -19,7 +19,7 @@ namespace _CityBuilder.Scripts.Test_Script
             shopItemContainer = container;
             shopManager = shop;
             GetComponent<Button>().onClick.AddListener(Select);
-            image.sprite = container.Sprite1;
+            image.sprite = container.ShopItemSprite;
             name.text = container.ItemName;
         }
 

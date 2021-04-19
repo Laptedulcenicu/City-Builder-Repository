@@ -15,7 +15,7 @@ namespace _CityBuilder.Scripts.StructureModel
         public StructureContainer Container => structureContainer;
 
 
-
+        
         //
         // public void CreateModel(BuildingContainer container, int upgradeLevel)
         // {

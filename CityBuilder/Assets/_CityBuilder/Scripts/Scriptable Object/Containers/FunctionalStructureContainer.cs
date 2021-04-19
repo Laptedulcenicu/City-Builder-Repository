@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
-using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _CityBuilder.Scripts.Scriptable_Object
+namespace _CityBuilder.Scripts.Scriptable_Object.Containers
 {
     [Serializable]
     public struct UpgradeStage
     {
         [SerializeField] private GameObject gamePrefab;
-        [FormerlySerializedAs("buildingConfiguration")] [SerializeField] private StructureConfiguration structureConfiguration;
+        [SerializeField] private StructureConfiguration structureConfiguration;
         [SerializeField] private List<NecessaryResourcesData> necessaryResourcesDataList;
         
         public GameObject GameObjectPrefab => gamePrefab;
@@ -21,7 +20,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         public StructureConfiguration Configuration => structureConfiguration;
     }
     
-    [CreateAssetMenu(fileName = "FunctionalBuildingContainer", menuName = "GameData/FunctionalBuildingContainer")]
+    [CreateAssetMenu(fileName = "Functional Structure", menuName = "Structure Container/Functional Structure")]
     public class FunctionalStructureContainer : StructureContainer
     {
         [SerializeField] private StructureConfiguration defaultConfiguration;

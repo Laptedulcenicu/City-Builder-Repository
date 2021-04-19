@@ -35,17 +35,15 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         [SerializeField] private string itemName;
         [SerializeField][TextArea] private string itemDescription;
         [SerializeField] private int unlockDay;
-        [SerializeField] private BuildingType buildingType;
-    
+        [SerializeField] private BuildingType shopItemBuildingType;
         [SerializeField] private Sprite sprite;
-        [FormerlySerializedAs("buildingContainer")] [SerializeField] private StructureContainer structureContainer;
-
+        [SerializeField] private StructureContainer structureContainer;
         [SerializeField] private List<NecessaryResourcesData> necessaryResourcesDataList;
 
         public List<NecessaryResourcesData> NecessaryResourcesDataList => necessaryResourcesDataList;
-        public BuildingType BuildingType1 => buildingType;
+        public BuildingType ShopItemBuildingType => shopItemBuildingType;
         public int UnlockLevel => unlockDay;
-        public Sprite Sprite1 => sprite; 
+        public Sprite ShopItemSprite => sprite; 
 
         public StructureContainer Container => structureContainer;
 
