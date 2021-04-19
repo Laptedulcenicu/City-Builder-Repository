@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Global_Manager;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts.Scriptable_Object
 {
@@ -28,7 +30,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
     }
 
     [CreateAssetMenu(fileName = "ShopItem", menuName = "GameData/ShopItem")]
-    public class ShopItemContainer : ScriptableObject
+    public class  ShopItemContainer : ScriptableObject
     {
         [SerializeField] private string itemName;
         [SerializeField][TextArea] private string itemDescription;
@@ -36,7 +38,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         [SerializeField] private BuildingType buildingType;
     
         [SerializeField] private Sprite sprite;
-        [SerializeField] private BuildingContainer buildingContainer;
+        [FormerlySerializedAs("buildingContainer")] [SerializeField] private StructureContainer structureContainer;
 
         [SerializeField] private List<NecessaryResourcesData> necessaryResourcesDataList;
 
@@ -45,7 +47,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         public int UnlockLevel => unlockDay;
         public Sprite Sprite1 => sprite; 
 
-        public BuildingContainer Container => buildingContainer;
+        public StructureContainer Container => structureContainer;
 
         public string ItemDescription => itemDescription;
 

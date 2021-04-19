@@ -52,7 +52,7 @@ public enum CellType
     Road,
     Structure,
     Nature,
-    Wall,
+    Barrier,
     None
 }
 

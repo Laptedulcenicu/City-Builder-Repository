@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using _CityBuilder.Scripts.StructureModel;
 using BasicLogic.Scripts;
 using UnityEngine;
 
@@ -12,13 +14,13 @@ public class StructureManager : MonoBehaviour
 {
     public PlacementManager placementManager;
 
-    private List<BuildingContainer> buildingContainerList= new List<BuildingContainer>();
+    private List<StructureContainer> buildingContainerList= new List<StructureContainer>();
 
-    public List<BuildingContainer> BuildingContainerList => buildingContainerList;
+    public List<StructureContainer> BuildingContainerList => buildingContainerList;
 
     private void Awake()
     {
-        buildingContainerList = Resources.LoadAll<BuildingContainer>("Buildings").ToList();
+        buildingContainerList = Resources.LoadAll<StructureContainer>("Buildings").ToList();
     }
 
     public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
@@ -115,7 +117,7 @@ public class StructureManager : MonoBehaviour
         placementManager.PlaceObjectOnTheMap(position,BuildingContainerList.Find(e=>e.Index==buildingPrefabindex),upgradeState);
     }
 
-    public Dictionary<Vector3Int, StructureModel> GetAllStructures()
+    public Dictionary<Vector3Int, Structure> GetAllStructures()
     {
         return placementManager.GetAllStructures();
     }

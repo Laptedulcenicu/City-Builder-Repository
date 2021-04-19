@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.Scriptable_Object
@@ -26,7 +27,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object
         public GameObject RoadPrefab => roadPrefab;
     }
     [CreateAssetMenu(fileName = "RoadBuildingContainer", menuName = "GameData/RoadBuildingContainer")]
-    public class RoadBuildingContainer : BuildingContainer
+    public class RoadStructureContainer : StructureContainer
     {
         [SerializeField] private List<RoadBuildingData> roadBuildingDataList;
 

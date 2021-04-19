@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using BasicLogic.Scripts;
 using UnityEngine;
 
 public class RoadFixer : MonoBehaviour
 {
-    public static Action<BuildingContainer> ConfigRoadData;
+    public static Action<StructureContainer> ConfigRoadData;
         
     private RoadBuildingData deadEnd, roadStraight, corner, threeWay, fourWay;
-    private RoadBuildingContainer roadBuildingContainer;
+    private RoadStructureContainer roadStructureContainer;
 
     public RoadBuildingData DeadEnd => deadEnd;
 
@@ -23,7 +24,7 @@ public class RoadFixer : MonoBehaviour
 
     public RoadBuildingData FourWay => fourWay;
 
-    public RoadBuildingContainer Container => roadBuildingContainer;
+    public RoadStructureContainer Container => roadStructureContainer;
 
     
     
@@ -37,9 +38,9 @@ public class RoadFixer : MonoBehaviour
         ConfigRoadData -= ConfigureRoadData;
     }
 
-    public void ConfigureRoadData(BuildingContainer buildingContainer )
+    public void ConfigureRoadData(StructureContainer structureContainer )
     {
-        roadBuildingContainer =(RoadBuildingContainer) buildingContainer;
+        roadStructureContainer =(RoadStructureContainer) structureContainer;
         deadEnd = Container.RoadBuildingDataList.Find(e => e.RoadType1 == RoadType.DeadEnd);
         roadStraight = Container.RoadBuildingDataList.Find(e => e.RoadType1 == RoadType.RoadStraight);
         corner = Container.RoadBuildingDataList.Find(e => e.RoadType1 == RoadType.Corner);

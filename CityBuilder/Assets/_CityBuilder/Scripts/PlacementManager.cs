@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using _CityBuilder.Scripts.StructureModel;
 using UnityEngine;
 
 namespace BasicLogic.Scripts
@@ -7,11 +9,14 @@ namespace BasicLogic.Scripts
     public class PlacementManager : MonoBehaviour
     {
         [SerializeField] private int width, height;
-    
+
         private Grid placementGrid;
 
-        private Dictionary<Vector3Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector3Int, StructureModel>();
-        private Dictionary<Vector3Int, StructureModel> structureDictionary = new Dictionary<Vector3Int, StructureModel>();
+        private Dictionary<Vector3Int, Structure> temporaryRoadobjects =
+            new Dictionary<Vector3Int, Structure>();
+
+        private Dictionary<Vector3Int, Structure> structureDictionary =
+            new Dictionary<Vector3Int, Structure>();
 
         public int Width => width;
 
@@ -37,23 +42,25 @@ namespace BasicLogic.Scripts
 
             return false;
         }
-        internal void PlaceObjectOnTheMap(Vector3Int position, BuildingContainer buildingContainer, int upgradeState= 0)
-        {
-            StructureModel structure = CreateANewStructureModel(position, buildingContainer, upgradeState);
 
-            var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
-            if (structureNeedingRoad != null)
-            {
-                structureNeedingRoad.RoadPosition = GetNearestRoad(position, buildingContainer.Width, buildingContainer.Height).Value;
-            }
+        internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer,
+            int upgradeState = 0)
+        {
+            Structure structure = CreateANewStructureModel(position, structureContainer, upgradeState);
+
+            //   var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
+            // if (structureNeedingRoad != null)
+            // {
+            //     structureNeedingRoad.RoadPosition = GetNearestRoad(position, buildingContainer.Width, buildingContainer.Height).Value;
+            // }
 
             structureDictionary.Add(position, structure);
-            for (int x = 0; x < buildingContainer.Width; x++)
+            for (int x = 0; x < structureContainer.Width; x++)
             {
-                for (int z = 0; z < buildingContainer.Height; z++)
+                for (int z = 0; z < structureContainer.Height; z++)
                 {
                     var newPosition = position + new Vector3Int(x, 0, z);
-                    placementGrid[newPosition.x, newPosition.z] = buildingContainer.CellType1;
+                    placementGrid[newPosition.x, newPosition.z] = structureContainer.CellTypeStructure;
 
                     DestroyNatureAt(newPosition);
                 }
@@ -98,10 +105,11 @@ namespace BasicLogic.Scripts
             return placementGrid[position.x, position.z] == type;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, BuildingContainer buildingContainer, RoadBuildingData roadBuildingData)
+        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
+            RoadBuildingData roadBuildingData)
         {
-            placementGrid[position.x, position.z] = buildingContainer.CellType1;
-            StructureModel structure = CreateANewStructureModel(position, buildingContainer, roadBuildingData);
+            placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
+            Structure structure = CreateANewStructureModel(position, structureContainer, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
         }
 
@@ -117,24 +125,26 @@ namespace BasicLogic.Scripts
             return neighbours;
         }
 
-        private StructureModel CreateANewStructureModel(Vector3Int position, BuildingContainer buildingContainer, RoadBuildingData roadBuildingData)
+        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
+            RoadBuildingData roadBuildingData)
         {
-            GameObject structure = new GameObject(buildingContainer.CellType1.ToString());
+            GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
-            var structureModel = structure.AddComponent<StructureModel>();
-            structureModel.CreateModel(buildingContainer, roadBuildingData);
+            var structureModel = structure.AddComponent<Structure>();
+            structureModel.CreateModel(structureContainer, roadBuildingData);
             return structureModel;
         }
-        
-        
-        private StructureModel CreateANewStructureModel(Vector3Int position, BuildingContainer buildingContainer, int upgradeState)
+
+
+        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
+            int upgradeState)
         {
-            GameObject structure = new GameObject(buildingContainer.CellType1.ToString());
+            GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
-            var structureModel = structure.AddComponent<StructureModel>();
-            structureModel.CreateModel(buildingContainer, upgradeState);
+            var structureModel = structure.AddComponent<Structure>();
+            structureModel.CreateModel(structureContainer, upgradeState);
             return structureModel;
         }
 
@@ -174,15 +184,16 @@ namespace BasicLogic.Scripts
             temporaryRoadobjects.Clear();
         }
 
-        public void ModifyStructureModel(Vector3Int position, BuildingContainer buildingContainer, RoadBuildingData roadBuildingData, Quaternion rotation)
+        public void ModifyStructureModel(Vector3Int position, StructureContainer structureContainer,
+            RoadBuildingData roadBuildingData, Quaternion rotation)
         {
             if (temporaryRoadobjects.ContainsKey(position))
-                temporaryRoadobjects[position].SwapModel(buildingContainer,roadBuildingData, rotation);
+                temporaryRoadobjects[position].SwapModel(structureContainer, roadBuildingData, rotation);
             else if (structureDictionary.ContainsKey(position))
-                structureDictionary[position].SwapModel(buildingContainer,roadBuildingData, rotation);
+                structureDictionary[position].SwapModel(structureContainer, roadBuildingData, rotation);
         }
-    
-        private StructureModel GetStructureAt(Point point)
+
+        private Structure GetStructureAt(Point point)
         {
             if (point != null)
             {
@@ -191,8 +202,8 @@ namespace BasicLogic.Scripts
 
             return null;
         }
-    
-        public StructureModel GetStructureAt(Vector3Int position)
+
+        public Structure GetStructureAt(Vector3Int position)
         {
             if (structureDictionary.ContainsKey(position))
             {
@@ -202,12 +213,12 @@ namespace BasicLogic.Scripts
             return null;
         }
 
-        public CellType GetCellType(int x, int  y)
+        public CellType GetCellType(int x, int y)
         {
             return placementGrid[x, y];
         }
 
-        public Dictionary<Vector3Int, StructureModel> GetAllStructures()
+        public Dictionary<Vector3Int, Structure> GetAllStructures()
         {
             return structureDictionary;
         }
