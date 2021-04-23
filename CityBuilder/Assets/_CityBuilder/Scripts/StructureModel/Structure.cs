@@ -7,56 +7,68 @@ namespace _CityBuilder.Scripts.StructureModel
 {
     public class Structure : MonoBehaviour
     {
-        protected LifeStatusData LifeStatusData;
-        protected StructureContainer StructureContainer;
-        protected StructureConfiguration StructureConfiguration;
-        public StructureContainer Container => StructureContainer;
+        private LifeStatusData lifeStatusData;
+        private StructureContainer structureContainer;
+        private StructureConfiguration structureConfiguration;
 
-        protected StructureConfiguration Configuration => StructureConfiguration;
+        private GameObject currentVisualStructure;
+        public StructureContainer Container => structureContainer;
+        protected StructureConfiguration Configuration => structureConfiguration;
+        protected LifeStatusData StatusData => lifeStatusData;
 
-        protected LifeStatusData StatusData => LifeStatusData;
-
-        public virtual void CreateModel(StructureContainer structureContainer, StructureConfiguration structureConfiguration)
+        public void CreateModel(StructureContainer container, StructureConfiguration configuration)
         {
-            StructureContainer = structureContainer;
-            StructureConfiguration = structureConfiguration;
-            LifeStatusData = structureConfiguration.StatusData;
+            structureContainer = container;
+            structureConfiguration = configuration;
+            lifeStatusData = configuration.StatusData;
+            currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+            
+            LoadDefaultConfig();
         }
-        
-        
-        //
-        // public void CreateModel(BuildingContainer container, int upgradeLevel)
-        // {
-        //     var structure = Instantiate(container.DefaultPrefab, transform);
-        // }
-        //
-        // public void CreateModel(BuildingContainer container, RoadBuildingData roadBuildingData)
-        // {
-        //     buildingType = container.CellType1;
-        //     currentRoadBuildingData = roadBuildingData;
-        //     buildingContainer = container;
-        //
-        //     var structure = Instantiate(currentRoadBuildingData.RoadPrefab, transform);
-        // }
-        //
-        // private void SetUpgradeState()
-        // {
-        //     FunctionalBuildingContainer functionalBuildingContainer = (FunctionalBuildingContainer) Container;
-        // }
-        //
-        // public void SwapModel(BuildingContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
-        // {
-        //     buildingContainer = container;
-        //     currentRoadBuildingData = roadBuildingData;
-        //
-        //     foreach (Transform child in transform)
-        //     {
-        //         Destroy(child.gameObject);
-        //     }
-        //
-        //     var structure = Instantiate(currentRoadBuildingData.RoadPrefab, transform);
-        //     structure.transform.localPosition = new Vector3(0, 0, 0);
-        //     structure.transform.localRotation = rotation;
-        // }
+
+        public void CreateModel(StructureContainer container, StructureConfiguration configuration,
+            RoadBuildingData roadBuildingData)
+        {
+            structureContainer = container;
+            structureConfiguration = configuration;
+            lifeStatusData = configuration.StatusData;
+            currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
+            
+            LoadDefaultConfig();
+        }
+
+
+        public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
+        {
+            structureContainer = container;
+            structureConfiguration = container.DefaultStructureConfiguration;
+            lifeStatusData = structureConfiguration.StatusData;
+
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            var structure = Instantiate(roadBuildingData.RoadPrefab, transform);
+            structure.transform.localPosition = new Vector3(0, 0, 0);
+            structure.transform.localRotation = rotation;
+
+            LoadDefaultConfig();
+        }
+
+
+        private void SetUpgradeStage()
+        {
+            
+        }
+
+
+        private void LoadDefaultConfig()
+        {
+            if (structureConfiguration.TypeConFiguration == ConfigType.Functional)
+            {
+                SetUpgradeStage();
+            }
+        }
     }
 }

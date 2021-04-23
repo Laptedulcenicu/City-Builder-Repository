@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
@@ -12,5 +13,12 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
         public int DestroyPrice => destroyPrice;
 
         public List<NecessaryResourcesData> EarnResourcesList => earnResourcesList;
+
+        
+        private void Awake()
+        {
+            ConfigType = ConfigType.Natural;
+        }
+
     }
 }

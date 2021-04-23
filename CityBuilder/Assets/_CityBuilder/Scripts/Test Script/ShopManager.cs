@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using BitBenderGames;
 using TMPro;
 using UnityEditor;
@@ -102,11 +103,6 @@ namespace _CityBuilder.Scripts.Test_Script
                 {
                     return;
                 }
-            }
-
-            if (selectedShopItemContainer.Container.IsRoad)
-            {
-                RoadFixer.ConfigRoadData(selectedShopItemContainer.Container);
             }
             gameManager.GenericPlacementHandler(selectedShopItemContainer);
             Disable();

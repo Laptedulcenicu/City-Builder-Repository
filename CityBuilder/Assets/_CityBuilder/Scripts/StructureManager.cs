@@ -14,7 +14,7 @@ public class StructureManager : MonoBehaviour
 {
     public PlacementManager placementManager;
 
-    private List<StructureContainer> buildingContainerList= new List<StructureContainer>();
+    private List<StructureContainer> buildingContainerList = new List<StructureContainer>();
 
     public List<StructureContainer> BuildingContainerList => buildingContainerList;
 
@@ -29,29 +29,29 @@ public class StructureManager : MonoBehaviour
         {
             foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
             {
-                if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                if (necessaryResourcesData.Amount >
+                    GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
                 {
                     return;
                 }
             }
-            
+
             foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
             {
-                GameResourcesManager.AddResourceAmount( necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
+                GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
             }
-            
-            
-            if(CheckBigStructure(position, shopItemContainer.Container.Width , shopItemContainer.Container.Height))
+
+
+            if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
             {
-               // placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
-                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container);
+                // placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
+                placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
+                    shopItemContainer.Container.DefaultStructureConfiguration);
                 AudioPlayer.instance.PlayPlacementSound();
             }
-            
-           
         }
     }
-    
+
     private bool CheckBigStructure(Vector3Int position, int width, int height)
     {
         bool nearRoad = false;
@@ -60,20 +60,22 @@ public class StructureManager : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 var newPosition = position + new Vector3Int(x, 0, z);
-                
-                if (DefaultCheck(newPosition)==false)
+
+                if (DefaultCheck(newPosition) == false)
                 {
                     return false;
                 }
+
                 if (nearRoad == false)
                 {
                     nearRoad = RoadCheck(newPosition);
                 }
             }
         }
+
         return nearRoad;
     }
-    
+
     private bool CheckPositionBeforePlacement(Vector3Int position)
     {
         if (DefaultCheck(position) == false)
@@ -83,7 +85,7 @@ public class StructureManager : MonoBehaviour
 
         if (RoadCheck(position) == false)
             return false;
-        
+
         return true;
     }
 
@@ -94,6 +96,7 @@ public class StructureManager : MonoBehaviour
             Debug.Log("Must be placed near a road");
             return false;
         }
+
         return true;
     }
 
@@ -104,25 +107,27 @@ public class StructureManager : MonoBehaviour
             //Debug.Log("This position is out of bounds");
             return false;
         }
+
         if (placementManager.CheckIfPositionIsFree(position) == false)
         {
             //Debug.Log("This position is not EMPTY");
             return false;
         }
+
         return true;
     }
 
     internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, int upgradeState)
     {
-        placementManager.PlaceObjectOnTheMap(position,BuildingContainerList.Find(e=>e.Index==buildingPrefabindex),upgradeState);
+        var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
+        placementManager.PlaceObjectOnTheMap(position, container, container.DefaultStructureConfiguration);
     }
 
     public Dictionary<Vector3Int, Structure> GetAllStructures()
     {
         return placementManager.GetAllStructures();
     }
-    
-    
+
 
     public void ClearMap()
     {

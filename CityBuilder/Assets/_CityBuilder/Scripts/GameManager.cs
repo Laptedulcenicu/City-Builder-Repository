@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
-using BasicLogic.Scripts;
 using GameRig.Scripts.Systems.SaveSystem;
 using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
@@ -26,14 +25,14 @@ public class GameManager : MonoBehaviour
 
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
     {
-        if (shopItemContainer.Container.IsRoad)
+        ClearInputActions();
+        
+        if (shopItemContainer.Container.CellTypeStructure == CellType.Road)
         {
             RoadPlacementHandler();
         }
         else
         {
-            ClearInputActions();
-
             inputManager.OnMouseClick += (pos) =>
             {
                 ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer);
@@ -86,10 +85,10 @@ public class GameManager : MonoBehaviour
                     newSaveValue.position = new Vector3Int(width, 0, height);
                     Structure intermediaryStructure =
                         structureManager.placementManager.GetStructureAt(newSaveValue.position);
-                    
+
                     newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
                     newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
-                  //  newSaveValue.upgradeState = intermediaryStructure.UpgradeState;
+                    //  newSaveValue.upgradeState = intermediaryStructure.UpgradeState;
 
 
                     saveList.Add(newSaveValue);

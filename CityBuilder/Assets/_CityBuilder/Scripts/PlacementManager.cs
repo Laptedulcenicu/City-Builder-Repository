@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
 using UnityEngine;
@@ -9,17 +10,11 @@ namespace BasicLogic.Scripts
     public class PlacementManager : MonoBehaviour
     {
         [SerializeField] private int width, height;
-
         private Grid placementGrid;
-
-        private Dictionary<Vector3Int, Structure> temporaryRoadobjects =
-            new Dictionary<Vector3Int, Structure>();
-
-        private Dictionary<Vector3Int, Structure> structureDictionary =
-            new Dictionary<Vector3Int, Structure>();
+        private Dictionary<Vector3Int, Structure> temporaryRoadobjects = new Dictionary<Vector3Int, Structure>();
+        private Dictionary<Vector3Int, Structure> structureDictionary = new Dictionary<Vector3Int, Structure>();
 
         public int Width => width;
-
         public int Height => height;
 
 
@@ -44,15 +39,9 @@ namespace BasicLogic.Scripts
         }
 
         internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer,
-            int upgradeState = 0)
+            StructureConfiguration defaultConfig)
         {
-            Structure structure = CreateANewStructureModel(position, structureContainer, upgradeState);
-
-            //   var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
-            // if (structureNeedingRoad != null)
-            // {
-            //     structureNeedingRoad.RoadPosition = GetNearestRoad(position, buildingContainer.Width, buildingContainer.Height).Value;
-            // }
+            Structure structure = CreateANewStructureModel(position, structureContainer, defaultConfig);
 
             structureDictionary.Add(position, structure);
             for (int x = 0; x < structureContainer.Width; x++)
@@ -105,11 +94,10 @@ namespace BasicLogic.Scripts
             return placementGrid[position.x, position.z] == type;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
-            RoadBuildingData roadBuildingData)
+        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,RoadBuildingData roadBuildingData)
         {
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
-            Structure structure = CreateANewStructureModel(position, structureContainer, roadBuildingData);
+            Structure structure = CreateANewStructureModel(position, structureContainer, structureContainer.DefaultStructureConfiguration, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
         }
 
@@ -126,25 +114,24 @@ namespace BasicLogic.Scripts
         }
 
         private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
-            RoadBuildingData roadBuildingData)
+            StructureConfiguration defaultConfig, RoadBuildingData roadBuildingData)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
             var structureModel = structure.AddComponent<Structure>();
-            structureModel.CreateModel(structureContainer, roadBuildingData);
+            structureModel.CreateModel(structureContainer, defaultConfig, roadBuildingData);
             return structureModel;
         }
 
-
         private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
-            int upgradeState)
+            StructureConfiguration defaultConfig)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
             var structureModel = structure.AddComponent<Structure>();
-            structureModel.CreateModel(structureContainer, upgradeState);
+            structureModel.CreateModel(structureContainer, defaultConfig);
             return structureModel;
         }
 

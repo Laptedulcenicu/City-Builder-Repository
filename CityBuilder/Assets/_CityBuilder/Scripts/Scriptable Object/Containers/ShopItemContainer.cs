@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Global_Manager;
-using _CityBuilder.Scripts.Scriptable_Object.Containers;
-using UnityEngine.Serialization;
+using UnityEngine;
 
-namespace _CityBuilder.Scripts.Scriptable_Object
+namespace _CityBuilder.Scripts.Scriptable_Object.Containers
 {
     public enum BuildingType
     {
