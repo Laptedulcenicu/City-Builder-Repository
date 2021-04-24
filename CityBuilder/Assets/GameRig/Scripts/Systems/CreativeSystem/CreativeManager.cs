@@ -1,6 +1,6 @@
 using GameRig.Scripts.Systems.InputSystem;
 using GameRig.Scripts.Utilities.Attributes;
-
+using InputManager = _CityBuilder.Scripts.InputManager;
 #if UNITY_STANDALONE
 using UnityEngine;
 using GameRig.Scripts.Utilities.GameRigConstantValues;

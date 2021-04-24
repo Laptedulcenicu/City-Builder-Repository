@@ -6,6 +6,7 @@ using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using BitBenderGames;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts.Test_Script
 {
@@ -31,7 +32,7 @@ namespace _CityBuilder.Scripts.Test_Script
         private List<ShopItemContainer> shopItemContainerList;
         private List<Item> instantiatedItem;
         private ShopItemContainer selectedShopItemContainer;
-        [SerializeField] private GameManager gameManager;
+        [FormerlySerializedAs("gameManager")] [SerializeField] private InputController inputController;
         private void Awake()
         {
             GameResourcesManager.OnGameResourcesChange+= OnGameResourcesChange;
@@ -102,7 +103,7 @@ namespace _CityBuilder.Scripts.Test_Script
                     return;
                 }
             }
-            gameManager.GenericPlacementHandler(selectedShopItemContainer);
+            inputController.GenericPlacementHandler(selectedShopItemContainer);
             Disable();
             panel.SetActive(false);
             touchInputController.enabled = false;

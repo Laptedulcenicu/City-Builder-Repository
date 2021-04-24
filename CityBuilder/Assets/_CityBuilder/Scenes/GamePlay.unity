@@ -15112,7 +15112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 175588784}
   inputManager: {fileID: 246317459}
-  gameManager: {fileID: 899527523}
+  inputController: {fileID: 899527523}
 --- !u!1001 &875472098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15469,7 +15469,7 @@ GameObject:
   - component: {fileID: 899527524}
   - component: {fileID: 899527523}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: InputController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19055,7 +19055,7 @@ MonoBehaviour:
   descriptionPanel: {fileID: 1545103366}
   panel: {fileID: 2005683328}
   descrption: {fileID: 2129820283}
-  gameManager: {fileID: 899527523}
+  inputController: {fileID: 899527523}
 --- !u!1 &1107343897
 GameObject:
   m_ObjectHideFlags: 0
@@ -19257,7 +19257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 899527523}
+      - m_Target: {fileID: 1327494511}
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
@@ -21861,6 +21861,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1319290784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1327494509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1327494510}
+  - component: {fileID: 1327494511}
+  m_Layer: 0
+  m_Name: SaveGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1327494510
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327494509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1983130868}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1327494511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327494509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59eeabed81bc407db65ad06d0e5a321c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadManager: {fileID: 1449713295}
+  structureManager: {fileID: 2080395267}
 --- !u!1 &1335420192
 GameObject:
   m_ObjectHideFlags: 0
@@ -28992,7 +29037,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 899527523}
+      - m_Target: {fileID: 1327494511}
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -34538,6 +34583,7 @@ Transform:
   - {fileID: 1547233247}
   - {fileID: 1449713296}
   - {fileID: 1780742265}
+  - {fileID: 1327494510}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

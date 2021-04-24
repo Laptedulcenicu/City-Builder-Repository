@@ -1,63 +1,67 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour
-{ 
-    public event Action<Ray> OnMouseClick, OnMouseHold;
-    public event Action OnMouseUp, OnEscape; 
-    
-    [SerializeField] private Camera mainCamera;
-
-
-    void Update()
+namespace _CityBuilder.Scripts
+{
+    public class InputManager : MonoBehaviour
     {
-        CheckClickDownEvent();
-        CheckClickHoldEvent();
-        CheckClickUpEvent();
-        CheckEscClick();
-    }
+        public event Action<Ray> OnMouseClick, OnMouseClickDown, OnMouseClickUp;
 
-    private void CheckClickHoldEvent()
-    {
-        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        public event Action OnMouseUp, OnEscape;
+
+        [SerializeField] private Camera mainCamera;
+
+        public Camera MainCamera => mainCamera;
+
+
+        void Update()
         {
-
-            OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+            CheckClickDownEvent();
+            CheckClickHoldEvent();
+            CheckClickUpEvent();
+            CheckEscClick();
         }
-    }
 
-    private void CheckClickUpEvent()
-    {
-        if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        private void CheckClickHoldEvent()
         {
-            OnMouseUp?.Invoke();
+            if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+            {
+                OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+            }
         }
-    }
 
-    private void CheckClickDownEvent()
-    {
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        private void CheckClickUpEvent()
         {
-            OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+            if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
+            {
+                OnMouseUp?.Invoke();
+                OnMouseClickUp?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+            }
         }
-    }
 
-    private void CheckEscClick()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        private void CheckClickDownEvent()
         {
-            OnEscape.Invoke();
+            if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+            {
+                OnMouseClick?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+                OnMouseClickDown?.Invoke(mainCamera.ScreenPointToRay(Input.mousePosition));
+            }
         }
-    }
-    
-    public void ClearEvents()
-    {
-        OnMouseClick = null;
-        OnMouseHold = null;
-        OnEscape = null;
-        OnMouseUp = null;
+
+        private void CheckEscClick()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnEscape.Invoke();
+            }
+        }
+
+        public void ClearEvents()
+        {
+            OnMouseClick = null;
+            OnEscape = null;
+            OnMouseUp = null;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts
 {
@@ -6,7 +7,7 @@ namespace _CityBuilder.Scripts
     {
         [SerializeField] private GameObject shopPanel;
         [SerializeField] private InputManager inputManager;
-        [SerializeField] private GameManager gameManager;
+        [FormerlySerializedAs("gameManager")] [SerializeField] private InputController inputController;
         public void ActivateShopPanelButton()
         {
             inputManager.ClearEvents();
@@ -14,7 +15,7 @@ namespace _CityBuilder.Scripts
 
             if (shopPanel.activeSelf == false)
             {
-                gameManager.ActivateStructureSelection();
+                inputController.ActivateStructureSelection();
             }
         }
     }

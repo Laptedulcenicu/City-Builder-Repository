@@ -1,11 +1,10 @@
-﻿using _CityBuilder.Scripts.Scriptable_Object;
-using _CityBuilder.Scripts.Scriptable_Object.Configurations;
+﻿using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.StructureModel
 {
-    public class Structure : MonoBehaviour
+    public class Structure : MonoBehaviour, IClickable
     {
         private StructureContainer structureContainer;
         private StructureConfiguration structureConfiguration;
@@ -13,6 +12,19 @@ namespace _CityBuilder.Scripts.StructureModel
         private GameObject currentVisualStructure;
         public StructureContainer Container => structureContainer;
         public StructureConfiguration Configuration => structureConfiguration;
+
+
+        private void SetUpgradeStage()
+        {
+        }
+        
+        private void LoadDefaultConfig()
+        {
+            if (structureConfiguration.TypeConFiguration == ConfigType.Functional)
+            {
+                SetUpgradeStage();
+            }
+        }
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)
         {
@@ -33,7 +45,6 @@ namespace _CityBuilder.Scripts.StructureModel
             LoadDefaultConfig();
         }
 
-
         public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
         {
             structureContainer = container;
@@ -51,18 +62,9 @@ namespace _CityBuilder.Scripts.StructureModel
             LoadDefaultConfig();
         }
 
-
-        private void SetUpgradeStage()
+        public void OnClick()
         {
-        }
-
-
-        private void LoadDefaultConfig()
-        {
-            if (structureConfiguration.TypeConFiguration == ConfigType.Functional)
-            {
-                SetUpgradeStage();
-            }
+            InfoBuildingPanel.ConfigBuildingContainer?.Invoke(this);
         }
     }
 }
