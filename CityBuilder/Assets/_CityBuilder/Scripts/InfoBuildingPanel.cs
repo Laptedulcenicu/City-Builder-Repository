@@ -11,7 +11,7 @@ namespace _CityBuilder.Scripts
     public class InfoBuildingPanel : MonoBehaviour
     {
         public static Action<Structure> ConfigBuildingContainer;
-
+        [SerializeField] private GameObject panel;
         [SerializeField] private Image healthImage;
         [SerializeField] private TextMeshProUGUI healthLifeText;
         [SerializeField] private TextMeshProUGUI levelText;
@@ -52,6 +52,7 @@ namespace _CityBuilder.Scripts
 
         private void ConfigCurrentBuildingContainer(Structure structure)
         {
+            panel.SetActive(true);
             currentStructure = structure;
             CurrentLife();
             SetCurrentConfigType();
@@ -163,6 +164,7 @@ namespace _CityBuilder.Scripts
 
         private void CancelButton()
         {
+            panel.SetActive(false);
         }
 
         #endregion

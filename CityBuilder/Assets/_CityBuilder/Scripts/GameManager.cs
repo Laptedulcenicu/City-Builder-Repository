@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CityBuilder.Scripts;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
 using GameRig.Scripts.Systems.SaveSystem;
@@ -21,6 +22,26 @@ public class GameManager : MonoBehaviour
     private void HandleEscape()
     {
         ClearInputActions();
+    }
+
+    public void ActivateStructureSelection()
+    {
+        inputManager.OnMouseClick += (pos) => { StructureFinderHandler(pos); };
+    }
+
+    private void StructureFinderHandler(Ray ray)
+    {
+        GameObject result = objectDetector.RaycastAll(ray);
+        if (result)
+        {
+            Structure structure = result.GetComponent<Structure>();
+            if (structure)
+            {
+                InfoBuildingPanel.ConfigBuildingContainer?.Invoke(structure);
+            }
+
+            print(result.name);
+        }
     }
 
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)

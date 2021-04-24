@@ -94,11 +94,13 @@ namespace BasicLogic.Scripts
             return placementGrid[position.x, position.z] == type;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,RoadBuildingData roadBuildingData)
+        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
+            RoadBuildingData roadBuildingData)
         {
             print(structureContainer);
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
-            Structure structure = CreateANewStructureModel(position, structureContainer, structureContainer.DefaultStructureConfiguration, roadBuildingData);
+            Structure structure = CreateANewStructureModel(position, structureContainer,
+                structureContainer.DefaultStructureConfiguration, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
         }
 
@@ -118,6 +120,7 @@ namespace BasicLogic.Scripts
             StructureConfiguration defaultConfig, RoadBuildingData roadBuildingData)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
+            structure.AddComponent<BoxCollider>();
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
             var structureModel = structure.AddComponent<Structure>();
@@ -129,6 +132,7 @@ namespace BasicLogic.Scripts
             StructureConfiguration defaultConfig)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
+            structure.AddComponent<BoxCollider>();
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
             var structureModel = structure.AddComponent<Structure>();
