@@ -26,9 +26,10 @@ public class GameManager : MonoBehaviour
     public void GenericPlacementHandler(ShopItemContainer shopItemContainer)
     {
         ClearInputActions();
-        
+
         if (shopItemContainer.Container.CellTypeStructure == CellType.Road)
         {
+            print(shopItemContainer.Container.name);
             RoadPlacementHandler();
         }
         else

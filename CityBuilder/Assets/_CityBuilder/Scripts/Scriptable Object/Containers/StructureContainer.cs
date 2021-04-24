@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace _CityBuilder.Scripts.Scriptable_Object.Containers
 {
+    [CreateAssetMenu(fileName = "Structure", menuName = "Structure Container/Structure")]
     public class StructureContainer : ScriptableObject
     {
         [SerializeField] int index;
@@ -17,7 +18,5 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
         public int Height => height;
         public int Width => width;
         public CellType CellTypeStructure => cellType;
-
-     
     }
 }

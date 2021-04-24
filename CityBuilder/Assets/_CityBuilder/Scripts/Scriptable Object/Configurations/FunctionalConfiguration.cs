@@ -15,11 +15,9 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
         public NecessaryResourcesData EarnResources => earnResources;
     }
 
-    [CreateAssetMenu(fileName = "Functional Configuration",
-        menuName = "Structure Configuration/Functional Configuration")]
+    [CreateAssetMenu(fileName = "Functional Configuration", menuName = "Structure Configuration/Functional Configuration")]
     public class FunctionalConfiguration : StructureConfiguration
     {
-        [HideInInspector] public int currentLevel;
         [SerializeField] private EarnResourcesDelayData earnResourcesDelayDataList;
 
         public EarnResourcesDelayData EarnResourcesDelayDataList => earnResourcesDelayDataList;

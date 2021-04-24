@@ -7,22 +7,19 @@ namespace _CityBuilder.Scripts.StructureModel
 {
     public class Structure : MonoBehaviour
     {
-        private LifeStatusData lifeStatusData;
         private StructureContainer structureContainer;
         private StructureConfiguration structureConfiguration;
 
         private GameObject currentVisualStructure;
         public StructureContainer Container => structureContainer;
-        protected StructureConfiguration Configuration => structureConfiguration;
-        protected LifeStatusData StatusData => lifeStatusData;
+        public StructureConfiguration Configuration => structureConfiguration;
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)
         {
             structureContainer = container;
             structureConfiguration = configuration;
-            lifeStatusData = configuration.StatusData;
             currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
-            
+
             LoadDefaultConfig();
         }
 
@@ -31,9 +28,8 @@ namespace _CityBuilder.Scripts.StructureModel
         {
             structureContainer = container;
             structureConfiguration = configuration;
-            lifeStatusData = configuration.StatusData;
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
-            
+
             LoadDefaultConfig();
         }
 
@@ -42,7 +38,6 @@ namespace _CityBuilder.Scripts.StructureModel
         {
             structureContainer = container;
             structureConfiguration = container.DefaultStructureConfiguration;
-            lifeStatusData = structureConfiguration.StatusData;
 
             foreach (Transform child in transform)
             {
@@ -59,7 +54,6 @@ namespace _CityBuilder.Scripts.StructureModel
 
         private void SetUpgradeStage()
         {
-            
         }
 
 

@@ -38,8 +38,9 @@ public class RoadFixer : MonoBehaviour
         ConfigRoadData -= ConfigureRoadData;
     }
 
-    public void ConfigureRoadData(StructureContainer structureContainer )
+    private  void ConfigureRoadData(StructureContainer structureContainer )
     {
+        print(structureContainer.name);
         roadStructureContainer =(RoadStructureContainer) structureContainer;
         deadEnd = Container.RoadBuildingDataList.Find(e => e.RoadType1 == RoadType.DeadEnd);
         roadStraight = Container.RoadBuildingDataList.Find(e => e.RoadType1 == RoadType.RoadStraight);

@@ -15,14 +15,11 @@ MonoBehaviour:
   itemName: Flat 3
   itemDescription: Flat 3
   unlockDay: 0
-  buildingType: 2
-  cellType: 2
+  shopItemBuildingType: 0
   sprite: {fileID: 21300030, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  buildingContainer: {fileID: 11400000, guid: 8b4f8503768498d4ab38a9efe6a98f4c, type: 2}
+  structureContainer: {fileID: 11400000, guid: 972202b2edbe1dd418929a29ee8b04b6, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
-    amount: 10
-  - resourceType: 0
-    amount: 10
-  - resourceType: 2
-    amount: 10
+    amount: 5
+  - resourceType: 1
+    amount: 1

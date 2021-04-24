@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: Road
   itemDescription: Drum
   unlockDay: 0
-  buildingType: 2
+  shopItemBuildingType: 0
   sprite: {fileID: 21300026, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  buildingContainer: {fileID: 11400000, guid: 5eb866f170de9e6459693a023213c4e1, type: 2}
+  structureContainer: {fileID: 11400000, guid: 5d8951c32bd6de942b437bd269fb3b8f, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
     amount: 5

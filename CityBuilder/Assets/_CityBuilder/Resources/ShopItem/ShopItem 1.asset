@@ -15,10 +15,9 @@ MonoBehaviour:
   itemName: Flat 2
   itemDescription: Flat 2
   unlockDay: 0
-  buildingType: 2
-  cellType: 2
+  shopItemBuildingType: 0
   sprite: {fileID: 21300028, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  buildingContainer: {fileID: 11400000, guid: f831c1912047c8845b351dea9e15a92a, type: 2}
+  structureContainer: {fileID: 11400000, guid: 98c8343f834431a47ae4ec4e868253c7, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
     amount: 10

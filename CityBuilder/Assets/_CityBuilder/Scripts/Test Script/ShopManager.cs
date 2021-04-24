@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
-using _CityBuilder.Scripts.Scriptable_Object;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using BitBenderGames;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.Test_Script
@@ -108,6 +106,11 @@ namespace _CityBuilder.Scripts.Test_Script
             Disable();
             panel.SetActive(false);
             touchInputController.enabled = false;
+
+            if (selectedShopItemContainer.Container.CellTypeStructure == CellType.Road)
+            {
+                RoadFixer.ConfigRoadData(selectedShopItemContainer.Container);
+            }
         }
 
         public void Cancel()

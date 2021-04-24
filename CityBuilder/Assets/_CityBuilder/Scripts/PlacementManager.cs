@@ -96,6 +96,7 @@ namespace BasicLogic.Scripts
 
         internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,RoadBuildingData roadBuildingData)
         {
+            print(structureContainer);
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
             Structure structure = CreateANewStructureModel(position, structureContainer, structureContainer.DefaultStructureConfiguration, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
