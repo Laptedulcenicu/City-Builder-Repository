@@ -210,6 +210,11 @@ namespace BasicLogic.Scripts
             return placementGrid[x, y];
         }
 
+        public void SetCellTypeAtPosition(Point point, CellType cellType)
+        {
+            placementGrid[point.X, point.Y] = cellType;
+        }
+
         public Dictionary<Vector3Int, Structure> GetAllStructures()
         {
             return structureDictionary;

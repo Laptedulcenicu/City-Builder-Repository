@@ -25,15 +25,18 @@ MonoBehaviour:
   upgradeStageList:
   - gamePrefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd,
       type: 3}
-    structureConfiguration: {fileID: 0}
+    structureConfiguration: {fileID: 11400000, guid: 53a7b23b1e1780945af95a1e181b403a,
+      type: 2}
     necessaryResourcesDataList: []
   - gamePrefab: {fileID: 8172496117335426106, guid: 3527735cc30c8554aadd1222f91bf61f,
       type: 3}
-    structureConfiguration: {fileID: 0}
+    structureConfiguration: {fileID: 11400000, guid: 53a7b23b1e1780945af95a1e181b403a,
+      type: 2}
     necessaryResourcesDataList: []
   - gamePrefab: {fileID: 8067785501733222628, guid: 4617fd335db984f4bb34f5eb561fd82b,
       type: 3}
-    structureConfiguration: {fileID: 0}
+    structureConfiguration: {fileID: 11400000, guid: 53a7b23b1e1780945af95a1e181b403a,
+      type: 2}
     necessaryResourcesDataList:
     - resourceType: 0
       amount: 2

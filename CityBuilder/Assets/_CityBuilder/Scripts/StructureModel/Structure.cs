@@ -14,35 +14,48 @@ namespace _CityBuilder.Scripts.StructureModel
         public StructureConfiguration Configuration => structureConfiguration;
 
 
-        private void SetUpgradeStage()
+        private void LoadDefaultConfig(StructureContainer container, StructureConfiguration configuration)
         {
-        }
-        
-        private void LoadDefaultConfig()
-        {
-            if (structureConfiguration.TypeConFiguration == ConfigType.Functional)
+            structureContainer = container;
+
+            if (configuration.TypeConFiguration == ConfigType.Functional)
             {
-                SetUpgradeStage();
+                FunctionalConfiguration functionalConfiguration = (FunctionalConfiguration) configuration;
+                SetUpgradeStage(functionalConfiguration.currentUpgradeLevel);
             }
+            else
+            {
+                structureConfiguration = configuration;
+                currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+            }
+        }
+
+        public void SetUpgradeStage(int upgradeLevel)
+        {
+            FunctionalStructureContainer functionalStructureContainer = (FunctionalStructureContainer) structureContainer;
+
+            if (currentVisualStructure)
+            {
+                Destroy(currentVisualStructure);
+            }
+
+            structureConfiguration = functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration;
+            currentVisualStructure =
+                Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
         }
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)
         {
-            structureContainer = container;
-            structureConfiguration = configuration;
-            currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
-
-            LoadDefaultConfig();
+            LoadDefaultConfig(container, configuration);
         }
 
-        public void CreateModel(StructureContainer container, StructureConfiguration configuration,
-            RoadBuildingData roadBuildingData)
+        public void CreateModel(StructureContainer container, StructureConfiguration configuration, RoadBuildingData roadBuildingData)
         {
             structureContainer = container;
             structureConfiguration = configuration;
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
 
-            LoadDefaultConfig();
+            //   LoadDefaultConfig(); TODO It will be added if Road will be with upgrade
         }
 
         public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
@@ -50,16 +63,13 @@ namespace _CityBuilder.Scripts.StructureModel
             structureContainer = container;
             structureConfiguration = container.DefaultStructureConfiguration;
 
-            foreach (Transform child in transform)
-            {
-                Destroy(child.gameObject);
-            }
+            Destroy(currentVisualStructure);
 
-            var structure = Instantiate(roadBuildingData.RoadPrefab, transform);
-            structure.transform.localPosition = new Vector3(0, 0, 0);
-            structure.transform.localRotation = rotation;
+            currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
+            currentVisualStructure.transform.localPosition = new Vector3(0, 0, 0);
+            currentVisualStructure.transform.localRotation = rotation;
 
-            LoadDefaultConfig();
+            //   LoadDefaultConfig(); TODO It will be added if Road will be with upgrade
         }
 
         public void OnClick()

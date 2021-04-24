@@ -7,8 +7,8 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
     public class StructureContainer : ScriptableObject
     {
         [SerializeField] int index;
-        [SerializeField] private GameObject defaultPrefab;
-        [SerializeField] private StructureConfiguration defaultStructureConfiguration;
+        [SerializeField] protected GameObject defaultPrefab;
+        [SerializeField] protected StructureConfiguration defaultStructureConfiguration;
         [SerializeField] private CellType cellType;
         [SerializeField] private int width = 1;
         [SerializeField] private int height = 1;

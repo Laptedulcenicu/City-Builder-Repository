@@ -11,6 +11,7 @@ namespace _CityBuilder.Scripts
         public void ActivateShopPanelButton()
         {
             inputManager.ClearEvents();
+            
             shopPanel.SetActive(!shopPanel.activeSelf);
 
             if (shopPanel.activeSelf == false)

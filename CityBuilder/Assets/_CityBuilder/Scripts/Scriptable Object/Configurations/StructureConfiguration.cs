@@ -1,4 +1,6 @@
-﻿using _CityBuilder.Scripts.StructureModel;
+﻿using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using _CityBuilder.Scripts.StructureModel;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
@@ -12,7 +14,8 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
     public class StructureConfiguration : ScriptableObject
     {
         [SerializeField] protected LifeStatusData lifeStatusData;
-        
+        [SerializeField] protected List<NecessaryResourcesData> destroyEarnResourcesList;
+        public List<NecessaryResourcesData> DestroyEarnResourcesList => destroyEarnResourcesList;
         protected ConfigType ConfigType;
         public LifeStatusData StatusData => lifeStatusData;
 

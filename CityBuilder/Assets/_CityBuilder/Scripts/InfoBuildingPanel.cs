@@ -1,4 +1,5 @@
 ﻿using System;
+using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
@@ -11,6 +12,7 @@ namespace _CityBuilder.Scripts
     public class InfoBuildingPanel : MonoBehaviour
     {
         public static Action<Structure> ConfigBuildingContainer;
+        [SerializeField] private StructureManager structureManager;
         [SerializeField] private GameObject panel;
         [SerializeField] private Image healthImage;
         [SerializeField] private TextMeshProUGUI healthLifeText;
@@ -88,17 +90,16 @@ namespace _CityBuilder.Scripts
 
         private void CurrentUpgradeLevel()
         {
-            FunctionalStructureContainer currentFunctionalConfiguration =
+            FunctionalConfiguration currentFunctionalConfiguration =
+                (FunctionalConfiguration) currentStructure.Configuration;
+            FunctionalStructureContainer functionalStructureContainer =
                 (FunctionalStructureContainer) currentStructure.Container;
 
-            UpgradeStage currentUpgrade = currentFunctionalConfiguration.UpgradeStageList.Find(e =>
-                e.GameObjectPrefab == currentFunctionalConfiguration.DefaultPrefab);
+            int currentLevel = currentFunctionalConfiguration.currentUpgradeLevel;
 
-            int currentLevel = currentFunctionalConfiguration.UpgradeStageList.IndexOf(currentUpgrade);
+            levelText.text = currentLevel + "/" + (functionalStructureContainer.UpgradeStageList.Count - 1) + "level";
 
-            levelText.text = currentLevel + "/" + (currentFunctionalConfiguration.UpgradeStageList.Count - 1) + "level";
-
-            if (currentLevel < currentFunctionalConfiguration.UpgradeStageList.Count - 1)
+            if (currentLevel < functionalStructureContainer.UpgradeStageList.Count - 1)
             {
                 upgradeButton.gameObject.SetActive(true);
             }
@@ -143,11 +144,29 @@ namespace _CityBuilder.Scripts
 
         private void DestroyBuildingButton()
         {
-            
+            foreach (NecessaryResourcesData necessaryResourcesData in currentStructure.Configuration
+                .DestroyEarnResourcesList)
+            {
+                GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
+            }
+
+            Point point = new Point((int)currentStructure.transform.position.x,(int) currentStructure.transform.position.z);
+            structureManager.placementManager.SetCellTypeAtPosition(point, CellType.Empty );
+            Destroy(currentStructure.gameObject);
+            CancelButton();
         }
 
         private void UpgradeBuildingButton()
         {
+            FunctionalConfiguration currentFunctionalConfiguration =
+                (FunctionalConfiguration) currentStructure.Configuration;
+
+            int currentLevel = currentFunctionalConfiguration.currentUpgradeLevel;
+
+            currentLevel++;
+            currentStructure.SetUpgradeStage(currentLevel);
+
+            CurrentUpgradeLevel();
         }
 
         private void RepairBuildingButton()

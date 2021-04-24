@@ -34,12 +34,14 @@ namespace _CityBuilder.Scripts
 
         private void OnMouseclickDown(Ray ray)
         {
+            print("OnMouseclickDown");
             mouseClickDownPosition = objectDetector.RaycastGround(ray);
             cameraMouseDownPosition = inputManager.MainCamera.transform.position;
         }
 
         private void OnMouseClickUp(Ray ray)
         {
+            print("OnMouseClickUp");
             mouseClickUpPosition = objectDetector.RaycastGround(ray);
             cameraMouseUpPosition = inputManager.MainCamera.transform.position;
 

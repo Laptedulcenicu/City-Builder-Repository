@@ -62,6 +62,8 @@ namespace _CityBuilder.Scripts
             OnMouseClick = null;
             OnEscape = null;
             OnMouseUp = null;
+            OnMouseClickDown = null;
+            OnMouseClickUp = null;
         }
     }
 }

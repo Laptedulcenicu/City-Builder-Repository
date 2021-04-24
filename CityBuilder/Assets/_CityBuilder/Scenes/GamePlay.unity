@@ -18312,6 +18312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf3cd49528c4d21a13c0dad7e5165eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  structureManager: {fileID: 2080395267}
   panel: {fileID: 1866209217}
   healthImage: {fileID: 1927042096}
   healthLifeText: {fileID: 2111041483}

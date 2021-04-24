@@ -18,6 +18,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
     [CreateAssetMenu(fileName = "Functional Configuration", menuName = "Structure Configuration/Functional Configuration")]
     public class FunctionalConfiguration : StructureConfiguration
     {
+        [HideInInspector] public int currentUpgradeLevel;
         [SerializeField] private EarnResourcesDelayData earnResourcesDelayDataList;
 
         public EarnResourcesDelayData EarnResourcesDelayDataList => earnResourcesDelayDataList;

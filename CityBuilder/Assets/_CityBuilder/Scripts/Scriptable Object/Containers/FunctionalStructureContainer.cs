@@ -22,10 +22,20 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
     [CreateAssetMenu(fileName = "Functional Structure", menuName = "Structure Container/Functional Structure")]
     public class FunctionalStructureContainer : StructureContainer
     {
-        [SerializeField] private StructureConfiguration defaultConfiguration;
         [SerializeField] private List<UpgradeStage> upgradeStageList;
-
         public List<UpgradeStage> UpgradeStageList => upgradeStageList;
-        public StructureConfiguration DefaultConfiguration => defaultConfiguration;
+
+        private void Awake()
+        {
+            if (defaultPrefab)
+            {
+                defaultPrefab.hideFlags = HideFlags.HideInInspector;
+            }
+
+            if (defaultStructureConfiguration)
+            {
+                defaultStructureConfiguration.hideFlags = HideFlags.HideInInspector;
+            }
+        }
     }
 }
