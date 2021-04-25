@@ -150,7 +150,8 @@ namespace _CityBuilder.Scripts
                 GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
             }
 
-            Point point = new Point((int) currentStructure.transform.position.x, (int) currentStructure.transform.position.z);
+            Point point = new Point((int) currentStructure.transform.position.x,
+                (int) currentStructure.transform.position.z);
             structureManager.placementManager.RemoveStructureAtPosition(point, currentStructure);
             Destroy(currentStructure.gameObject);
             CancelButton();

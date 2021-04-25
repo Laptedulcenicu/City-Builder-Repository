@@ -11,7 +11,7 @@ namespace _CityBuilder.Scripts.StructureModel
 
         public int MAXHealth => maxHealth;
         public int CurrentHealth => currentHealth;
-
+        
         public void Initialize(int cHealth, int mHealth)
         {
             maxHealth = mHealth;

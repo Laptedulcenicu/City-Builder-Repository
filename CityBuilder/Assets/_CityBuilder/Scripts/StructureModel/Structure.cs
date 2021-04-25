@@ -25,21 +25,23 @@ namespace _CityBuilder.Scripts.StructureModel
             }
             else
             {
-                structureConfiguration = configuration;
+                structureConfiguration = new StructureConfiguration(configuration);
                 currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
             }
         }
 
         public void SetUpgradeStage(int upgradeLevel)
         {
-            FunctionalStructureContainer functionalStructureContainer = (FunctionalStructureContainer) structureContainer;
+            FunctionalStructureContainer functionalStructureContainer =
+                (FunctionalStructureContainer) structureContainer;
 
             if (currentVisualStructure)
             {
                 Destroy(currentVisualStructure);
             }
 
-            structureConfiguration = functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration;
+            structureConfiguration =
+                new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
             currentVisualStructure =
                 Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
         }
@@ -49,10 +51,11 @@ namespace _CityBuilder.Scripts.StructureModel
             LoadDefaultConfig(container, configuration);
         }
 
-        public void CreateModel(StructureContainer container, StructureConfiguration configuration, RoadBuildingData roadBuildingData)
+        public void CreateModel(StructureContainer container, StructureConfiguration configuration,
+            RoadBuildingData roadBuildingData)
         {
             structureContainer = container;
-            structureConfiguration = configuration;
+            structureConfiguration = new StructureConfiguration(configuration);
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
 
             //   LoadDefaultConfig(); TODO It will be added if Road will be with upgrade
@@ -61,7 +64,7 @@ namespace _CityBuilder.Scripts.StructureModel
         public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
         {
             structureContainer = container;
-            structureConfiguration = container.DefaultStructureConfiguration;
+            structureConfiguration = new StructureConfiguration(container.DefaultStructureConfiguration);
 
             Destroy(currentVisualStructure);
 

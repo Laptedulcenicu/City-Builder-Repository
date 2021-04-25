@@ -13,5 +13,10 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
         {
             ConfigType = ConfigType.NonFunctional;
         }
+
+        public NonFunctionalConfiguration(StructureConfiguration structure) : base(structure)
+        {
+            Debug.Log("NonFunctionalConfiguration");
+        }
     }
 }

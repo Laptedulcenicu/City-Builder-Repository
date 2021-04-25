@@ -236,18 +236,6 @@ namespace BasicLogic.Scripts
                 }
                 case CellType.Structure:
                 {
-                    // KeyValuePair<Vector3Int, Structure> element = new KeyValuePair<Vector3Int, Structure>();
-                    // foreach (KeyValuePair<Vector3Int, Structure> keyValuePair in structureDictionary)
-                    // {
-                    //     if (Vector3.Distance(new Vector3(point.X, 0, point.Y),
-                    //         new Vector3(keyValuePair.Key.x, 0, keyValuePair.Key.z)) < 1f)
-                    //     {
-                    //         element = keyValuePair;
-                    //         break;
-                    //     }
-                    // }
-                    //
-                    // structureDictionary.Remove(element.Key);
                     KeyValuePair<Vector3Int, Structure> element = structureDictionary.First(e => e.Value == str);
                     structureDictionary.Remove(element.Key);
                     break;

@@ -14,5 +14,12 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
         {
             ConfigType = ConfigType.Natural;
         }
+
+        public NatureConfiguration(StructureConfiguration structure) : base(structure)
+        {
+            Debug.Log("NatureConfiguration");
+            NatureConfiguration natureConfiguration = (NatureConfiguration) structure;
+            destroyPrice = natureConfiguration.destroyPrice;
+        }
     }
 }
