@@ -15,8 +15,8 @@ namespace _CityBuilder.Scripts.Test_Script
     {
         public TextMeshProUGUI moneyAmount;
         public ResourceType resourceType;
-        
     }
+
     public class ShopManager : MonoBehaviour
     {
         [SerializeField] private TouchInputController touchInputController;
@@ -32,28 +32,32 @@ namespace _CityBuilder.Scripts.Test_Script
         private List<ShopItemContainer> shopItemContainerList;
         private List<Item> instantiatedItem;
         private ShopItemContainer selectedShopItemContainer;
-        [FormerlySerializedAs("gameManager")] [SerializeField] private InputController inputController;
+
+        [FormerlySerializedAs("gameManager")] [SerializeField]
+        private InputController inputController;
+
         private void Awake()
         {
-            GameResourcesManager.OnGameResourcesChange+= OnGameResourcesChange;
-            
+            GameResourcesManager.OnGameResourcesChange += OnGameResourcesChange;
+
             shopItemContainerList = Resources.LoadAll<ShopItemContainer>("ShopItem").ToList();
-            
+
             foreach (ShopItemContainer shopItemContainer in shopItemContainerList)
             {
-                Item currentItem = Instantiate(itemPrefab,content);
-                currentItem.Initialize( shopItemContainer, this);
+                Item currentItem = Instantiate(itemPrefab, content);
+                currentItem.Initialize(shopItemContainer, this);
             }
-            
+
             foreach (var moneyTextData in currentMoney)
             {
                 moneyTextData.moneyAmount.text = GameResourcesManager.GetDisplayString(moneyTextData.resourceType);
             }
-            
+
             Disable();
             GameResourcesManager.AddResourceAmount(ResourceType.Gold, 100);
             GameResourcesManager.AddResourceAmount(ResourceType.Wood, 300);
         }
+
         private void OnDestroy()
         {
             GameResourcesManager.OnGameResourcesChange -= OnGameResourcesChange;
@@ -69,7 +73,7 @@ namespace _CityBuilder.Scripts.Test_Script
         public void SelectButton(Transform item, ShopItemContainer shopItemContainer)
         {
             selection.parent = item;
-            selection.localPosition= Vector3.zero;
+            selection.localPosition = Vector3.zero;
 
             if (selectedShopItemContainer == shopItemContainer)
             {
@@ -78,31 +82,34 @@ namespace _CityBuilder.Scripts.Test_Script
             }
             else
             {
-                selection.localPosition= Vector3.one;
+                selection.localPosition = Vector3.one;
                 selectedShopItemContainer = shopItemContainer;
                 ShowAll();
 
                 foreach (var necessaryResourcesData in selectedShopItemContainer.NecessaryResourcesDataList)
                 {
-                    MoneyTextData currentNeedMoney=  needMoney.Find(e => e.resourceType == necessaryResourcesData.Resource);
-                    currentNeedMoney.moneyAmount.text = GameResourcesManager.GetDisplayString(necessaryResourcesData.Amount);
+                    MoneyTextData currentNeedMoney =
+                        needMoney.Find(e => e.resourceType == necessaryResourcesData.Resource);
+                    currentNeedMoney.moneyAmount.text =
+                        GameResourcesManager.GetDisplayString(necessaryResourcesData.Amount);
                     currentNeedMoney.moneyAmount.transform.parent.gameObject.SetActive(true);
                 }
 
                 descrption.text = shopItemContainer.ItemDescription;
             }
-           
         }
 
         public void Confirm()
         {
             foreach (var necessaryResourcesData in selectedShopItemContainer.NecessaryResourcesDataList)
             {
-                if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                if (necessaryResourcesData.Amount >
+                    GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
                 {
                     return;
                 }
             }
+
             inputController.GenericPlacementHandler(selectedShopItemContainer);
             Disable();
             panel.SetActive(false);
@@ -118,6 +125,11 @@ namespace _CityBuilder.Scripts.Test_Script
         {
             panel.SetActive(true);
             touchInputController.enabled = true;
+        }
+
+        public ShopItemContainer GetShopItem(StructureContainer structureContainer)
+        {
+            return shopItemContainerList.Find(e => e.Container == structureContainer);
         }
 
         private void Disable()

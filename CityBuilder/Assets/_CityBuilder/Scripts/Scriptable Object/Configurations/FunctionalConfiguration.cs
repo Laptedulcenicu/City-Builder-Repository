@@ -32,7 +32,6 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
 
         public FunctionalConfiguration(StructureConfiguration structure) : base(structure)
         {
-            Debug.Log("FunctionalConfiguration");
             FunctionalConfiguration config = (FunctionalConfiguration) structure;
             currentUpgradeLevel = config.currentUpgradeLevel;
             earnResourcesDelayDataList = new List<EarnResourcesDelayData>(config.earnResourcesDelayDataList);

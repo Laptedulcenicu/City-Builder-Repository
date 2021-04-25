@@ -17,7 +17,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
     }
 
     [Serializable]
-    public struct NecessaryResourcesData
+    public class NecessaryResourcesData
     {
         [SerializeField] private ResourceType resourceType;
         [SerializeField] private int amount;
@@ -25,6 +25,12 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
         public ResourceType Resource => resourceType;
 
         public int Amount => amount;
+
+        public void Initialize(ResourceType type, int resourceAmount)
+        {
+            resourceType = type;
+            amount = resourceAmount;
+        }
     }
 
     [CreateAssetMenu(fileName = "ShopItem", menuName = "GameData/ShopItem")]

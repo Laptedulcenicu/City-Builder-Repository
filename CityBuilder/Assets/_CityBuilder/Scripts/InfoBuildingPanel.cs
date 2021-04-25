@@ -1,8 +1,10 @@
 ﻿using System;
-using _CityBuilder.Scripts.Global_Manager;
+using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
+using _CityBuilder.Scripts.Test_Script;
+using _CityBuilder.Scripts.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,12 +14,13 @@ namespace _CityBuilder.Scripts
     public class InfoBuildingPanel : MonoBehaviour
     {
         public static Action<Structure> ConfigBuildingContainer;
+        [SerializeField] private InfoStructurePopUpList infoStructurePopUp;
+        [SerializeField] private ShopManager shopManager;
         [SerializeField] private StructureManager structureManager;
         [SerializeField] private GameObject panel;
         [SerializeField] private Image healthImage;
         [SerializeField] private TextMeshProUGUI healthLifeText;
         [SerializeField] private TextMeshProUGUI levelText;
-        [SerializeField] private TextMeshProUGUI repairPriceText;
 
         [Header("Buttons Panel Data")] [SerializeField]
         private Button upgradeButton;
@@ -28,8 +31,18 @@ namespace _CityBuilder.Scripts
         [SerializeField] private Button destroyButton;
         [SerializeField] private Button cancelButton;
 
+        [SerializeField] [Range(0.1f, 1f)] private float percentOffsetRepairPrice;
+
         private Structure currentStructure;
-        private int repairPrice;
+        private ShopItemContainer currentShopItem;
+
+        public StructureManager StructureManager1 => structureManager;
+
+        public Structure CurrentStructure => currentStructure;
+
+        public ShopItemContainer CurrentShopItem => currentShopItem;
+
+        public float PercentOffsetRepairPrice => percentOffsetRepairPrice;
 
         public void Awake()
         {
@@ -39,11 +52,12 @@ namespace _CityBuilder.Scripts
 
         private void ConfigPanelDataButton()
         {
-            upgradeButton.onClick.AddListener(UpgradeBuildingButton);
-            repairButton.onClick.AddListener(RepairBuildingButton);
+            upgradeButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Upgrade));
+            repairButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Repair));
+            destroyButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Destroy));
+            
             moveButton.onClick.AddListener(MoveBuildingButton);
             rotateButton.onClick.AddListener(RotateBuildingButton);
-            destroyButton.onClick.AddListener(DestroyBuildingButton);
             cancelButton.onClick.AddListener(CancelButton);
         }
 
@@ -56,6 +70,7 @@ namespace _CityBuilder.Scripts
         {
             panel.SetActive(true);
             currentStructure = structure;
+            currentShopItem = shopManager.GetShopItem(structure.Container);
             CurrentLife();
             SetCurrentConfigType();
         }
@@ -88,7 +103,7 @@ namespace _CityBuilder.Scripts
             }
         }
 
-        private void CurrentUpgradeLevel()
+        public void CurrentUpgradeLevel()
         {
             FunctionalConfiguration currentFunctionalConfiguration =
                 (FunctionalConfiguration) currentStructure.Configuration;
@@ -110,7 +125,7 @@ namespace _CityBuilder.Scripts
         }
 
 
-        private void CurrentLife()
+        public void CurrentLife()
         {
             StructureConfiguration currentConfig = currentStructure.Configuration;
             healthLifeText.text = currentConfig.StatusData.CurrentHealth + "/" + currentConfig.StatusData.MAXHealth;
@@ -129,8 +144,6 @@ namespace _CityBuilder.Scripts
 
             if (currentConfig.StatusData.CurrentHealth < currentConfig.StatusData.MAXHealth)
             {
-                repairPrice = 10;
-                repairPriceText.text = repairPrice.ToString();
                 repairButton.gameObject.SetActive(true);
             }
             else
@@ -142,36 +155,11 @@ namespace _CityBuilder.Scripts
 
         #region BuildingButtons
 
-        private void DestroyBuildingButton()
-        {
-            foreach (NecessaryResourcesData necessaryResourcesData in currentStructure.Configuration
-                .DestroyEarnResourcesList)
-            {
-                GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
-            }
-
-            Point point = new Point((int) currentStructure.transform.position.x,
-                (int) currentStructure.transform.position.z);
-            structureManager.placementManager.RemoveStructureAtPosition(point, currentStructure);
-            Destroy(currentStructure.gameObject);
-            CancelButton();
-        }
-
-        private void UpgradeBuildingButton()
-        {
-            FunctionalConfiguration currentFunctionalConfiguration =
-                (FunctionalConfiguration) currentStructure.Configuration;
-
-            int currentLevel = currentFunctionalConfiguration.currentUpgradeLevel;
-
-            currentLevel++;
-            currentStructure.SetUpgradeStage(currentLevel);
-
-            CurrentUpgradeLevel();
-        }
+     
 
         private void RepairBuildingButton()
         {
+           
         }
 
         private void MoveBuildingButton()
@@ -182,7 +170,7 @@ namespace _CityBuilder.Scripts
         {
         }
 
-        private void CancelButton()
+        public void CancelButton()
         {
             panel.SetActive(false);
         }

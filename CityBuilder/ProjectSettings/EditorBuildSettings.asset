@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/PolygonFantasyKingdom/Scenes/Demo_ExteriorOnly_Optimized.unity
-    guid: 5840491f9dde1b349bd9dde4b6f2d7b7
-  - enabled: 1
     path: Assets/_CityBuilder/Scenes/GamePlay.unity
     guid: 22a32a1a4c811b74589d812129f8e1fb
   m_configObjects: {}
