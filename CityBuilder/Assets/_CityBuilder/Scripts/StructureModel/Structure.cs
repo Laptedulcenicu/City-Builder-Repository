@@ -40,10 +40,11 @@ namespace _CityBuilder.Scripts.StructureModel
                 Destroy(currentVisualStructure);
             }
 
-            structureConfiguration =
-                new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
-            currentVisualStructure =
-                Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            structureConfiguration = new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
+            FunctionalConfiguration functionalStructureConfiguration = (FunctionalConfiguration) structureConfiguration;
+
+            functionalStructureConfiguration.currentUpgradeLevel = upgradeLevel;
+            currentVisualStructure = Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
         }
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)
