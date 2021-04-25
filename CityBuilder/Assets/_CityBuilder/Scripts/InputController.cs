@@ -46,7 +46,7 @@ namespace _CityBuilder.Scripts
             cameraMouseUpPosition = inputManager.MainCamera.transform.position;
 
 
-            if (CheckMouseOffsetPositions()&& CheckCameraOffsetPosition())
+            if (CheckMouseOffsetPositions() && CheckCameraOffsetPosition())
             {
                 ObjectFindHandler(ray);
             }
@@ -81,7 +81,6 @@ namespace _CityBuilder.Scripts
 
             if (shopItemContainer.Container.CellTypeStructure == CellType.Road)
             {
-                print(shopItemContainer.Container.name);
                 RoadPlacementHandler();
             }
             else

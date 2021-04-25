@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using _CityBuilder.Scripts.Scriptable_Object;
+using System.Linq;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
@@ -97,7 +97,6 @@ namespace BasicLogic.Scripts
         internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
             RoadBuildingData roadBuildingData)
         {
-            print(structureContainer);
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
             Structure structure = CreateANewStructureModel(position, structureContainer,
                 structureContainer.DefaultStructureConfiguration, roadBuildingData);
@@ -106,7 +105,7 @@ namespace BasicLogic.Scripts
 
         internal List<Vector3Int> GetNeighboursOfTypeFor(Vector3Int position, CellType type)
         {
-            var neighbourVertices = placementGrid.GetAdjacentCellsOfType(position.x, position.z, type);
+            List<Point> neighbourVertices = placementGrid.GetAdjacentCellsOfType(position.x, position.z, type);
             List<Vector3Int> neighbours = new List<Vector3Int>();
             foreach (var point in neighbourVertices)
             {
@@ -210,9 +209,50 @@ namespace BasicLogic.Scripts
             return placementGrid[x, y];
         }
 
-        public void SetCellTypeAtPosition(Point point, CellType cellType)
+        public void RemoveStructureAtPosition(Point point, Structure str)
         {
-            placementGrid[point.X, point.Y] = cellType;
+            placementGrid[point.X, point.Y] = CellType.Empty;
+
+            switch (str.Container.CellTypeStructure)
+            {
+                case CellType.Road:
+                {
+                    KeyValuePair<Vector3Int, Structure> element = new KeyValuePair<Vector3Int, Structure>();
+                    foreach (KeyValuePair<Vector3Int, Structure> keyValuePair in temporaryRoadobjects)
+                    {
+                        if (Vector3.Distance(new Vector3(point.X, 0, point.Y),
+                            new Vector3(keyValuePair.Key.x, 0, keyValuePair.Key.z)) < 1f)
+                        {
+                            element = keyValuePair;
+                            break;
+                        }
+                    }
+
+                    temporaryRoadobjects.Remove(element.Key);
+
+                    element = structureDictionary.First(e => e.Value == str);
+                    structureDictionary.Remove(element.Key);
+                    break;
+                }
+                case CellType.Structure:
+                {
+                    // KeyValuePair<Vector3Int, Structure> element = new KeyValuePair<Vector3Int, Structure>();
+                    // foreach (KeyValuePair<Vector3Int, Structure> keyValuePair in structureDictionary)
+                    // {
+                    //     if (Vector3.Distance(new Vector3(point.X, 0, point.Y),
+                    //         new Vector3(keyValuePair.Key.x, 0, keyValuePair.Key.z)) < 1f)
+                    //     {
+                    //         element = keyValuePair;
+                    //         break;
+                    //     }
+                    // }
+                    //
+                    // structureDictionary.Remove(element.Key);
+                    KeyValuePair<Vector3Int, Structure> element = structureDictionary.First(e => e.Value == str);
+                    structureDictionary.Remove(element.Key);
+                    break;
+                }
+            }
         }
 
         public Dictionary<Vector3Int, Structure> GetAllStructures()

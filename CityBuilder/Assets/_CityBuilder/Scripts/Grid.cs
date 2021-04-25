@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
 
 public class Point

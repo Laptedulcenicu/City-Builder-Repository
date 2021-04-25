@@ -43,7 +43,6 @@ namespace _CityBuilder.Scripts
 
                 if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
                 {
-                    // placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container.DefaultPrefab, CellType.Structure, shopItemContainer.Container.Width,shopItemContainer.Container.Height,  shopItemContainer.Container.Index);
                     placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
                         shopItemContainer.Container.DefaultStructureConfiguration);
                     AudioPlayer.instance.PlayPlacementSound();
