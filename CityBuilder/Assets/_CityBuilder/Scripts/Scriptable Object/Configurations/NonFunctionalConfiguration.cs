@@ -16,7 +16,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
 
         public NonFunctionalConfiguration(StructureConfiguration structure) : base(structure)
         {
-            Debug.Log("NonFunctionalConfiguration");
+          
         }
     }
 }

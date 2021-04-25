@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object;
+using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using BasicLogic.Scripts;
 using UnityEngine;
 
@@ -18,9 +19,8 @@ public class RoadManager : MonoBehaviour
 
     public RoadFixer roadFixer;
 
-  
 
-    public void PlaceRoad(Vector3Int position)
+    public void PlaceRoad(Vector3Int position, StructureConfiguration structureConfiguration)
     {
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
@@ -36,8 +36,8 @@ public class RoadManager : MonoBehaviour
 
             temporaryPlacementPositions.Add(position);
 
-            placementManager.PlaceTemporaryStructure(position,roadFixer.Container,  roadFixer.DeadEnd);
-
+            placementManager.PlaceTemporaryStructure(position, roadFixer.Container, structureConfiguration,
+                roadFixer.DeadEnd);
         }
         else
         {
@@ -59,14 +59,66 @@ public class RoadManager : MonoBehaviour
                 {
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
-                }  
-                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.Container,roadFixer.DeadEnd );
+                }
+
+                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.Container, structureConfiguration,
+                    roadFixer.DeadEnd);
             }
         }
 
         FixRoadPrefabs();
-
     }
+
+
+    public void PlaceRoad(Vector3Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+            return;
+        if (placementMode == false)
+        {
+            temporaryPlacementPositions.Clear();
+            roadPositionsToRecheck.Clear();
+
+            placementMode = true;
+            startPosition = position;
+
+            temporaryPlacementPositions.Add(position);
+
+            placementManager.PlaceTemporaryStructure(position, roadFixer.Container,
+                roadFixer.Container.DefaultStructureConfiguration, roadFixer.DeadEnd);
+        }
+        else
+        {
+            placementManager.RemoveAllTemporaryStructures();
+            temporaryPlacementPositions.Clear();
+
+            foreach (var positionsToFix in roadPositionsToRecheck)
+            {
+                roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+            }
+
+            roadPositionsToRecheck.Clear();
+
+            temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
+
+            foreach (var temporaryPosition in temporaryPlacementPositions)
+            {
+                if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
+                {
+                    roadPositionsToRecheck.Add(temporaryPosition);
+                    continue;
+                }
+
+                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.Container,
+                    roadFixer.Container.DefaultStructureConfiguration, roadFixer.DeadEnd);
+            }
+        }
+
+        FixRoadPrefabs();
+    }
+
 
     private void FixRoadPrefabs()
     {
@@ -76,12 +128,13 @@ public class RoadManager : MonoBehaviour
             var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
             foreach (var roadposition in neighbours)
             {
-                if (roadPositionsToRecheck.Contains(roadposition)==false)
+                if (roadPositionsToRecheck.Contains(roadposition) == false)
                 {
                     roadPositionsToRecheck.Add(roadposition);
                 }
             }
         }
+
         foreach (var positionToFix in roadPositionsToRecheck)
         {
             roadFixer.FixRoadAtPosition(placementManager, positionToFix);
@@ -96,6 +149,7 @@ public class RoadManager : MonoBehaviour
         {
             AudioPlayer.instance.PlayPlacementSound();
         }
+
         temporaryPlacementPositions.Clear();
         startPosition = Vector3Int.zero;
     }

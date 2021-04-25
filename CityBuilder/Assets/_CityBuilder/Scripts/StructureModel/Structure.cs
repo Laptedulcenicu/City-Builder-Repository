@@ -18,15 +18,23 @@ namespace _CityBuilder.Scripts.StructureModel
         {
             structureContainer = container;
 
-            if (configuration.TypeConFiguration == ConfigType.Functional)
+            switch (configuration.TypeConFiguration)
             {
-                FunctionalConfiguration functionalConfiguration = (FunctionalConfiguration) configuration;
-                SetUpgradeStage(functionalConfiguration.currentUpgradeLevel);
-            }
-            else
-            {
-                structureConfiguration = new StructureConfiguration(configuration);
-                currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+                case ConfigType.Functional:
+                {
+                    FunctionalConfiguration functionalConfiguration = (FunctionalConfiguration) configuration;
+                    SetUpgradeStage(functionalConfiguration.currentUpgradeLevel);
+                    break;
+                }
+                case ConfigType.NonFunctional:
+                    structureConfiguration = new NonFunctionalConfiguration(configuration);
+                    currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+                    break;
+
+                case ConfigType.Natural:
+                    structureConfiguration = new NatureConfiguration(configuration);
+                    currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+                    break;
             }
         }
 
@@ -40,11 +48,13 @@ namespace _CityBuilder.Scripts.StructureModel
                 Destroy(currentVisualStructure);
             }
 
-            structureConfiguration = new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
+            structureConfiguration =
+                new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
             FunctionalConfiguration functionalStructureConfiguration = (FunctionalConfiguration) structureConfiguration;
 
             functionalStructureConfiguration.currentUpgradeLevel = upgradeLevel;
-            currentVisualStructure = Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            currentVisualStructure =
+                Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
         }
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)

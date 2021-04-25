@@ -94,12 +94,10 @@ namespace BasicLogic.Scripts
             return placementGrid[position.x, position.z] == type;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
-            RoadBuildingData roadBuildingData)
+        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,StructureConfiguration structureConfiguration, RoadBuildingData roadBuildingData)
         {
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
-            Structure structure = CreateANewStructureModel(position, structureContainer,
-                structureContainer.DefaultStructureConfiguration, roadBuildingData);
+            Structure structure = CreateANewStructureModel(position, structureContainer, structureConfiguration, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
         }
 

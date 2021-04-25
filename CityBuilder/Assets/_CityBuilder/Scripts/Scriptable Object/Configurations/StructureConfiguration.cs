@@ -25,7 +25,6 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
 
         public StructureConfiguration(StructureConfiguration structure)
         {
-            Debug.Log("Constructor");
             lifeStatusData = new LifeStatusData();
             lifeStatusData.Initialize(structure.lifeStatusData.CurrentHealth, structure.lifeStatusData.MAXHealth);
             destroyEarnResourcesList = new List<NecessaryResourcesData>(structure.destroyEarnResourcesList);

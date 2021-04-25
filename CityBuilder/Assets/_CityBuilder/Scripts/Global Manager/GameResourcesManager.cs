@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace _CityBuilder.Scripts.Global_Manager
 {
+    [Serializable]
     public enum ResourceType
     {
         Gold = 0,

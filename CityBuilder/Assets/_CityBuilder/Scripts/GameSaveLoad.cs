@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.StructureModel;
 using GameRig.Scripts.Systems.SaveSystem;
 using GameRig.Scripts.Utilities.ConstantValues;
@@ -24,14 +25,24 @@ namespace _CityBuilder.Scripts
                     {
                         SaveValue newSaveValue = new SaveValue();
                         newSaveValue.position = new Vector3Int(width, 0, height);
+
                         Structure intermediaryStructure =
                             structureManager.placementManager.GetStructureAt(newSaveValue.position);
+                        switch (intermediaryStructure.Configuration.TypeConFiguration)
+                        {
+                            case ConfigType.Functional:
+                                newSaveValue.structureConfiguration = new FunctionalConfiguration(intermediaryStructure.Configuration);
+                                break;
+                            case ConfigType.NonFunctional:
+                                newSaveValue.structureConfiguration = new NonFunctionalConfiguration(intermediaryStructure.Configuration);
+                                break;
+                            case ConfigType.Natural:
+                                newSaveValue.structureConfiguration = new NatureConfiguration(intermediaryStructure.Configuration);
+                                break;
+                        }
 
                         newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
                         newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
-                        //  newSaveValue.upgradeState = intermediaryStructure.UpgradeState;
-
-
                         saveList.Add(newSaveValue);
                     }
                 }
@@ -53,13 +64,13 @@ namespace _CityBuilder.Scripts
                 {
                     RoadFixer.ConfigRoadData(
                         structureManager.BuildingContainerList.Find(e => e.Index == saveValue.buildingPrefabindex));
-                    roadManager.PlaceRoad(position);
+                    roadManager.PlaceRoad(position, saveValue.structureConfiguration);
                     roadManager.FinishPlacingRoad();
                 }
                 else
                 {
                     structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex,
-                        saveValue.upgradeState);
+                        saveValue.structureConfiguration);
                 }
             }
         }
@@ -67,10 +78,10 @@ namespace _CityBuilder.Scripts
         [Serializable]
         public class SaveValue
         {
-            public int upgradeState;
             public int buildingPrefabindex;
             public CellType buildingType;
             public Vector3Int position;
+            public StructureConfiguration structureConfiguration;
         }
     }
 }

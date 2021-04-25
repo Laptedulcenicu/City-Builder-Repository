@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _CityBuilder.Scripts.Global_Manager;
+using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
 using BasicLogic.Scripts;
@@ -37,7 +38,8 @@ namespace _CityBuilder.Scripts
 
                 foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
                 {
-                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
+                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                        -necessaryResourcesData.Amount);
                 }
 
 
@@ -115,10 +117,10 @@ namespace _CityBuilder.Scripts
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, int upgradeState)
+        internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, StructureConfiguration structureConfiguration)
         {
             var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
-            placementManager.PlaceObjectOnTheMap(position, container, container.DefaultStructureConfiguration);
+            placementManager.PlaceObjectOnTheMap(position, container, structureConfiguration);
         }
 
         public Dictionary<Vector3Int, Structure> GetAllStructures()

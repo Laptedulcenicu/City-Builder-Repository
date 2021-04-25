@@ -17,7 +17,7 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
 
         public NatureConfiguration(StructureConfiguration structure) : base(structure)
         {
-            Debug.Log("NatureConfiguration");
+          
             NatureConfiguration natureConfiguration = (NatureConfiguration) structure;
             destroyPrice = natureConfiguration.destroyPrice;
         }

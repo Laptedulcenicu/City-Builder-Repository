@@ -15,6 +15,6 @@ MonoBehaviour:
   lifeStatusData:
     maxHealth: 8
     currentHealth: 8
-  earnResourcesList:
-  - resourceType: 2
-    amount: 2
+  destroyEarnResourcesList:
+  - resourceType: 0
+    amount: 10
