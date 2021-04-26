@@ -22207,6 +22207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf3cd49528c4d21a13c0dad7e5165eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputController: {fileID: 899527523}
   infoStructurePopUp: {fileID: 136160660}
   shopManager: {fileID: 1104217364}
   structureManager: {fileID: 2080395267}
@@ -43399,6 +43400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25b01563a8066a4db4058ad88bc11bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 246317459}
   placementManager: {fileID: 1547233246}
 --- !u!4 &2080395268
 Transform:

@@ -120,7 +120,7 @@ public class RoadManager : MonoBehaviour
     }
 
 
-    private void FixRoadPrefabs()
+    public void FixRoadPrefabs()
     {
         foreach (var temporaryPosition in temporaryPlacementPositions)
         {
@@ -141,6 +141,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
+    
     public void FinishPlacingRoad()
     {
         placementMode = false;

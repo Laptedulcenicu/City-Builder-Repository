@@ -38,10 +38,43 @@ namespace BasicLogic.Scripts
             return false;
         }
 
-        internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer,
-            StructureConfiguration defaultConfig)
+        internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer, StructureConfiguration defaultConfig)
         {
             Structure structure = CreateANewStructureModel(position, structureContainer, defaultConfig);
+
+            structureDictionary.Add(position, structure);
+            for (int x = 0; x < structureContainer.Width; x++)
+            {
+                for (int z = 0; z < structureContainer.Height; z++)
+                {
+                    var newPosition = position + new Vector3Int(x, 0, z);
+                    placementGrid[newPosition.x, newPosition.z] = structureContainer.CellTypeStructure;
+
+                    DestroyNatureAt(newPosition);
+                }
+            }
+        }
+        
+        internal void MoveObjectOnTheMap(Vector3Int position, Structure structure)
+        {
+            structure.transform.localPosition = position;
+            structureDictionary.Add(position, structure);
+            for (int x = 0; x < structure.Container.Width; x++)
+            {
+                for (int z = 0; z < structure.Container.Height; z++)
+                {
+                    var newPosition = position + new Vector3Int(x, 0, z);
+                    placementGrid[newPosition.x, newPosition.z] = structure.Container.CellTypeStructure;
+
+                    DestroyNatureAt(newPosition);
+                }
+            }
+        }
+
+        internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 rotation, StructureContainer structureContainer,
+            StructureConfiguration defaultConfig)
+        {
+            Structure structure = CreateANewStructureModel(position, rotation, structureContainer, defaultConfig);
 
             structureDictionary.Add(position, structure);
             for (int x = 0; x < structureContainer.Width; x++)
@@ -94,10 +127,12 @@ namespace BasicLogic.Scripts
             return placementGrid[position.x, position.z] == type;
         }
 
-        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,StructureConfiguration structureConfiguration, RoadBuildingData roadBuildingData)
+        internal void PlaceTemporaryStructure(Vector3Int position, StructureContainer structureContainer,
+            StructureConfiguration structureConfiguration, RoadBuildingData roadBuildingData)
         {
             placementGrid[position.x, position.z] = structureContainer.CellTypeStructure;
-            Structure structure = CreateANewStructureModel(position, structureContainer, structureConfiguration, roadBuildingData);
+            Structure structure =
+                CreateANewStructureModel(position, structureContainer, structureConfiguration, roadBuildingData);
             temporaryRoadobjects.Add(position, structure);
         }
 
@@ -125,10 +160,22 @@ namespace BasicLogic.Scripts
             return structureModel;
         }
 
-        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
-            StructureConfiguration defaultConfig)
+        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer, StructureConfiguration defaultConfig)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
+            structure.AddComponent<BoxCollider>();
+            structure.transform.SetParent(transform);
+            structure.transform.localPosition = position;
+            var structureModel = structure.AddComponent<Structure>();
+            structureModel.CreateModel(structureContainer, defaultConfig);
+            return structureModel;
+        }
+
+        private Structure CreateANewStructureModel(Vector3Int position, Vector3 rotation,
+            StructureContainer structureContainer, StructureConfiguration defaultConfig)
+        {
+            GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
+            structure.transform.eulerAngles = rotation;
             structure.AddComponent<BoxCollider>();
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;

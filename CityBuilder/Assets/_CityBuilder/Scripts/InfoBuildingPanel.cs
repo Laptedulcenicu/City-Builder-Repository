@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
@@ -14,6 +13,7 @@ namespace _CityBuilder.Scripts
     public class InfoBuildingPanel : MonoBehaviour
     {
         public static Action<Structure> ConfigBuildingContainer;
+        [SerializeField] private InputController inputController;
         [SerializeField] private InfoStructurePopUpList infoStructurePopUp;
         [SerializeField] private ShopManager shopManager;
         [SerializeField] private StructureManager structureManager;
@@ -55,7 +55,7 @@ namespace _CityBuilder.Scripts
             upgradeButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Upgrade));
             repairButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Repair));
             destroyButton.onClick.AddListener(() => infoStructurePopUp.ShowPopUp(PopUpInfoStructureType.Destroy));
-            
+
             moveButton.onClick.AddListener(MoveBuildingButton);
             rotateButton.onClick.AddListener(RotateBuildingButton);
             cancelButton.onClick.AddListener(CancelButton);
@@ -98,7 +98,12 @@ namespace _CityBuilder.Scripts
                 case ConfigType.NonFunctional:
                     CheckToRepair();
                     moveButton.gameObject.SetActive(true);
-                    rotateButton.gameObject.SetActive(true);
+
+                    if (currentStructure.Container.CellTypeStructure != CellType.Road)
+                    {
+                        rotateButton.gameObject.SetActive(true);
+                    }
+
                     break;
             }
         }
@@ -155,19 +160,20 @@ namespace _CityBuilder.Scripts
 
         #region BuildingButtons
 
-     
-
-        private void RepairBuildingButton()
-        {
-           
-        }
-
         private void MoveBuildingButton()
         {
+            Point point = new Point((int) currentStructure.transform.position.x, (int) currentStructure.transform.position.z);
+            structureManager.placementManager.RemoveStructureAtPosition(point, currentStructure);
+            inputController.MoveStructure(currentStructure);
+            CancelButton();
         }
 
         private void RotateBuildingButton()
         {
+            Transform transform1 = currentStructure.transform;
+            Vector3 currentRotation = transform1.eulerAngles;
+            currentRotation = currentRotation.y == 270f ? Vector3.zero : new Vector3(0, currentRotation.y + 90, 0);
+            transform1.eulerAngles = currentRotation;
         }
 
         public void CancelButton()

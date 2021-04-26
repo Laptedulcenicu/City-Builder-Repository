@@ -26,18 +26,24 @@ namespace _CityBuilder.Scripts
                         SaveValue newSaveValue = new SaveValue();
                         newSaveValue.position = new Vector3Int(width, 0, height);
 
+
                         Structure intermediaryStructure =
                             structureManager.placementManager.GetStructureAt(newSaveValue.position);
+                        newSaveValue.rotation = intermediaryStructure.transform.eulerAngles;
+
                         switch (intermediaryStructure.Configuration.TypeConFiguration)
                         {
                             case ConfigType.Functional:
-                                newSaveValue.structureConfiguration = new FunctionalConfiguration(intermediaryStructure.Configuration);
+                                newSaveValue.structureConfiguration =
+                                    new FunctionalConfiguration(intermediaryStructure.Configuration);
                                 break;
                             case ConfigType.NonFunctional:
-                                newSaveValue.structureConfiguration = new NonFunctionalConfiguration(intermediaryStructure.Configuration);
+                                newSaveValue.structureConfiguration =
+                                    new NonFunctionalConfiguration(intermediaryStructure.Configuration);
                                 break;
                             case ConfigType.Natural:
-                                newSaveValue.structureConfiguration = new NatureConfiguration(intermediaryStructure.Configuration);
+                                newSaveValue.structureConfiguration =
+                                    new NatureConfiguration(intermediaryStructure.Configuration);
                                 break;
                         }
 
@@ -57,7 +63,7 @@ namespace _CityBuilder.Scripts
 
             List<SaveValue> newSaveValue = SaveManager.Load(SaveKeys.Cell, new List<SaveValue>());
 
-            foreach (var saveValue in newSaveValue)
+            foreach (SaveValue saveValue in newSaveValue)
             {
                 Vector3Int position = Vector3Int.RoundToInt(saveValue.position);
                 if (saveValue.buildingType == CellType.Road)
@@ -69,7 +75,7 @@ namespace _CityBuilder.Scripts
                 }
                 else
                 {
-                    structureManager.PlaceLoadedStructure(position, saveValue.buildingPrefabindex,
+                    structureManager.PlaceLoadedStructure(position, saveValue.rotation, saveValue.buildingPrefabindex,
                         saveValue.structureConfiguration);
                 }
             }
@@ -81,6 +87,7 @@ namespace _CityBuilder.Scripts
             public int buildingPrefabindex;
             public CellType buildingType;
             public Vector3Int position;
+            public Vector3 rotation;
             public StructureConfiguration structureConfiguration;
         }
     }

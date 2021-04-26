@@ -12,6 +12,7 @@ namespace _CityBuilder.Scripts
 {
     public class StructureManager : MonoBehaviour
     {
+        public InputManager inputManager;
         public PlacementManager placementManager;
 
         private List<StructureContainer> buildingContainerList = new List<StructureContainer>();
@@ -36,21 +37,34 @@ namespace _CityBuilder.Scripts
                     }
                 }
 
-                foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                {
-                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                        -necessaryResourcesData.Amount);
-                }
+                //TODO Move inRightPosition to buy
+                // foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+                // {
+                //     GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
+                // }
 
 
                 if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
                 {
-                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
-                        shopItemContainer.Container.DefaultStructureConfiguration);
+                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container, shopItemContainer.Container.DefaultStructureConfiguration);
                     AudioPlayer.instance.PlayPlacementSound();
                 }
             }
         }
+        
+        public void MoveStructure(Vector3Int position, Structure structure)
+        {
+            if (CheckPositionBeforePlacement(position))
+            {
+                if (CheckBigStructure(position, structure.Container.Width, structure.Container.Height))
+                {
+                    placementManager.MoveObjectOnTheMap(position, structure);
+                    inputManager.ClearEvents();
+                    AudioPlayer.instance.PlayPlacementSound();
+                }
+            }
+        }
+        
 
         private bool CheckBigStructure(Vector3Int position, int width, int height)
         {
@@ -117,10 +131,10 @@ namespace _CityBuilder.Scripts
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position, int buildingPrefabindex, StructureConfiguration structureConfiguration)
+        internal void PlaceLoadedStructure(Vector3Int position,Vector3 rotation, int buildingPrefabindex, StructureConfiguration structureConfiguration)
         {
             var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
-            placementManager.PlaceObjectOnTheMap(position, container, structureConfiguration);
+            placementManager.PlaceObjectOnTheMap(position,rotation, container, structureConfiguration);
         }
 
         public Dictionary<Vector3Int, Structure> GetAllStructures()

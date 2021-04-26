@@ -1,5 +1,6 @@
 ﻿using System;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using _CityBuilder.Scripts.StructureModel;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts
@@ -85,12 +86,31 @@ namespace _CityBuilder.Scripts
             }
             else
             {
-                inputManager.OnMouseClick += (pos) =>
-                {
-                    ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer);
-                };
+                inputManager.OnMouseClick += (pos) => { ProcessInputAndCall(structureManager.PlaceGeneric, pos, shopItemContainer); };
                 inputManager.OnEscape += HandleEscape;
             }
+        }
+
+        public void MoveStructure(Structure structure)
+        {
+            ClearInputActions();
+          
+            if (structure.Container.CellTypeStructure == CellType.Road)
+            {
+                Destroy(structure.gameObject);
+                inputManager.OnMouseClick += (pos) => 
+                {
+                    ProcessInputAndCall(roadManager.PlaceRoad, pos);
+                    roadManager.FinishPlacingRoad();
+                    ClearInputActions();
+                };
+          
+            }
+            else
+            {
+                inputManager.OnMouseClick += (pos) => { ProcessInputAndCall(structureManager.MoveStructure, pos, structure); };
+            }
+            
         }
 
         private void RoadPlacementHandler()
@@ -114,12 +134,18 @@ namespace _CityBuilder.Scripts
                 callback.Invoke(result.Value);
         }
 
-        private void ProcessInputAndCall(Action<Vector3Int, ShopItemContainer> callback, Ray ray,
-            ShopItemContainer shopItemContainer)
+        private void ProcessInputAndCall(Action<Vector3Int, ShopItemContainer> callback, Ray ray, ShopItemContainer shopItemContainer)
         {
             Vector3Int? result = objectDetector.RaycastGround(ray);
             if (result.HasValue)
                 callback.Invoke(result.Value, shopItemContainer);
         }
+        private void ProcessInputAndCall(Action<Vector3Int, Structure> callback, Ray ray, Structure structure)
+        {
+            Vector3Int? result = objectDetector.RaycastGround(ray);
+            if (result.HasValue)
+                callback.Invoke(result.Value, structure);
+        }
+        
     }
 }
