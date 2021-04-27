@@ -37,21 +37,35 @@ namespace _CityBuilder.Scripts
                     }
                 }
 
-                //TODO Move inRightPosition to buy
-                // foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                // {
-                //     GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource, -necessaryResourcesData.Amount);
-                // }
+                foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+                {
+                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                        -necessaryResourcesData.Amount);
+                }
 
+                if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
+                    ConfigType.NonFunctional)
+                {
+                    NonFunctionalConfiguration nonFunctionalConfiguration =
+                        (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
+                    
+                    
+                    foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration.ObtainResourceList)
+                    {
+                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                            necessaryResourcesData.Amount);
+                    }
+                }
 
                 if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
                 {
-                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container, shopItemContainer.Container.DefaultStructureConfiguration);
+                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
+                        shopItemContainer.Container.DefaultStructureConfiguration);
                     AudioPlayer.instance.PlayPlacementSound();
                 }
             }
         }
-        
+
         public void MoveStructure(Vector3Int position, Structure structure)
         {
             if (CheckPositionBeforePlacement(position))
@@ -64,7 +78,7 @@ namespace _CityBuilder.Scripts
                 }
             }
         }
-        
+
 
         private bool CheckBigStructure(Vector3Int position, int width, int height)
         {
@@ -131,10 +145,11 @@ namespace _CityBuilder.Scripts
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position,Vector3 rotation, int buildingPrefabindex, StructureConfiguration structureConfiguration)
+        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabindex,
+            StructureConfiguration structureConfiguration)
         {
             var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
-            placementManager.PlaceObjectOnTheMap(position,rotation, container, structureConfiguration);
+            placementManager.PlaceObjectOnTheMap(position, rotation, container, structureConfiguration);
         }
 
         public Dictionary<Vector3Int, Structure> GetAllStructures()

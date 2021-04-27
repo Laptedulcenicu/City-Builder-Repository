@@ -40,8 +40,7 @@ namespace _CityBuilder.Scripts.StructureModel
 
         public void SetUpgradeStage(int upgradeLevel)
         {
-            FunctionalStructureContainer functionalStructureContainer =
-                (FunctionalStructureContainer) structureContainer;
+            FunctionalStructureContainer functionalStructureContainer =(FunctionalStructureContainer) structureContainer;
 
             if (currentVisualStructure)
             {
@@ -64,16 +63,15 @@ namespace _CityBuilder.Scripts.StructureModel
             RoadBuildingData roadBuildingData)
         {
             structureContainer = container;
-            structureConfiguration = new StructureConfiguration(configuration);
+            structureConfiguration = new NonFunctionalConfiguration(configuration);
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
 
-            //   LoadDefaultConfig(); TODO It will be added if Road will be with upgrade
         }
 
         public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
         {
             structureContainer = container;
-            structureConfiguration = new StructureConfiguration(container.DefaultStructureConfiguration);
+            structureConfiguration = new NonFunctionalConfiguration(container.DefaultStructureConfiguration); 
 
             Destroy(currentVisualStructure);
 
@@ -81,7 +79,6 @@ namespace _CityBuilder.Scripts.StructureModel
             currentVisualStructure.transform.localPosition = new Vector3(0, 0, 0);
             currentVisualStructure.transform.localRotation = rotation;
 
-            //   LoadDefaultConfig(); TODO It will be added if Road will be with upgrade
         }
 
         public void OnClick()

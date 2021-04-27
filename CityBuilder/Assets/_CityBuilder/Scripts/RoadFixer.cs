@@ -10,7 +10,7 @@ using UnityEngine;
 public class RoadFixer : MonoBehaviour
 {
     public static Action<StructureContainer> ConfigRoadData;
-        
+
     private RoadBuildingData deadEnd, roadStraight, corner, threeWay, fourWay;
     private RoadStructureContainer roadStructureContainer;
 
@@ -25,7 +25,7 @@ public class RoadFixer : MonoBehaviour
     public RoadBuildingData FourWay => fourWay;
 
     public RoadStructureContainer Container => roadStructureContainer;
-
+    
     
     
     private void Awake()

@@ -1,6 +1,7 @@
 ﻿using System;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using _CityBuilder.Scripts.StructureModel;
+using UnityEditor;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts
@@ -101,7 +102,7 @@ namespace _CityBuilder.Scripts
                 inputManager.OnMouseClick += (pos) => 
                 {
                     ProcessInputAndCall(roadManager.PlaceRoad, pos);
-                    roadManager.FinishPlacingRoad();
+                    roadManager.FinishPlacingRoad(false);
                     ClearInputActions();
                 };
           
@@ -117,8 +118,12 @@ namespace _CityBuilder.Scripts
         {
             ClearInputActions();
 
-            inputManager.OnMouseClick += (pos) => { ProcessInputAndCall(roadManager.PlaceRoad, pos); };
-            inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+            inputManager.OnMouseClick += (pos) => { ProcessInputAndCall(roadManager.PlaceRoad, pos ); };
+            inputManager.OnMouseUp += ()=>
+            {
+                
+                roadManager.FinishPlacingRoad(true);
+            };
             inputManager.OnEscape += HandleEscape;
         }
 
@@ -131,7 +136,7 @@ namespace _CityBuilder.Scripts
         {
             Vector3Int? result = objectDetector.RaycastGround(ray);
             if (result.HasValue)
-                callback.Invoke(result.Value);
+                callback.Invoke(result.Value );
         }
 
         private void ProcessInputAndCall(Action<Vector3Int, ShopItemContainer> callback, Ray ray, ShopItemContainer shopItemContainer)

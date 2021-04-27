@@ -36,6 +36,8 @@ namespace _CityBuilder.Scripts.Test_Script
         [FormerlySerializedAs("gameManager")] [SerializeField]
         private InputController inputController;
 
+        public ShopItemContainer SelectedShopItemContainer => selectedShopItemContainer;
+
         private void Awake()
         {
             GameResourcesManager.OnGameResourcesChange += OnGameResourcesChange;

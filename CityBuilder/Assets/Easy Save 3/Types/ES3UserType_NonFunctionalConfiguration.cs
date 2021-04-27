@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("lifeStatusData", "destroyEarnResourcesList", "ConfigType")]
+	[ES3PropertiesAttribute("obtainResourceList", "lifeStatusData", "destroyEarnResourcesList", "ConfigType")]
 	public class ES3UserType_NonFunctionalConfiguration : ES3ScriptableObjectType
 	{
 		public static ES3Type Instance = null;
@@ -16,6 +16,7 @@ namespace ES3Types
 		{
 			var instance = (_CityBuilder.Scripts.Scriptable_Object.Configurations.NonFunctionalConfiguration)obj;
 			
+			writer.WritePrivateField("obtainResourceList", instance);
 			writer.WritePrivateField("lifeStatusData", instance);
 			writer.WritePrivateField("destroyEarnResourcesList", instance);
 			writer.WritePrivateField("ConfigType", instance);
@@ -29,6 +30,9 @@ namespace ES3Types
 				switch(propertyName)
 				{
 					
+					case "obtainResourceList":
+					reader.SetPrivateField("obtainResourceList", reader.Read<System.Collections.Generic.List<_CityBuilder.Scripts.Scriptable_Object.Containers.NecessaryResourcesData>>(), instance);
+					break;
 					case "lifeStatusData":
 					reader.SetPrivateField("lifeStatusData", reader.Read<_CityBuilder.Scripts.StructureModel.LifeStatusData>(), instance);
 					break;

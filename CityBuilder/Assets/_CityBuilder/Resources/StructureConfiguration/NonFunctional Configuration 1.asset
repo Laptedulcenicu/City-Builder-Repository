@@ -18,3 +18,10 @@ MonoBehaviour:
   destroyEarnResourcesList:
   - resourceType: 0
     amount: 10
+  obtainResourceList:
+  - resourceType: 5
+    amount: 30
+  - resourceType: 3
+    amount: 20
+  - resourceType: 1
+    amount: 10

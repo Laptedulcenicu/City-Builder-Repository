@@ -71,7 +71,7 @@ namespace _CityBuilder.Scripts
                     RoadFixer.ConfigRoadData(
                         structureManager.BuildingContainerList.Find(e => e.Index == saveValue.buildingPrefabindex));
                     roadManager.PlaceRoad(position, saveValue.structureConfiguration);
-                    roadManager.FinishPlacingRoad();
+                    roadManager.FinishPlacingRoad(false);
                 }
                 else
                 {

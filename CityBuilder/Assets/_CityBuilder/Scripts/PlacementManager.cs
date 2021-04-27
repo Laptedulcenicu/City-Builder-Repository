@@ -43,6 +43,7 @@ namespace BasicLogic.Scripts
             Structure structure = CreateANewStructureModel(position, structureContainer, defaultConfig);
 
             structureDictionary.Add(position, structure);
+            
             for (int x = 0; x < structureContainer.Width; x++)
             {
                 for (int z = 0; z < structureContainer.Height; z++)
@@ -71,8 +72,7 @@ namespace BasicLogic.Scripts
             }
         }
 
-        internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 rotation, StructureContainer structureContainer,
-            StructureConfiguration defaultConfig)
+        internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 rotation, StructureContainer structureContainer, StructureConfiguration defaultConfig)
         {
             Structure structure = CreateANewStructureModel(position, rotation, structureContainer, defaultConfig);
 
@@ -219,7 +219,7 @@ namespace BasicLogic.Scripts
 
             temporaryRoadobjects.Clear();
         }
-
+        
         public void ModifyStructureModel(Vector3Int position, StructureContainer structureContainer,
             RoadBuildingData roadBuildingData, Quaternion rotation)
         {

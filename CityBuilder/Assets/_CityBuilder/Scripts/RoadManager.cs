@@ -1,14 +1,15 @@
-﻿using SVS;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using _CityBuilder.Scripts.Scriptable_Object;
+﻿using System.Collections.Generic;
+using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
+using _CityBuilder.Scripts.Scriptable_Object.Containers;
+using _CityBuilder.Scripts.Test_Script;
 using BasicLogic.Scripts;
+using SVS;
 using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
+    [SerializeField] private ShopManager shopManager;
     public PlacementManager placementManager;
 
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
@@ -85,7 +86,6 @@ public class RoadManager : MonoBehaviour
             startPosition = position;
 
             temporaryPlacementPositions.Add(position);
-
             placementManager.PlaceTemporaryStructure(position, roadFixer.Container,
                 roadFixer.Container.DefaultStructureConfiguration, roadFixer.DeadEnd);
         }
@@ -141,17 +141,96 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    
-    public void FinishPlacingRoad()
+
+    public void FinishPlacingRoad(bool isWithMoney)
     {
         placementMode = false;
-        placementManager.AddtemporaryStructuresToStructureDictionary();
-        if (temporaryPlacementPositions.Count > 0)
+        if (isWithMoney)
         {
-            AudioPlayer.instance.PlayPlacementSound();
+            if (IsEnoughMoney())
+            {
+                for (int i = 0; i < temporaryPlacementPositions.Count; i++)
+                {
+                    foreach (var necessaryResourcesData in shopManager.SelectedShopItemContainer
+                        .NecessaryResourcesDataList)
+                    {
+                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                            -necessaryResourcesData.Amount);
+                    }
+                }
+
+
+                placementManager.AddtemporaryStructuresToStructureDictionary();
+
+                if (temporaryPlacementPositions.Count > 0)
+                {
+                    AudioPlayer.instance.PlayPlacementSound();
+                }
+
+                temporaryPlacementPositions.Clear();
+                startPosition = Vector3Int.zero;
+            }
+            else
+            {
+                placementManager.RemoveAllTemporaryStructures();
+            }
+        }
+        else
+        {
+            placementManager.AddtemporaryStructuresToStructureDictionary();
+
+            if (temporaryPlacementPositions.Count > 0)
+            {
+                AudioPlayer.instance.PlayPlacementSound();
+            }
+
+            temporaryPlacementPositions.Clear();
+            startPosition = Vector3Int.zero;
+        }
+    }
+
+    private bool IsEnoughMoney()
+    {
+        List<NecessaryResourcesData> necessaryResourcesDataList = new List<NecessaryResourcesData>();
+
+        for (int i = 0; i < temporaryPlacementPositions.Count; i++)
+        {
+            foreach (NecessaryResourcesData necessaryResourcesData in shopManager.SelectedShopItemContainer
+                .NecessaryResourcesDataList)
+            {
+                if (necessaryResourcesDataList.Count <= 0)
+                {
+                    NecessaryResourcesData necessaryResourcesData1 = new NecessaryResourcesData();
+                    necessaryResourcesData1.Initialize(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
+                    necessaryResourcesDataList.Add(necessaryResourcesData1);
+                }
+                else
+                {
+                    NecessaryResourcesData necessaryResourcesData1 = necessaryResourcesDataList.Find(e => e.Resource == necessaryResourcesData.Resource);
+                    if (necessaryResourcesData1 == null)
+                    {
+                        NecessaryResourcesData necessaryResourcesData2 = new NecessaryResourcesData();
+                        necessaryResourcesData2.Initialize(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
+                        necessaryResourcesDataList.Add(necessaryResourcesData2);
+
+                    }
+                    else
+                    {
+                        necessaryResourcesData1.Initialize(necessaryResourcesData.Resource, necessaryResourcesData1.Amount + necessaryResourcesData.Amount);
+                    }
+                }
+            }
         }
 
-        temporaryPlacementPositions.Clear();
-        startPosition = Vector3Int.zero;
+
+        foreach (var necessaryResourcesData in necessaryResourcesDataList)
+        {
+            if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
