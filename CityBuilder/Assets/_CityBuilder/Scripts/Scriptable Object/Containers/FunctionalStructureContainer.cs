@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.FunctionalStruct;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using UnityEngine;
 
@@ -23,7 +24,10 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
     public class FunctionalStructureContainer : StructureContainer
     {
         [SerializeField] private List<UpgradeStage> upgradeStageList;
+        [SerializeField] private FunctionalStructureOperation functionalStructureOperation;
         public List<UpgradeStage> UpgradeStageList => upgradeStageList;
+
+        public FunctionalStructureOperation StructureOperation => functionalStructureOperation;
 
         private void Awake()
         {

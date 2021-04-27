@@ -25,6 +25,8 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Containers
         public ResourceType Resource => resourceType;
 
         public int Amount => amount;
+        
+        
 
         public void Initialize(ResourceType type, int resourceAmount)
         {

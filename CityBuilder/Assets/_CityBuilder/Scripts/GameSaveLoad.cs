@@ -34,8 +34,9 @@ namespace _CityBuilder.Scripts
                         switch (intermediaryStructure.Configuration.TypeConFiguration)
                         {
                             case ConfigType.Functional:
-                                newSaveValue.structureConfiguration =
-                                    new FunctionalConfiguration(intermediaryStructure.Configuration);
+                                newSaveValue.structureConfiguration = new FunctionalConfiguration(intermediaryStructure.Configuration);
+                 
+                                
                                 break;
                             case ConfigType.NonFunctional:
                                 newSaveValue.structureConfiguration =

@@ -48,3 +48,5 @@ MonoBehaviour:
       amount: 2
     - resourceType: 1
       amount: 3
+  functionalStructureOperation: {fileID: 8795808593682214922, guid: 5e73563f0d2d2bb45b53cae6d8ad66bb,
+    type: 3}

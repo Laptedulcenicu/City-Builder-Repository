@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -15,8 +15,10 @@ MonoBehaviour:
   lifeStatusData:
     maxHealth: 10
     currentHealth: 10
+  destroyEarnResourcesList: []
+  currentUpgradeLevel: 0
   earnResourcesDelayDataList:
-    timerValue: 1
+  - timerSecondsValue: 60
     earnResources:
-      resourceType: 0
-      amount: 5
+      resourceType: 2
+      amount: 20

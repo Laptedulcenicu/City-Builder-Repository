@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _CityBuilder.Scripts.Scriptable_Object.Containers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
 {
@@ -18,10 +17,19 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
             ConfigType = ConfigType.NonFunctional;
         }
 
+
         public NonFunctionalConfiguration(StructureConfiguration structure) : base(structure)
         {
             NonFunctionalConfiguration config = (NonFunctionalConfiguration) structure;
-            obtainResourceList = new List<NecessaryResourcesData>(config.ObtainResourceList);
+            obtainResourceList = new List<NecessaryResourcesData>();
+            
+            foreach (NecessaryResourcesData necessaryResourcesData in config.ObtainResourceList)
+            {
+                NecessaryResourcesData newResourcesData = new NecessaryResourcesData();
+
+                newResourcesData.Initialize(necessaryResourcesData.Resource, necessaryResourcesData.Amount);
+                obtainResourceList.Add(newResourcesData);
+            }
         }
     }
 }

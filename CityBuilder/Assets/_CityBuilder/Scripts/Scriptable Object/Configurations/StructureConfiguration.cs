@@ -27,6 +27,8 @@ namespace _CityBuilder.Scripts.Scriptable_Object.Configurations
         {
             lifeStatusData = new LifeStatusData();
             lifeStatusData.Initialize(structure.lifeStatusData.CurrentHealth, structure.lifeStatusData.MAXHealth);
+            
+            
             destroyEarnResourcesList = new List<NecessaryResourcesData>(structure.destroyEarnResourcesList);
             ConfigType = structure.ConfigType;
         }
