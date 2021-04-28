@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e9ca9bc4c61b646aa7b3816300551e, type: 3}
+  m_Name: Bulding Container 19
+  m_EditorClassIdentifier: 
+  index: 19
+  defaultPrefab: {fileID: 1474906737303118, guid: 5a47459c828b0834aac48f15a22069f0,
+    type: 3}
+  defaultStructureConfiguration: {fileID: 11400000, guid: d2bd70c0fd5143e4298e9b4c2f59dcc3,
+    type: 2}
+  cellType: 2
+  width: 30
+  height: 30
+  upgradeStageList:
+  - gamePrefab: {fileID: 1474906737303118, guid: 5a47459c828b0834aac48f15a22069f0,
+      type: 3}
+    structureConfiguration: {fileID: 11400000, guid: d2bd70c0fd5143e4298e9b4c2f59dcc3,
+      type: 2}
+    necessaryResourcesDataList:
+    - resourceType: 0
+      amount: 15
+  - gamePrefab: {fileID: 1385894361391736, guid: 7d6919505691962458135bc69d38b4bf,
+      type: 3}
+    structureConfiguration: {fileID: 11400000, guid: 96357c8263b83494ea7eccbc990f03a3,
+      type: 2}
+    necessaryResourcesDataList:
+    - resourceType: 0
+      amount: 30
+    - resourceType: 1
+      amount: 30
+  functionalStructureOperation: {fileID: 8795808593682214922, guid: 5e73563f0d2d2bb45b53cae6d8ad66bb,
+    type: 3}

@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aa4b40fb671954abd86262fa8347bd, type: 3}
   m_Name: ShopItem 2
   m_EditorClassIdentifier: 
-  itemName: Flat 3
-  itemDescription: Flat 3
+  itemName: 2
+  itemDescription: Shop Item 2
   unlockDay: 0
   shopItemBuildingType: 0
-  sprite: {fileID: 21300030, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
-  structureContainer: {fileID: 11400000, guid: 972202b2edbe1dd418929a29ee8b04b6, type: 2}
+  sprite: {fileID: 21300064, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  structureContainer: {fileID: 11400000, guid: c81f7945f0b56aa48b51d76b8e698003, type: 2}
   necessaryResourcesDataList:
-  - resourceType: 0
-    amount: 5
   - resourceType: 1
-    amount: 1
+    amount: 10

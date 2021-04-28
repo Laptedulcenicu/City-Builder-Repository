@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3aa4b40fb671954abd86262fa8347bd, type: 3}
+  m_Name: ShopItem 4
+  m_EditorClassIdentifier: 
+  itemName: 4
+  itemDescription: Shop Item 4
+  unlockDay: 0
+  shopItemBuildingType: 0
+  sprite: {fileID: 21300066, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  structureContainer: {fileID: 11400000, guid: 6adf1857808607d4a949fbce3587088c, type: 2}
+  necessaryResourcesDataList:
+  - resourceType: 1
+    amount: 25

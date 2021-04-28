@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac808a8dc869804fa449a6ce0805683, type: 3}
+  m_Name: Bulding Container 9
+  m_EditorClassIdentifier: 
+  index: 9
+  defaultPrefab: {fileID: 1523748264990538, guid: e54a240e2659194489457508170df6c4,
+    type: 3}
+  defaultStructureConfiguration: {fileID: 11400000, guid: 0b2676f65e73f3d44a7e901628cc9397,
+    type: 2}
+  cellType: 2
+  width: 30
+  height: 30
