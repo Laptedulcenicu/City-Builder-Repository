@@ -19,5 +19,5 @@ MonoBehaviour:
   sprite: {fileID: 21300066, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   structureContainer: {fileID: 11400000, guid: 6adf1857808607d4a949fbce3587088c, type: 2}
   necessaryResourcesDataList:
-  - resourceType: 1
-    amount: 25
+  - resourceType: 0
+    amount: 1

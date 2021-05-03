@@ -20,8 +20,4 @@ MonoBehaviour:
   structureContainer: {fileID: 11400000, guid: 209991fdcc8de2244a060d79ae487d7f, type: 2}
   necessaryResourcesDataList:
   - resourceType: 0
-    amount: 100
-  - resourceType: 1
-    amount: 15
-  - resourceType: 2
-    amount: 70
+    amount: 1

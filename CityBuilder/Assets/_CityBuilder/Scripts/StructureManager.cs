@@ -21,44 +21,46 @@ namespace _CityBuilder.Scripts
 
         private void Awake()
         {
-            buildingContainerList = Resources.LoadAll<StructureContainer>("Buildings").ToList();
+            buildingContainerList = Resources.LoadAll<StructureContainer>("Buildings Container").ToList();
         }
 
         public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
         {
             if (CheckPositionBeforePlacement(position))
             {
-                foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                {
-                    if (necessaryResourcesData.Amount >
-                        GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
-                    {
-                        return;
-                    }
-                }
-
-                foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                {
-                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                        -necessaryResourcesData.Amount);
-                }
-
-                if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
-                    ConfigType.NonFunctional)
-                {
-                    NonFunctionalConfiguration nonFunctionalConfiguration =
-                        (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
-                    
-                    
-                    foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration.ObtainResourceList)
-                    {
-                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                            necessaryResourcesData.Amount);
-                    }
-                }
-
                 if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
                 {
+                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+                    {
+                        if (necessaryResourcesData.Amount >
+                            GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                        {
+                            return;
+                        }
+                    }
+
+                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+                    {
+                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                            -necessaryResourcesData.Amount);
+                    }
+
+                    if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
+                        ConfigType.NonFunctional)
+                    {
+                        NonFunctionalConfiguration nonFunctionalConfiguration =
+                            (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
+
+
+                        foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration
+                            .ObtainResourceList)
+                        {
+                            GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                                necessaryResourcesData.Amount);
+                        }
+                    }
+
+
                     placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
                         shopItemContainer.Container.DefaultStructureConfiguration);
                     AudioPlayer.instance.PlayPlacementSound();

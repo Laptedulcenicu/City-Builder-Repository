@@ -38,12 +38,13 @@ namespace BasicLogic.Scripts
             return false;
         }
 
-        internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer, StructureConfiguration defaultConfig)
+        internal void PlaceObjectOnTheMap(Vector3Int position, StructureContainer structureContainer,
+            StructureConfiguration defaultConfig)
         {
             Structure structure = CreateANewStructureModel(position, structureContainer, defaultConfig);
 
             structureDictionary.Add(position, structure);
-            
+
             for (int x = 0; x < structureContainer.Width; x++)
             {
                 for (int z = 0; z < structureContainer.Height; z++)
@@ -55,7 +56,7 @@ namespace BasicLogic.Scripts
                 }
             }
         }
-        
+
         internal void MoveObjectOnTheMap(Vector3Int position, Structure structure)
         {
             structure.transform.localPosition = position;
@@ -72,7 +73,8 @@ namespace BasicLogic.Scripts
             }
         }
 
-        internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 rotation, StructureContainer structureContainer, StructureConfiguration defaultConfig)
+        internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 rotation, StructureContainer structureContainer,
+            StructureConfiguration defaultConfig)
         {
             Structure structure = CreateANewStructureModel(position, rotation, structureContainer, defaultConfig);
 
@@ -160,10 +162,12 @@ namespace BasicLogic.Scripts
             return structureModel;
         }
 
-        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer, StructureConfiguration defaultConfig)
+        private Structure CreateANewStructureModel(Vector3Int position, StructureContainer structureContainer,
+            StructureConfiguration defaultConfig)
         {
             GameObject structure = new GameObject(structureContainer.CellTypeStructure.ToString());
-            structure.AddComponent<BoxCollider>();
+            BoxCollider structureBoxCollider = structure.AddComponent<BoxCollider>();
+            structureBoxCollider.size = new Vector3(structureContainer.Width, structureContainer.Width, structureContainer.Height);
             structure.transform.SetParent(transform);
             structure.transform.localPosition = position;
             var structureModel = structure.AddComponent<Structure>();
@@ -219,7 +223,7 @@ namespace BasicLogic.Scripts
 
             temporaryRoadobjects.Clear();
         }
-        
+
         public void ModifyStructureModel(Vector3Int position, StructureContainer structureContainer,
             RoadBuildingData roadBuildingData, Quaternion rotation)
         {

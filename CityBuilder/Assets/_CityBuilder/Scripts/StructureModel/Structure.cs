@@ -31,11 +31,13 @@ namespace _CityBuilder.Scripts.StructureModel
                 case ConfigType.NonFunctional:
                     structureConfiguration = new NonFunctionalConfiguration(configuration);
                     currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+                    currentVisualStructure.transform.localPosition = Vector3.zero;
                     break;
 
                 case ConfigType.Natural:
                     structureConfiguration = new NatureConfiguration(configuration);
                     currentVisualStructure = Instantiate(container.DefaultPrefab, transform);
+                    currentVisualStructure.transform.localPosition = Vector3.zero;
                     break;
             }
         }
@@ -57,10 +59,9 @@ namespace _CityBuilder.Scripts.StructureModel
             FunctionalStructureOperation functionalStructureOperation =
                 Instantiate(functionalStructureContainer.StructureOperation, transform);
             functionalStructureOperation.transform.localPosition = Vector3.zero;
-            functionalStructureOperation.StartOperation(functionalStructureConfiguration.EarnResourcesDelayDataList,
-                this);
-            currentVisualStructure =
-                Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            functionalStructureOperation.StartOperation(functionalStructureConfiguration.EarnResourcesDelayDataList, this);
+            currentVisualStructure = Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            currentVisualStructure.transform.localPosition = Vector3.zero;
         }
 
         public void SetUpgradeStage(int upgradeLevel)
@@ -73,18 +74,15 @@ namespace _CityBuilder.Scripts.StructureModel
                 Destroy(currentVisualStructure);
             }
 
-            FunctionalConfiguration functionalStructureConfiguration =
-                new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
+            FunctionalConfiguration functionalStructureConfiguration = new FunctionalConfiguration(functionalStructureContainer.UpgradeStageList[upgradeLevel].Configuration);
             structureConfiguration = functionalStructureConfiguration;
 
             functionalStructureConfiguration.currentUpgradeLevel = upgradeLevel;
-            FunctionalStructureOperation functionalStructureOperation =
-                Instantiate(functionalStructureContainer.StructureOperation, transform);
+            FunctionalStructureOperation functionalStructureOperation = Instantiate(functionalStructureContainer.StructureOperation, transform);
             functionalStructureOperation.transform.localPosition = Vector3.zero;
-            functionalStructureOperation.StartOperation(functionalStructureConfiguration.EarnResourcesDelayDataList,
-                this);
-            currentVisualStructure =
-                Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            functionalStructureOperation.StartOperation(functionalStructureConfiguration.EarnResourcesDelayDataList, this);
+            currentVisualStructure = Instantiate(functionalStructureContainer.UpgradeStageList[upgradeLevel].GameObjectPrefab, transform);
+            currentVisualStructure.transform.localPosition = Vector3.zero;
         }
 
         public void CreateModel(StructureContainer container, StructureConfiguration configuration)
@@ -98,6 +96,7 @@ namespace _CityBuilder.Scripts.StructureModel
             structureContainer = container;
             structureConfiguration = new NonFunctionalConfiguration(configuration);
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
+            currentVisualStructure.transform.localPosition = Vector3.zero;
         }
 
         public void SwapModel(StructureContainer container, RoadBuildingData roadBuildingData, Quaternion rotation)
@@ -108,7 +107,7 @@ namespace _CityBuilder.Scripts.StructureModel
             Destroy(currentVisualStructure);
 
             currentVisualStructure = Instantiate(roadBuildingData.RoadPrefab, transform);
-            currentVisualStructure.transform.localPosition = new Vector3(0, 0, 0);
+            currentVisualStructure.transform.localPosition = Vector3.zero;
             currentVisualStructure.transform.localRotation = rotation;
         }
 

@@ -69,8 +69,7 @@ namespace _CityBuilder.Scripts
                 Vector3Int position = Vector3Int.RoundToInt(saveValue.position);
                 if (saveValue.buildingType == CellType.Road)
                 {
-                    RoadFixer.ConfigRoadData(
-                        structureManager.BuildingContainerList.Find(e => e.Index == saveValue.buildingPrefabindex));
+                    RoadFixer.ConfigRoadData(structureManager.BuildingContainerList.Find(e => e.Index == saveValue.buildingPrefabindex));
                     roadManager.PlaceRoad(position, saveValue.structureConfiguration);
                     roadManager.FinishPlacingRoad(false);
                 }
