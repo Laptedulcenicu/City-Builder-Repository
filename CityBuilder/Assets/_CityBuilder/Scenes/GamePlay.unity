@@ -4461,7 +4461,7 @@ GameObject:
   - component: {fileID: 195567935}
   - component: {fileID: 195567934}
   - component: {fileID: 195567933}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4477,7 +4477,7 @@ Transform:
   m_GameObject: {fileID: 195567931}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 110, y: 1, z: 110}
   m_Children: []
   m_Father: {fileID: 1639672090}
   m_RootOrder: 0
@@ -42179,7 +42179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2031158984
 Transform:
   m_ObjectHideFlags: 0
@@ -44749,8 +44749,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
-  far clip plane: 1000
+  near clip plane: -10
+  far clip plane: 200
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -44784,9 +44784,9 @@ MonoBehaviour:
   cameraAxes: 1
   perspectiveZoomMode: 0
   camZoomMin: 1
-  camZoomMax: 20
+  camZoomMax: 15
   camOverzoomMargin: 0
-  camOverdragMargin: 10
+  camOverdragMargin: 5
   boundaryMin: {x: 50, y: 50}
   boundaryMax: {x: 950, y: 950}
   camFollowFactor: 15
