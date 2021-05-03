@@ -41422,7 +41422,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975982179}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d0a6ccc8c0776e44b21f7ae4789da5f, type: 3}
   m_Name: 
@@ -44749,7 +44749,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -44783,32 +44783,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraAxes: 1
   perspectiveZoomMode: 0
-  camZoomMin: 4
+  camZoomMin: 1
   camZoomMax: 20
-  camOverzoomMargin: 1
-  camOverdragMargin: 0
-  boundaryMin: {x: 13.402954, y: 36.54135}
-  boundaryMax: {x: 996.1306, y: 998.1146}
+  camOverzoomMargin: 0
+  camOverdragMargin: 10
+  boundaryMin: {x: 50, y: 50}
+  boundaryMax: {x: 950, y: 950}
   camFollowFactor: 15
-  autoScrollDampMode: 0
-  autoScrollDamp: 300
+  autoScrollDampMode: 1
+  autoScrollDamp: 150
   autoScrollDampCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.7
-      value: 0.9
-      inSlope: -0.5
-      outSlope: -0.5
+      inSlope: -1
+      outSlope: -1
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -44816,8 +44807,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0.01
-      inSlope: -0.85
-      outSlope: -0.85
+      inSlope: -1
+      outSlope: -1
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -44826,12 +44817,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   groundLevelOffset: 0
-  enableRotation: 0
-  enableTilt: 0
-  tiltAngleMin: 45
+  enableRotation: 1
+  enableTilt: 1
+  tiltAngleMin: 40
   tiltAngleMax: 90
   enableZoomTilt: 0
-  zoomTiltAngleMin: 45
+  zoomTiltAngleMin: 10
   zoomTiltAngleMax: 90
   OnPickItem:
     m_PersistentCalls:
@@ -44856,10 +44847,10 @@ MonoBehaviour:
   keyboardZoomFactor: 1
   keyboardRepeatFactor: 60
   keyboardRepeatDelay: 0.5
-  expertModeEnabled: 0
+  expertModeEnabled: 1
   zoomBackSpringFactor: 20
   dragBackSpringFactor: 10
-  autoScrollVelocityMax: 60
+  autoScrollVelocityMax: 20
   dampFactorTimeMultiplier: 2
   isPinchModeExclusive: 1
   customZoomSensitivity: 1
