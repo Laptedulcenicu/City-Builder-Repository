@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bulding Container 17
   m_EditorClassIdentifier: 
   index: 17
-  defaultPrefab: {fileID: 1539475987485874, guid: ad046a662ca27474fbd4aef7604bdde6,
+  defaultPrefab: {fileID: 5032095516038590625, guid: dc10e8abad0d9c7449578163fe572c6a,
     type: 3}
   defaultStructureConfiguration: {fileID: 11400000, guid: d3539cf060581ca4291e27d2aa7316bd,
     type: 2}
@@ -21,14 +21,14 @@ MonoBehaviour:
   width: 13
   height: 13
   upgradeStageList:
-  - gamePrefab: {fileID: 1539475987485874, guid: ad046a662ca27474fbd4aef7604bdde6,
+  - gamePrefab: {fileID: 5032095516038590625, guid: dc10e8abad0d9c7449578163fe572c6a,
       type: 3}
     structureConfiguration: {fileID: 11400000, guid: d3539cf060581ca4291e27d2aa7316bd,
       type: 2}
     necessaryResourcesDataList:
     - resourceType: 0
       amount: 15
-  - gamePrefab: {fileID: 1706033077068076, guid: 044a867193d29504fa2a37be23d222de,
+  - gamePrefab: {fileID: 3745335917754697247, guid: 8ad42d584049ddf4fb01223765e294cc,
       type: 3}
     structureConfiguration: {fileID: 11400000, guid: a89a7dfb56942ff43b846ec15fca4569,
       type: 2}

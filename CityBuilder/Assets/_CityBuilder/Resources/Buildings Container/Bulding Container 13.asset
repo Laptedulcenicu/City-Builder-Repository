@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Bulding Container 13
   m_EditorClassIdentifier: 
   index: 13
-  defaultPrefab: {fileID: 1326707324818654, guid: 198a52accde14ea498057ec0dfc5a859,
+  defaultPrefab: {fileID: 873084201407616924, guid: 3a910eeb1f307b849a2ac7a1ac083777,
     type: 3}
   defaultStructureConfiguration: {fileID: 11400000, guid: 7f2259c7727271e43a4c2dbb27b906a5,
     type: 2}
   cellType: 2
-  width: 13
-  height: 13
+  width: 10
+  height: 10
