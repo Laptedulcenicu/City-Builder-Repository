@@ -12,8 +12,10 @@ namespace _CityBuilder.Scripts
 {
     public class StructureManager : MonoBehaviour
     {
+        [SerializeField] private int offSetXPlacement;
         public InputManager inputManager;
         public PlacementManager placementManager;
+        
 
         private List<StructureContainer> buildingContainerList = new List<StructureContainer>();
 
@@ -32,13 +34,11 @@ namespace _CityBuilder.Scripts
                 {
                     foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
                     {
-                        if (necessaryResourcesData.Amount >
-                            GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                        if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
                         {
                             return;
                         }
                     }
-
                     foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
                     {
                         GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
@@ -68,6 +68,11 @@ namespace _CityBuilder.Scripts
             }
         }
 
+        private void RoadOffset(Vector3Int position, ShopItemContainer shopItemContainer)
+        {
+            
+        }
+
         public void MoveStructure(Vector3Int position, Structure structure)
         {
             if (CheckPositionBeforePlacement(position))
@@ -85,6 +90,7 @@ namespace _CityBuilder.Scripts
         private bool CheckBigStructure(Vector3Int position, int width, int height)
         {
             bool nearRoad = false;
+            
             for (int x = 0; x < width; x++)
             {
                 for (int z = 0; z < height; z++)
