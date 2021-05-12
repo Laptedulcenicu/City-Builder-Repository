@@ -15,7 +15,7 @@ namespace _CityBuilder.Scripts
         [SerializeField] private int offSetXPlacement;
         public InputManager inputManager;
         public PlacementManager placementManager;
-        
+
 
         private List<StructureContainer> buildingContainerList = new List<StructureContainer>();
 
@@ -26,68 +26,85 @@ namespace _CityBuilder.Scripts
             buildingContainerList = Resources.LoadAll<StructureContainer>("Buildings Container").ToList();
         }
 
-        
-
         public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
         {
-            
-            int halfWidth = shopItemContainer.Container.Width/2;
-            int halfHeight = shopItemContainer.Container.Height/2;
 
-            Vector3Int  checkPos= new Vector3Int(halfWidth+position.x, 0, halfHeight+position.z);
 
-            Debug.Log(checkPos);
-            Debug.Log(position);
-            
-            if (CheckPositionBeforePlacement(checkPos))
+
+            if (shopItemContainer.Container.Width > 1 || shopItemContainer.Container.Height > 1)
             {
-                if (CheckBigStructure(checkPos, halfWidth, halfHeight))
+                if (CheckBigStructure(position,shopItemContainer.Container.Width, shopItemContainer.Container.Width))
                 {
-                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                    {
-                        if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
-                        {
-                            return;
-                        }
-                    }
-                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                    {
-                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                            -necessaryResourcesData.Amount);
-                    }
-
-                    if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
-                        ConfigType.NonFunctional)
-                    {
-                        NonFunctionalConfiguration nonFunctionalConfiguration =
-                            (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
-
-
-                        foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration
-                            .ObtainResourceList)
-                        {
-                            GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                                necessaryResourcesData.Amount);
-                        }
-                    }
-
-
-                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
-                        shopItemContainer.Container.DefaultStructureConfiguration);
-                    AudioPlayer.instance.PlayPlacementSound();
+                    Place(position, shopItemContainer);
+                }
+            }
+            else
+            {
+                if (CheckPositionBeforePlacement(position))
+                {
+                    Place(position, shopItemContainer);
                 }
             }
         }
-        
+
+        private void Place(Vector3Int position, ShopItemContainer shopItemContainer)
+        {
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                if (necessaryResourcesData.Amount >
+                    GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                {
+                    return;
+                }
+            }
+
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                    -necessaryResourcesData.Amount);
+            }
+
+            if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
+                ConfigType.NonFunctional)
+            {
+                NonFunctionalConfiguration nonFunctionalConfiguration =
+                    (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
+
+
+                foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration
+                    .ObtainResourceList)
+                {
+                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                        necessaryResourcesData.Amount);
+                }
+            }
+
+
+            placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
+                shopItemContainer.Container.DefaultStructureConfiguration);
+            AudioPlayer.instance.PlayPlacementSound();
+        }
+
         public void MoveStructure(Vector3Int position, Structure structure)
         {
-            int halfWidth = structure.Container.Width/2;
-            int halfHeight = structure.Container.Height/2;
+            int halfWidth = structure.Container.Width / 2;
+            int halfHeight = structure.Container.Height / 2;
 
-            Vector3Int  checkPos= new Vector3Int(halfWidth, 0, halfHeight);
-            if (CheckPositionBeforePlacement(checkPos))
+            Vector3Int checkPos = new Vector3Int(halfWidth, 0, halfHeight);
+
+
+            if (structure.Container.Width > 1 || structure.Container.Height > 1)
             {
                 if (CheckBigStructure(checkPos, halfWidth, halfHeight))
+                {
+                    placementManager.MoveObjectOnTheMap(position, structure);
+                    inputManager.ClearEvents();
+                    AudioPlayer.instance.PlayPlacementSound();
+                }
+            }
+            else
+            {
+                if (CheckPositionBeforePlacement(checkPos))
                 {
                     placementManager.MoveObjectOnTheMap(position, structure);
                     inputManager.ClearEvents();
@@ -101,11 +118,10 @@ namespace _CityBuilder.Scripts
         {
             bool nearRoad = false;
 
-          
-            
-            for (int x = -width; x < width; x++)
+
+            for (int x = (-width/2)+1; x < width/2; x++)
             {
-                for (int z = -height; z < height; z++)
+                for (int z = (-height/2)+1; z < height/2; z++)
                 {
                     var newPosition = position + new Vector3Int(x, 0, z);
 
@@ -139,7 +155,7 @@ namespace _CityBuilder.Scripts
 
         private bool RoadCheck(Vector3Int position)
         {
-            if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0) 
+            if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
             {
                 Debug.Log("Must be placed near a road");
                 return false;
@@ -152,20 +168,22 @@ namespace _CityBuilder.Scripts
         {
             if (placementManager.CheckIfPositionInBound(position) == false)
             {
-                //Debug.Log("This position is out of bounds");
+                Debug.Log("This position is out of bounds");
                 return false;
             }
 
             if (placementManager.CheckIfPositionIsFree(position) == false)
             {
-                //Debug.Log("This position is not EMPTY");
+                Debug.Log("This position is not EMPTY,At position: "+ position );
+                
                 return false;
             }
 
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabIndex, StructureConfiguration structureConfiguration)
+        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabIndex,
+            StructureConfiguration structureConfiguration)
         {
             var container = BuildingContainerList.Find(e => e.Index == buildingPrefabIndex);
             placementManager.PlaceObjectOnTheMap(position, rotation, container, structureConfiguration);
