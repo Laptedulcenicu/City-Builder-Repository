@@ -26,11 +26,22 @@ namespace _CityBuilder.Scripts
             buildingContainerList = Resources.LoadAll<StructureContainer>("Buildings Container").ToList();
         }
 
+        
+
         public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
         {
-            if (CheckPositionBeforePlacement(position))
+            
+            int halfWidth = shopItemContainer.Container.Width/2;
+            int halfHeight = shopItemContainer.Container.Height/2;
+
+            Vector3Int  checkPos= new Vector3Int(halfWidth+position.x, 0, halfHeight+position.z);
+
+            Debug.Log(checkPos);
+            Debug.Log(position);
+            
+            if (CheckPositionBeforePlacement(checkPos))
             {
-                if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
+                if (CheckBigStructure(checkPos, halfWidth, halfHeight))
                 {
                     foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
                     {
@@ -67,17 +78,16 @@ namespace _CityBuilder.Scripts
                 }
             }
         }
-
-        private void RoadOffset(Vector3Int position, ShopItemContainer shopItemContainer)
-        {
-            
-        }
-
+        
         public void MoveStructure(Vector3Int position, Structure structure)
         {
-            if (CheckPositionBeforePlacement(position))
+            int halfWidth = structure.Container.Width/2;
+            int halfHeight = structure.Container.Height/2;
+
+            Vector3Int  checkPos= new Vector3Int(halfWidth, 0, halfHeight);
+            if (CheckPositionBeforePlacement(checkPos))
             {
-                if (CheckBigStructure(position, structure.Container.Width, structure.Container.Height))
+                if (CheckBigStructure(checkPos, halfWidth, halfHeight))
                 {
                     placementManager.MoveObjectOnTheMap(position, structure);
                     inputManager.ClearEvents();
@@ -90,10 +100,12 @@ namespace _CityBuilder.Scripts
         private bool CheckBigStructure(Vector3Int position, int width, int height)
         {
             bool nearRoad = false;
+
+          
             
-            for (int x = 0; x < width; x++)
+            for (int x = -width; x < width; x++)
             {
-                for (int z = 0; z < height; z++)
+                for (int z = -height; z < height; z++)
                 {
                     var newPosition = position + new Vector3Int(x, 0, z);
 
@@ -127,7 +139,7 @@ namespace _CityBuilder.Scripts
 
         private bool RoadCheck(Vector3Int position)
         {
-            if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
+            if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0) 
             {
                 Debug.Log("Must be placed near a road");
                 return false;
@@ -153,10 +165,9 @@ namespace _CityBuilder.Scripts
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabindex,
-            StructureConfiguration structureConfiguration)
+        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabIndex, StructureConfiguration structureConfiguration)
         {
-            var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
+            var container = BuildingContainerList.Find(e => e.Index == buildingPrefabIndex);
             placementManager.PlaceObjectOnTheMap(position, rotation, container, structureConfiguration);
         }
 
