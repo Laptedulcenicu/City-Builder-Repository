@@ -122,7 +122,7 @@ PrefabInstance:
     - target: {fileID: 3124304433467769095, guid: fa735454888b3824ba4786ae740aeab2,
         type: 3}
       propertyPath: m_Name
-      value: Structure
+      value: Structure Variant 19
       objectReference: {fileID: 0}
     - target: {fileID: 3124304433467769095, guid: fa735454888b3824ba4786ae740aeab2,
         type: 3}

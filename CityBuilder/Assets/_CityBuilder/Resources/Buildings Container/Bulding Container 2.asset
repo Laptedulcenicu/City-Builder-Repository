@@ -18,5 +18,5 @@ MonoBehaviour:
   defaultStructureConfiguration: {fileID: 11400000, guid: 293edb390128a1f46b5bf6e9084debac,
     type: 2}
   cellType: 2
-  width: 8
-  height: 8
+  width: 4
+  height: 4
