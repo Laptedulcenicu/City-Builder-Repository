@@ -18,8 +18,8 @@ MonoBehaviour:
   defaultStructureConfiguration: {fileID: 11400000, guid: d3539cf060581ca4291e27d2aa7316bd,
     type: 2}
   cellType: 2
-  width: 9
-  height: 9
+  width: 4
+  height: 4
   upgradeStageList:
   - gamePrefab: {fileID: 5032095516038590625, guid: dc10e8abad0d9c7449578163fe572c6a,
       type: 3}

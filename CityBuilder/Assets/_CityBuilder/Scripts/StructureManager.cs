@@ -15,7 +15,7 @@ namespace _CityBuilder.Scripts
         [SerializeField] private int offSetXPlacement;
         public InputManager inputManager;
         public PlacementManager placementManager;
-        
+
 
         private List<StructureContainer> buildingContainerList = new List<StructureContainer>();
 
@@ -28,56 +28,83 @@ namespace _CityBuilder.Scripts
 
         public void PlaceGeneric(Vector3Int position, ShopItemContainer shopItemContainer)
         {
-            if (CheckPositionBeforePlacement(position))
+
+
+
+            if (shopItemContainer.Container.Width > 1 || shopItemContainer.Container.Height > 1)
             {
-                if (CheckBigStructure(position, shopItemContainer.Container.Width, shopItemContainer.Container.Height))
+                if (CheckBigStructure(position,shopItemContainer.Container.Width, shopItemContainer.Container.Width))
                 {
-                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                    {
-                        if (necessaryResourcesData.Amount > GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
-                        {
-                            return;
-                        }
-                    }
-                    foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
-                    {
-                        GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                            -necessaryResourcesData.Amount);
-                    }
-
-                    if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
-                        ConfigType.NonFunctional)
-                    {
-                        NonFunctionalConfiguration nonFunctionalConfiguration =
-                            (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
-
-
-                        foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration
-                            .ObtainResourceList)
-                        {
-                            GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
-                                necessaryResourcesData.Amount);
-                        }
-                    }
-
-
-                    placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
-                        shopItemContainer.Container.DefaultStructureConfiguration);
-                    AudioPlayer.instance.PlayPlacementSound();
+                    Place(position, shopItemContainer);
+                }
+            }
+            else
+            {
+                if (CheckPositionBeforePlacement(position))
+                {
+                    Place(position, shopItemContainer);
                 }
             }
         }
 
-        private void RoadOffset(Vector3Int position, ShopItemContainer shopItemContainer)
+        private void Place(Vector3Int position, ShopItemContainer shopItemContainer)
         {
-            
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                if (necessaryResourcesData.Amount >
+                    GameResourcesManager.GetResourceAmount(necessaryResourcesData.Resource))
+                {
+                    return;
+                }
+            }
+
+            foreach (var necessaryResourcesData in shopItemContainer.NecessaryResourcesDataList)
+            {
+                GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                    -necessaryResourcesData.Amount);
+            }
+
+            if (shopItemContainer.Container.DefaultStructureConfiguration.TypeConFiguration ==
+                ConfigType.NonFunctional)
+            {
+                NonFunctionalConfiguration nonFunctionalConfiguration =
+                    (NonFunctionalConfiguration) shopItemContainer.Container.DefaultStructureConfiguration;
+
+
+                foreach (NecessaryResourcesData necessaryResourcesData in nonFunctionalConfiguration
+                    .ObtainResourceList)
+                {
+                    GameResourcesManager.AddResourceAmount(necessaryResourcesData.Resource,
+                        necessaryResourcesData.Amount);
+                }
+            }
+
+
+            placementManager.PlaceObjectOnTheMap(position, shopItemContainer.Container,
+                shopItemContainer.Container.DefaultStructureConfiguration);
+            AudioPlayer.instance.PlayPlacementSound();
         }
 
         public void MoveStructure(Vector3Int position, Structure structure)
         {
-            if (CheckPositionBeforePlacement(position))
+            int halfWidth = structure.Container.Width / 2;
+            int halfHeight = structure.Container.Height / 2;
+
+            Vector3Int checkPos = new Vector3Int(halfWidth, 0, halfHeight);
+
+
+            if (structure.Container.Width > 1 || structure.Container.Height > 1)
             {
-                if (CheckBigStructure(position, structure.Container.Width, structure.Container.Height))
+                if (CheckBigStructure(checkPos, halfWidth, halfHeight))
+                {
+                    placementManager.MoveObjectOnTheMap(position, structure);
+                    inputManager.ClearEvents();
+                    AudioPlayer.instance.PlayPlacementSound();
+                }
+            }
+            else
+            {
+                if (CheckPositionBeforePlacement(checkPos))
                 {
                     placementManager.MoveObjectOnTheMap(position, structure);
                     inputManager.ClearEvents();
@@ -90,10 +117,11 @@ namespace _CityBuilder.Scripts
         private bool CheckBigStructure(Vector3Int position, int width, int height)
         {
             bool nearRoad = false;
-            
-            for (int x = 0; x < width; x++)
+
+
+            for (int x = (-width/2)+1; x < width/2; x++)
             {
-                for (int z = 0; z < height; z++)
+                for (int z = (-height/2)+1; z < height/2; z++)
                 {
                     var newPosition = position + new Vector3Int(x, 0, z);
 
@@ -140,23 +168,24 @@ namespace _CityBuilder.Scripts
         {
             if (placementManager.CheckIfPositionInBound(position) == false)
             {
-                //Debug.Log("This position is out of bounds");
+                Debug.Log("This position is out of bounds");
                 return false;
             }
 
             if (placementManager.CheckIfPositionIsFree(position) == false)
             {
-                //Debug.Log("This position is not EMPTY");
+                Debug.Log("This position is not EMPTY,At position: "+ position );
+                
                 return false;
             }
 
             return true;
         }
 
-        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabindex,
+        internal void PlaceLoadedStructure(Vector3Int position, Vector3 rotation, int buildingPrefabIndex,
             StructureConfiguration structureConfiguration)
         {
-            var container = BuildingContainerList.Find(e => e.Index == buildingPrefabindex);
+            var container = BuildingContainerList.Find(e => e.Index == buildingPrefabIndex);
             placementManager.PlaceObjectOnTheMap(position, rotation, container, structureConfiguration);
         }
 
