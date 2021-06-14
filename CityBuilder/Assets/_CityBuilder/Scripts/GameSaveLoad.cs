@@ -21,36 +21,39 @@ namespace _CityBuilder.Scripts
             {
                 for (int height = 0; height < structureManager.placementManager.Height; height++)
                 {
-                    if (structureManager.placementManager.GetCellType(width, height) != CellType.Empty)
+                    if (structureManager.placementManager.GetCellType(width, height) != CellType.None && structureManager.placementManager.GetCellType(width, height) != CellType.Empty)
                     {
                         SaveValue newSaveValue = new SaveValue();
                         newSaveValue.position = new Vector3Int(width, 0, height);
 
 
-                        Structure intermediaryStructure =
-                            structureManager.placementManager.GetStructureAt(newSaveValue.position);
-                        newSaveValue.rotation = intermediaryStructure.transform.eulerAngles;
-
-                        switch (intermediaryStructure.Configuration.TypeConFiguration)
+                        Structure intermediaryStructure = structureManager.placementManager.GetStructureAt(newSaveValue.position);
+                        if (intermediaryStructure != null)
                         {
-                            case ConfigType.Functional:
-                                newSaveValue.structureConfiguration = new FunctionalConfiguration(intermediaryStructure.Configuration);
+                            newSaveValue.rotation = intermediaryStructure.transform.eulerAngles;
+
+                            switch (intermediaryStructure.Configuration.TypeConFiguration)
+                            {
+                                case ConfigType.Functional:
+                                    newSaveValue.structureConfiguration = new FunctionalConfiguration(intermediaryStructure.Configuration);
                  
                                 
-                                break;
-                            case ConfigType.NonFunctional:
-                                newSaveValue.structureConfiguration =
-                                    new NonFunctionalConfiguration(intermediaryStructure.Configuration);
-                                break;
-                            case ConfigType.Natural:
-                                newSaveValue.structureConfiguration =
-                                    new NatureConfiguration(intermediaryStructure.Configuration);
-                                break;
-                        }
+                                    break;
+                                case ConfigType.NonFunctional:
+                                    newSaveValue.structureConfiguration =
+                                        new NonFunctionalConfiguration(intermediaryStructure.Configuration);
+                                    break;
+                                case ConfigType.Natural:
+                                    newSaveValue.structureConfiguration =
+                                        new NatureConfiguration(intermediaryStructure.Configuration);
+                                    break;
+                            }
 
-                        newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
-                        newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
-                        saveList.Add(newSaveValue);
+                            newSaveValue.buildingPrefabindex = intermediaryStructure.Container.Index;
+                            newSaveValue.buildingType = structureManager.placementManager.GetCellType(width, height);
+                            saveList.Add(newSaveValue);
+                        }
+                     
                     }
                 }
             }

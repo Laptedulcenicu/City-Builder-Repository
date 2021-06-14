@@ -14,12 +14,10 @@ public class ObjectDetector : MonoBehaviour
         {
             Transform objectHit = hit.transform;
             Vector3Int positionInt = Vector3Int.RoundToInt(hit.point);
-            Debug.DrawRay(ray.origin,ray.direction, Color.red, Single.MaxValue);
             return positionInt;
         }
         print("NotFinded");
         print(hit.transform.gameObject);
-        Debug.DrawRay(ray.origin,ray.direction, Color.red, Single.MaxValue);
         return null;
     }
 

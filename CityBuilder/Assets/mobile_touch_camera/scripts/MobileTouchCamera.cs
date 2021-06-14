@@ -569,7 +569,6 @@ namespace BitBenderGames {
       if (success == false || (Cam.orthographic == false && distance > maxHorizonFallbackDistance)) {
 
         if (showHorizonError == true) {
-          Debug.DrawRay( ray.origin,ray.direction, Color.red, Single.MaxValue);
           Debug.LogError("Failed to compute intersection between camera ray and reference plane. Make sure the camera Axes are set up correctly.");
           showHorizonError = false;
         }
