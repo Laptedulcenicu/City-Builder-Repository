@@ -1,13 +1,3 @@
-// /************************************************************
-// *                                                           *
-// *   Mobile Touch Camera                                     *
-// *                                                           *
-// *   Created 2015 by BitBender Games                         *
-// *                                                           *
-// *   bitbendergames@gmail.com                                *
-// *                                                           *
-// ************************************************************/
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -470,7 +460,6 @@ namespace BitBenderGames {
         CamZoomMax = camZoomMinBackup;
       }
 
-      //Errors for certain incorrect settings.
       string cameraAxesError = CheckCameraAxesErrors();
       if(string.IsNullOrEmpty(cameraAxesError) == false) {
         Debug.LogError(cameraAxesError);
@@ -506,27 +495,15 @@ namespace BitBenderGames {
     }
 
     #region public interface
-    /// <summary>
-    /// Method for resetting the camera boundaries. This method may need to be invoked
-    /// when resetting the camera transform (rotation, tilt) by code for example.
-    /// </summary>
+
     public void ResetCameraBoundaries() {
       ComputeCamBoundaries();
     }
 
-    /// <summary>
-    /// This method tilts the camera based on the values
-    /// defined for the zoom tilt mode.
-    /// </summary>
     public void ResetZoomTilt() {
       UpdateTiltForAutoTilt(CamZoom);
     }
-
-    /// <summary>
-    /// Helper method for retrieving the world position of the
-    /// finger with id 0. This method may only return a valid value when
-    /// there is at least 1 finger touching the device.
-    /// </summary>
+    
     public Vector3 GetFinger0PosWorld() {
       Vector3 posWorld = Vector3.zero;
       if (TouchWrapper.TouchCount > 0) {
@@ -535,11 +512,7 @@ namespace BitBenderGames {
       }
       return (posWorld);
     }
-
-    /// <summary>
-    /// Method for performing a raycast against either the refplane, or
-    /// against a terrain-collider in case the collider is set.
-    /// </summary>
+    
     public bool RaycastGround(Ray ray, out Vector3 hitPoint) {
       bool hitSuccess = false;
       hitPoint = Vector3.zero;
@@ -558,22 +531,17 @@ namespace BitBenderGames {
       }
       return hitSuccess;
     }
-
-    /// <summary>
-    /// Method for retrieving the intersection-point between the given ray and the ref plane.
-    /// </summary>
     public Vector3 GetIntersectionPoint(Ray ray) {
       float distance = 0;
       bool success = RefPlane.Raycast(ray, out distance);
       
       if (success == false || (Cam.orthographic == false && distance > maxHorizonFallbackDistance)) {
 
-        if (showHorizonError == true) {
-          Debug.LogError("Failed to compute intersection between camera ray and reference plane. Make sure the camera Axes are set up correctly.");
-          showHorizonError = false;
-        }
+        // if (showHorizonError == true) {
+        //   Debug.LogError("Failed to compute intersection between camera ray and reference plane. Make sure the camera Axes are set up correctly.");
+        //   showHorizonError = false;
+        // }
 
-        //Fallback: Compute a sphere-cap on the ground and use the border point at the direction of the ray as maximum point in the distance.
         Vector3 rayOriginProjected = UnprojectVector2(ProjectVector3(ray.origin));
         Vector3 rayDirProjected = UnprojectVector2(ProjectVector3(ray.direction));
         return rayOriginProjected + rayDirProjected.normalized * maxHorizonFallbackDistance;
@@ -684,10 +652,7 @@ namespace BitBenderGames {
       ComputeCamBoundaries();
     }
 
-    /// <summary>
-    /// MonoBehaviour method override to assign proper default values depending on
-    /// the camera parameters and orientation.
-    /// </summary>
+    
     private void Reset() {
 
       //Compute camera tilt to find out the camera orientation.
@@ -713,10 +678,7 @@ namespace BitBenderGames {
       }
     }
       
-    /// <summary>
-    /// Method that does all the computation necessary when the pinch gesture of the user
-    /// has changed.
-    /// </summary>
+  
     private void UpdatePinch(float deltaTime) {
 
       if (IsPinching == true) {
@@ -793,9 +755,7 @@ namespace BitBenderGames {
       UpdateCameraTilt(tiltAngleDiff);
     }
 
-    /// <summary>
-    /// Method that computes the updated camera position when the user tilts the camera.
-    /// </summary>
+
     private void DoPositionUpdateForTilt(bool isSpringBack) {
 
       //Position update.
@@ -842,9 +802,7 @@ namespace BitBenderGames {
       ComputeCamBoundaries();
     }
 
-    /// <summary>
-    /// Method that ensures that all limits are met when the user tilts the camera.
-    /// </summary>
+  
     private void ClampCameraTilt(Vector3 rotationPoint, Vector3 rotationAxis) {
 
      float tiltAngle = GetCurrentTiltAngleDeg(rotationAxis);
@@ -857,9 +815,7 @@ namespace BitBenderGames {
       }
     }
 
-    /// <summary>
-    /// Method to get the current tilt angle of the camera.
-    /// </summary>
+    
     private float GetCurrentTiltAngleDeg(Vector3 rotationAxis) {
       Vector3 camForwardOnPlane = Vector3.Cross(RefPlane.normal, rotationAxis);
       float tiltAngle = Vector3.Angle(camForwardOnPlane, -Transform.forward);
@@ -1345,7 +1301,6 @@ namespace BitBenderGames {
 
           if(isPinchTiltMode == true) {
 
-            //Evaluate a potential break-out from a tilt. Under certain tweak-settings the tilt may trigger prematurely and needs to be overrided.
             if(pinchTiltAccumulated < pinchAccumBreakout) {
               bool breakoutZoom = Mathf.Abs(pinchDistanceStart - pinchUpdateData.pinchDistance) > pinchDistanceForTiltBreakout;
               bool breakoutRot = enableRotation == true && Mathf.Abs(pinchAngleCurrent) > rotationLockThreshold;

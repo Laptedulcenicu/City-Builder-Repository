@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace UniStorm.Example
 {
-    /// <summary>
-    /// A simple save system that allows users to save UniStorm's time, date, weather, and player position.
-    /// </summary>
     public class SaveAndLoad : MonoBehaviour
     {
         public SaveTypeEnum SaveType = SaveTypeEnum.Manual;
@@ -47,13 +44,13 @@ namespace UniStorm.Example
                 PlayerPrefs.SetString("UniStorm Player Rotation", PlayerTransform.eulerAngles.ToString());
                 PlayerPrefs.SetString("UniStorm Camera Rotation", PlayerCamera.eulerAngles.ToString());
                 m_AutoSaveTimer = 0;
-
-                if (DebugLogs == DebugLogsEnum.Enabled)
-                {
-                    Debug.Log("Data Saved: UniStorm Time: " + UniStormSystem.Instance.Hour.ToString() + ":" + UniStormSystem.Instance.Minute.ToString("00") + 
-                        " - UniStorm Weather: " + UniStormSystem.Instance.CurrentWeatherType.WeatherTypeName + " - UniStorm Temperature: " + UniStormSystem.Instance.Temperature.ToString() + "°" + " " +
-                        "- UniStorm Date: " + UniStormSystem.Instance.Month.ToString() + "/" + UniStormSystem.Instance.Day.ToString() + "/" + UniStormSystem.Instance.Year.ToString());
-                }
+                //
+                // if (DebugLogs == DebugLogsEnum.Enabled)
+                // {
+                //     Debug.Log("Data Saved: UniStorm Time: " + UniStormSystem.Instance.Hour.ToString() + ":" + UniStormSystem.Instance.Minute.ToString("00") + 
+                //         " - UniStorm Weather: " + UniStormSystem.Instance.CurrentWeatherType.WeatherTypeName + " - UniStorm Temperature: " + UniStormSystem.Instance.Temperature.ToString() + "°" + " " +
+                //         "- UniStorm Date: " + UniStormSystem.Instance.Month.ToString() + "/" + UniStormSystem.Instance.Day.ToString() + "/" + UniStormSystem.Instance.Year.ToString());
+                // }
             }
 
             //Load player data
@@ -86,10 +83,10 @@ namespace UniStorm.Example
                     }
                 }
 
-                if (DebugLogs == DebugLogsEnum.Enabled)
-                {
-                    Debug.Log("Data Loaded");
-                }
+                // if (DebugLogs == DebugLogsEnum.Enabled)
+                // {
+                //     Debug.Log("Data Loaded");
+                // }
             }
         }
 
