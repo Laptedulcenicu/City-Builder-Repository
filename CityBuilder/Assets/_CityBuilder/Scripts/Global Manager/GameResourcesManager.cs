@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameRig.Scripts.Systems.CurrencySystem;
-using GameRig.Scripts.Systems.OfflineSystem;
 using GameRig.Scripts.Systems.SaveSystem;
-using GameRig.Scripts.Utilities.Attributes;
-using GameRig.Scripts.Utilities.GameRigConstantValues;
+using UnityEditor;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts.Global_Manager
@@ -36,15 +34,14 @@ namespace _CityBuilder.Scripts.Global_Manager
         private static List<ResourcesData> ResourcesDataList = new List<ResourcesData>();
 
 
-        [InvokeOnAppLaunch()]
+        [InitializeOnLoadMethod()]
         private static void Initialize()
         {
-            settings = Resources.Load<GameCurrencySettings>(GameRigResourcesPaths.GameCurrencySettings);
+            settings = Resources.Load<GameCurrencySettings>("Game Currency System/Settings");
             InitializeResourcesList();
-            OfflineManager.OnGoToOffline += SaveResourcesAmount;
         }
 
-        private static void SaveResourcesAmount()
+        public static void SaveResourcesAmount()
         {
             foreach (var resourcesData in ResourcesDataList)
             {

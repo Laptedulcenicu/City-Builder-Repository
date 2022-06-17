@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CityBuilder.Scripts.Global_Manager;
 using _CityBuilder.Scripts.Scriptable_Object.Configurations;
 using _CityBuilder.Scripts.StructureModel;
 using GameRig.Scripts.Systems.SaveSystem;
-using GameRig.Scripts.Utilities.ConstantValues;
 using UnityEngine;
 
 namespace _CityBuilder.Scripts
@@ -58,14 +58,19 @@ namespace _CityBuilder.Scripts
                 }
             }
 
-            SaveManager.Save(SaveKeys.Cell, saveList);
+            SaveManager.Save("Cell", saveList);
+        }
+
+        private void OnApplicationQuit()
+        {
+            GameResourcesManager.SaveResourcesAmount();
         }
 
         public void LoadGame()
         {
             structureManager.ClearMap();
 
-            List<SaveValue> newSaveValue = SaveManager.Load(SaveKeys.Cell, new List<SaveValue>());
+            List<SaveValue> newSaveValue = SaveManager.Load("Cell", new List<SaveValue>());
 
             foreach (SaveValue saveValue in newSaveValue)
             {

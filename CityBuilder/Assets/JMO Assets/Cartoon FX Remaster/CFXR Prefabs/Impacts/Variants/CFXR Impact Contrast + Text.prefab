@@ -7,10 +7,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 948264529337635773}
     m_Modifications:
-    - target: {fileID: 8385872946906445718, guid: 3357a576d3010ee4bb29fbbd167379c0,
+    - target: {fileID: 1213776711389387167, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
-      propertyPath: m_Name
-      value: CFXR _Wham_
+      propertyPath: startDelay.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143437173393331251, guid: 3357a576d3010ee4bb29fbbd167379c0,
+        type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
@@ -29,6 +39,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -44,16 +59,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3778902966349015804, guid: 3357a576d3010ee4bb29fbbd167379c0,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -66,11 +71,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1213776711389387167, guid: 3357a576d3010ee4bb29fbbd167379c0,
-        type: 3}
-      propertyPath: startDelay.scalar
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5477312848112472223, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
@@ -82,10 +82,10 @@ PrefabInstance:
       propertyPath: startDelay.scalar
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 2143437173393331251, guid: 3357a576d3010ee4bb29fbbd167379c0,
+    - target: {fileID: 8385872946906445718, guid: 3357a576d3010ee4bb29fbbd167379c0,
         type: 3}
-      propertyPath: startDelay.scalar
-      value: 0.1
+      propertyPath: m_Name
+      value: CFXR _Wham_
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3357a576d3010ee4bb29fbbd167379c0, type: 3}
@@ -96,10 +96,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4387482976666195449, guid: d1eb5368e6bef184681cd4db6cf466fe,
+    - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
         type: 3}
-      propertyPath: m_Name
-      value: CFXR Impact Contrast + Text
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
         type: 3}
@@ -118,6 +118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -129,16 +134,6 @@ PrefabInstance:
     - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4387482976666195398, guid: d1eb5368e6bef184681cd4db6cf466fe,
@@ -155,6 +150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387482976666195449, guid: d1eb5368e6bef184681cd4db6cf466fe,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR Impact Contrast + Text
       objectReference: {fileID: 0}
     - target: {fileID: 5089351085054799090, guid: d1eb5368e6bef184681cd4db6cf466fe,
         type: 3}

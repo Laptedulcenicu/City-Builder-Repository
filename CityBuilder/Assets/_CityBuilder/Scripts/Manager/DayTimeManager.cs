@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameRig.Scripts.Systems.SaveSystem;
-using GameRig.Scripts.Utilities.ConstantValues;
 using UniStorm;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -30,16 +29,16 @@ namespace _CityBuilder.Scripts.Manager
 
         private void CheckCurrentDay()
         {
-            int savedDay = SaveManager.Load(SaveKeys.Day, 1);
+            int savedDay = SaveManager.Load("Day", 1);
 
             if (savedDay != uniStormSystem.Day)
             {
-                SaveManager.Save(SaveKeys.Day, uniStormSystem.Day);
+                SaveManager.Save("Day", uniStormSystem.Day);
                 ChangeWeather();
             }
             else
             {
-                WeatherType newWeather = uniStormSystem.AllWeatherTypes[SaveManager.Load(SaveKeys.currentWeather, 0)];
+                WeatherType newWeather = uniStormSystem.AllWeatherTypes[SaveManager.Load("CurrentWeather", 0)];
                 uniStormSystem.ChangeWeather(newWeather);
             }
         }
@@ -48,9 +47,9 @@ namespace _CityBuilder.Scripts.Manager
         {
             SeasonData currentSeason = seasonDataList.Find(e => e.Season == uniStormSystem.CurrentSeason);
 
-            currentSeason.SeasonIndexList.Remove(SaveManager.Load(SaveKeys.currentWeather, 0));
+            currentSeason.SeasonIndexList.Remove(SaveManager.Load("CurrentWeather", 0));
             int randomIndex = currentSeason.SeasonIndexList[Random.Range(0,currentSeason.SeasonIndexList.Count )];
-            SaveManager.Save(SaveKeys.currentWeather, randomIndex);
+            SaveManager.Save("CurrentWeather", randomIndex);
             WeatherType newWeather = uniStormSystem.AllWeatherTypes[randomIndex];
             
             uniStormSystem.ChangeWeather(newWeather);
